@@ -42,8 +42,8 @@ angular.module('sif-assistant.services', [])
             timezone: "CST"
         },
         {
-            id: "int",
-            name: "International",
+            id: "us",
+            name: "United States",
             timezone: "CST"
         },
         {
