@@ -14,9 +14,37 @@ angular.module('sif-assistant.controllers', [])
     }).then(function (modal) {
         $scope.addAccountModal = modal;
     });
+        
+    $scope.regions = [
+        {
+            id: "jp",
+            name: "Japan",
+            timezone: "JST"
+        },
+        {
+            id: "cn",
+            name: "China",
+            timezone: "CST"
+        },
+        {
+            id: "int",
+            name: "International",
+            timezone: "CST"
+        },
+        {
+            id: "kr",
+            name: "Korea",
+            timezone: "CST"
+        },
+        {
+            id: "tw",
+            name: "Taiwan",
+            timezone: "CST"
+        }
+    ];
 
-    $scope.addAccount = function (alias, region, level, exp) {
-        console.log(alias, region, level, exp);
+    $scope.addAccount = function (account) {
+        console.log(account);
         $scope.closeAddAccount();
     };
 
