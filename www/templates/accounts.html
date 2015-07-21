@@ -8,8 +8,17 @@
         <img ng-src="img/region_flags/{{account.region}}.png">
         <h2>Level: {{account.level}}</h2>
         <p>Exp: {{account.exp}}</p>
+      </div>
+      <div class="item item-body">
         <p>LP: {{account.lp}}</p>
+        <p>Loveca: {{account.loveca}}</p>
         <p>Has claimed daily bonus: {{account.has_claimed_bonus ? "yes" : "no"}}</p>
+      </div>
+      <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" href="#">
+          <i class="icon ion-thumbsup"></i>
+
+        </a>
       </div>
     </div>
   </ion-content>
