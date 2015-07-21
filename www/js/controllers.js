@@ -8,14 +8,15 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 //})
 
 .controller('AppCtrl', function($scope, $ionicModal, Accounts, Regions) {
+    $scope.regions = Regions.get();
+
+    // Add account
     $ionicModal.fromTemplateUrl('templates/add-account.html', {
         scope: $scope,
         animation: 'slide-in-up'
     }).then(function (modal) {
         $scope.addAccountModal = modal;
     });
-        
-    $scope.regions = Regions.get();
 
     $scope.addAccount = function (account) {
         Accounts.addAccount(account);
@@ -31,13 +32,40 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 
     $scope.$on('$destroy', function() {
-        $scope.modal.remove();
+        $scope.addAccountModal.remove();
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $ionicPopup, Accounts) {
+.controller('AccountsCtrl', function ($scope, $ionicModal, $ionicPopup, Accounts) {
+    // Show accounts
     $scope.accounts = Accounts.get();
 
+    // Update account
+    $ionicModal.fromTemplateUrl('templates/update-account.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function (modal) {
+        $scope.updateAccountModal = modal;
+    });
+
+    $scope.updateAccount = function (account) {
+        $scope.closeUpdateAccount();
+    };
+
+    $scope.openUpdateAccount = function (account) {
+        $scope.updatedAccount = account;
+        $scope.updateAccountModal.show();
+    };
+
+    $scope.closeUpdateAccount = function () {
+        $scope.updateAccountModal.hide();
+    };
+
+    $scope.$on('$destroy', function() {
+        $scope.updateAccountModal.remove();
+    });
+
+    // Delete account
     $scope.confirmDeleteAccount = function(confirmation) {
         var confirmPopup = $ionicPopup.confirm({
             title: 'Delete account',
@@ -47,10 +75,14 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 
     $scope.deleteAccount = function (account) {
+        Accounts.deleteAccount(account);
+    };
+
+    $scope.openDeleteAccount = function (account) {
         $scope.confirmDeleteAccount(function (yes) {
             if (yes) {
-                Accounts.deleteAccount(account);
+                $scope.deleteAccount(account);
             }
         });
-    }
+    };
 });
