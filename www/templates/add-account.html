@@ -1,0 +1,39 @@
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">Add Account</h1>
+        <button ng-click="closeAddAccount()" class="button button-icon button-clear ion-close"></button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Alias</span>
+                <input type="text" ng-model="alias">
+            </label>
+            <label class="item item-input item-select">
+                <span class="input-label">Region</span>
+                <select ng-model="region">
+                    <option selected>Japan</option>
+                    <option>China</option>
+                    <option>International</option>
+                    <option>Korea</option>
+                    <option>Taiwan</option>
+                </select>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Level</span>
+                <input type="number" ng-model="level">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Exp</span>
+                <input type="number" ng-model="exp">
+            </label>
+            <label class="item item-input">
+                <button
+                        class="button button-block button-positive"
+                        ng-click="addAccount(alias, region, level, exp)">
+                    Add
+                </button>
+            </label>
+        </div>
+    </ion-content>
+</ion-modal-view>
