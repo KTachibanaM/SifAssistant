@@ -35,6 +35,22 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, Accounts) {
-    $scope.accounts = Accounts.getAccounts();
+.controller('AccountsCtrl', function ($scope, $ionicPopup, Accounts) {
+    $scope.accounts = Accounts.get();
+
+    $scope.confirmDeleteAccount = function(confirmation) {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Delete account',
+            template: 'Are you sure you want to delete this account?'
+        });
+        confirmPopup.then(confirmation);
+    };
+
+    $scope.deleteAccount = function (account) {
+        $scope.confirmDeleteAccount(function (yes) {
+            if (yes) {
+                Accounts.deleteAccount(account);
+            }
+        });
+    }
 });

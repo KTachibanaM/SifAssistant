@@ -17,14 +17,30 @@ angular.module('sif-assistant.services', [])
 .factory('Accounts', ['$localStorage', function ($localStorage) {
     const ACCOUNTS_KEY = "accounts";
     return {
+        set: function (accounts) {
+            $localStorage.set(ACCOUNTS_KEY, accounts)
+        },
+        get: function () {
+            return $localStorage.getArray(ACCOUNTS_KEY);
+        },
         addAccount: function (new_account) {
             new_account.has_claimed_bonus = false;
-            var current_accounts = $localStorage.getArray(ACCOUNTS_KEY);
+            var current_accounts = this.get();
             current_accounts.push(new_account);
-            $localStorage.set(ACCOUNTS_KEY, current_accounts)
+            this.set(current_accounts);
         },
-        getAccounts: function () {
-            return $localStorage.getArray(ACCOUNTS_KEY);
+        getAccountIndex: function (account) {
+            var current_accounts = this.get();
+            var current_aliases = current_accounts.map(function (item) {
+                return item.alias
+            });
+            return current_aliases.indexOf(account.alias);
+        },
+        deleteAccount: function (account) {
+            var current_accounts = this.get();
+            var index = this.getAccountIndex(account);
+            current_accounts.splice(index, 1);
+            this.set(current_accounts);
         }
     }
 }])

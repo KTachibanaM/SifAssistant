@@ -12,12 +12,16 @@
       <div class="item item-body">
         <p>LP: {{account.lp}}</p>
         <p>Loveca: {{account.loveca}}</p>
-        <p>Has claimed daily bonus: {{account.has_claimed_bonus ? "yes" : "no"}}</p>
+        <p>Has claimed daily bonus: {{account.has_claimed_bonus ? "Yes" : "NO"}}</p>
       </div>
       <div class="item tabs tabs-secondary tabs-icon-left">
-        <a class="tab-item" href="#">
-          <i class="icon ion-thumbsup"></i>
-
+        <a class="tab-item">
+          <i class="icon ion-edit"></i>
+          Modify
+        </a>
+        <a class="tab-item" ng-click="deleteAccount(account)">
+          <i class="icon ion-trash-a"></i>
+          Delete
         </a>
       </div>
     </div>
