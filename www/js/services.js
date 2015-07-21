@@ -18,7 +18,7 @@ angular.module('sif-assistant.services', [])
     const ACCOUNTS_KEY = "accounts";
     return {
         addAccount: function (new_account) {
-            new_account.has_claimed_daily_bonus = false;
+            new_account.has_claimed_bonus = false;
             var current_accounts = $localStorage.getArray(ACCOUNTS_KEY);
             current_accounts.push(new_account);
             $localStorage.set(ACCOUNTS_KEY, current_accounts)
