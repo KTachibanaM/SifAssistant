@@ -1,4 +1,4 @@
-angular.module('sif-assistant.controllers', [])
+angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
 // With the new view caching in Ionic, Controllers are only called
 // when they are recreated or on app start, instead of every page change.
@@ -7,7 +7,7 @@ angular.module('sif-assistant.controllers', [])
 //$scope.$on('$ionicView.enter', function(e) {
 //})
 
-.controller('AppCtrl', function($scope, $ionicModal) {
+.controller('AppCtrl', function($scope, $ionicModal, Accounts, Regions) {
     $ionicModal.fromTemplateUrl('templates/add-account.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -15,36 +15,10 @@ angular.module('sif-assistant.controllers', [])
         $scope.addAccountModal = modal;
     });
         
-    $scope.regions = [
-        {
-            id: "jp",
-            name: "Japan",
-            timezone: "JST"
-        },
-        {
-            id: "cn",
-            name: "China",
-            timezone: "CST"
-        },
-        {
-            id: "int",
-            name: "International",
-            timezone: "CST"
-        },
-        {
-            id: "kr",
-            name: "Korea",
-            timezone: "CST"
-        },
-        {
-            id: "tw",
-            name: "Taiwan",
-            timezone: "CST"
-        }
-    ];
+    $scope.regions = Regions.get();
 
     $scope.addAccount = function (account) {
-        console.log(account);
+        Accounts.addAccount(account);
         $scope.closeAddAccount();
     };
 
@@ -61,6 +35,6 @@ angular.module('sif-assistant.controllers', [])
     });
 })
 
-.controller('AccountsCtrl', function ($scope) {
-    $scope.hello = "Hello from AccountsCtrl"
+.controller('AccountsCtrl', function ($scope, Accounts) {
+    $scope.accounts = Accounts.getAccounts();
 });
