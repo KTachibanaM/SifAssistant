@@ -97,7 +97,7 @@ angular.module('sif-assistant.services', [])
         {
             id: "us",
             name: "United States",
-            timezone: "CST"
+            timezone: "Etc/UTC"
         },
         {
             id: "kr",
