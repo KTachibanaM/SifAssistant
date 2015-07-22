@@ -216,13 +216,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 })
 
 .controller('RegionsCtrl', function ($scope, $interval, Regions) {
-    $scope.regions = Regions.get();
-
     $scope.refresh = function () {
-        $scope.regions_computed = $scope.regions.map(function (item) {
-            item.local_time = moment().tz(item.timezone).format("YYYY/MM/DD HH:mm:ss");
-            return item;
-        });
+        $scope.regions = Regions.get();
     };
 
     $scope.refresh();

@@ -113,7 +113,10 @@ angular.module('sif-assistant.services', [])
 
     return {
         get: function () {
-            return DATA;
+            return DATA.map(function (region) {
+                region.local_time = moment().tz(region.timezone).format("YYYY/MM/DD HH:mm:ss");
+                return region;
+            })
         }
     }
 });
