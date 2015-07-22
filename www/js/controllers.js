@@ -40,31 +40,6 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     // Show accounts
     $scope.accounts = Accounts.get();
 
-    // Update account
-    $ionicModal.fromTemplateUrl('templates/update-account.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(function (modal) {
-        $scope.updateAccountModal = modal;
-    });
-
-    $scope.updateAccount = function (account) {
-        $scope.closeUpdateAccount();
-    };
-
-    $scope.openUpdateAccount = function (account) {
-        $scope.updatedAccount = account;
-        $scope.updateAccountModal.show();
-    };
-
-    $scope.closeUpdateAccount = function () {
-        $scope.updateAccountModal.hide();
-    };
-
-    $scope.$on('$destroy', function() {
-        $scope.updateAccountModal.remove();
-    });
-
     // Delete account
     $scope.confirmDeleteAccount = function(confirmation) {
         var confirmPopup = $ionicPopup.confirm({
