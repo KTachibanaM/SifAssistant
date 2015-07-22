@@ -15,6 +15,26 @@
         <p>Has claimed daily bonus: {{account.has_claimed_bonus ? "Yes" : "NO"}}</p>
       </div>
       <div class="item tabs tabs-secondary tabs-icon-left">
+        <a class="tab-item" ng-click="oepnUpdateLevel(account)">
+          <i class="icon ion-arrow-up-a"></i>
+          Level
+        </a>
+        <a class="tab-item" ng-click="openUpdateExp(account)">
+          <i class="icon ion-plus"></i>
+          Exp
+        </a>
+        <a class="tab-item" ng-click="openUpdateLp(account)">
+          <i class="icon ion-battery-half"></i>
+          LP
+        </a>
+        <a class="tab-item" ng-click="openUpdateLoveca(account)">
+          <i class="icon ion-heart"></i>
+          Loveca
+        </a>
+        <a class="tab-item" ng-click="openUpdateBonus(account)">
+          <i class="icon ion-checkmark"></i>
+          Bonus
+        </a>
         <a class="tab-item" ng-click="openDeleteAccount(account)">
           <i class="icon ion-trash-a"></i>
           Delete

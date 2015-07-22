@@ -36,9 +36,138 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $ionicModal, $ionicPopup, Accounts) {
+.controller('AccountsCtrl', function ($scope, $ionicPopup, Accounts) {
     // Show accounts
     $scope.accounts = Accounts.get();
+
+    // Update Account
+    $scope.updateAccountData = {
+        updatedLevel: 0,
+        updatedExp: 0,
+        updatedLp: 0,
+        updatedLoveca: 0,
+        updatedBonus: true
+    };
+
+    // Update Level
+    $scope.oepnUpdateLevel = function (account) {
+        $scope.updateAccountData.updatedLevel = account.level;
+        $ionicPopup.show({
+            template: '<input type="number" ng-model="updateAccountData.updatedLevel">',
+            title: "Enter your updated Level",
+            scope: $scope,
+            buttons: [
+                {
+                    text: "Cancel"
+                },
+                {
+                    text: '<b>Save</b>',
+                    type: 'button-positive',
+                    onTap: function () {
+                        return $scope.updateAccountData.updatedLevel;
+                    }
+                }
+            ]
+        }).then(function (result) {
+            console.log(result);
+        })
+    };
+
+    // Update Exp
+    $scope.openUpdateExp = function (account) {
+        $scope.updateAccountData.updatedExp = account.exp;
+        $ionicPopup.show({
+            template: '<input type="number" ng-model="updateAccountData.updatedExp">',
+            title: "Enter your updated Exp",
+            scope: $scope,
+            buttons: [
+                {
+                    text: "Cancel"
+                },
+                {
+                    text: '<b>Save</b>',
+                    type: 'button-positive',
+                    onTap: function () {
+                        return $scope.updateAccountData.updatedExp;
+                    }
+                }
+            ]
+        }).then(function (result) {
+            console.log(result);
+        })
+    };
+
+    // Update LP
+    $scope.openUpdateLp = function (account) {
+        $scope.updateAccountData.updatedLp = account.lp;
+        $ionicPopup.show({
+            template: '<input type="number" ng-model="updateAccountData.updatedLp">',
+            title: "Enter your updated LP",
+            scope: $scope,
+            buttons: [
+                {
+                    text: "Cancel"
+                },
+                {
+                    text: '<b>Save</b>',
+                    type: 'button-positive',
+                    onTap: function () {
+                        return $scope.updateAccountData.updatedLp;
+                    }
+                }
+            ]
+        }).then(function (result) {
+            console.log(result);
+        })
+    };
+
+    // Update Loveca
+    $scope.openUpdateLoveca = function (account) {
+        $scope.updateAccountData.updatedLoveca = account.loveca;
+        $ionicPopup.show({
+            template: '<input type="number" ng-model="updateAccountData.updatedLoveca">',
+            title: "Enter your updated Loveca",
+            scope: $scope,
+            buttons: [
+                {
+                    text: "Cancel"
+                },
+                {
+                    text: '<b>Save</b>',
+                    type: 'button-positive',
+                    onTap: function () {
+                        return $scope.updateAccountData.updatedLoveca;
+                    }
+                }
+            ]
+        }).then(function (result) {
+            console.log(result);
+        })
+    };
+
+    // Update Bonus
+    $scope.openUpdateBonus = function (account) {
+        $scope.updateAccountData.updatedBonus = account.has_claimed_bonus;
+        $ionicPopup.show({
+            template: '<label class="checkbox"><input type="checkbox" ng-model="updateAccountData.updatedBonus"></label>',
+            title: 'Has claimed daily bonus',
+            scope: $scope,
+            buttons: [
+                {
+                    text: "Cancel"
+                },
+                {
+                    text: '<b>Save</b>',
+                    type: 'button-positive',
+                    onTap: function () {
+                        return $scope.updateAccountData.updatedBonus;
+                    }
+                }
+            ]
+        }).then(function (result) {
+            console.log(result);
+        })
+    };
 
     // Delete account
     $scope.confirmDeleteAccount = function(confirmation) {
