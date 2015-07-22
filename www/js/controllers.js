@@ -213,4 +213,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             $scope.refresh();
         }
     };
+})
+
+.controller('RegionsCtrl', function ($scope, Regions) {
+    $scope.regions = Regions.get();
 });

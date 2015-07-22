@@ -37,6 +37,16 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers'])
                 controller: 'AccountsCtrl'
             }
         }
+    })
+
+    .state('app.regions', {
+        url: '/regions',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/regions.html',
+                controller: 'RegionsCtrl'
+            }
+        }
     });
 
     // if none of the above states are matched, use this as the fallback

@@ -87,12 +87,12 @@ angular.module('sif-assistant.services', [])
         {
             id: "jp",
             name: "Japan",
-            timezone: "JST"
+            timezone: "Asia/Tokyo"
         },
         {
             id: "cn",
             name: "China",
-            timezone: "CST"
+            timezone: "Asia/Shanghai"
         },
         {
             id: "us",
@@ -102,12 +102,12 @@ angular.module('sif-assistant.services', [])
         {
             id: "kr",
             name: "Korea",
-            timezone: "CST"
+            timezone: "Asia/Seoul"
         },
         {
             id: "tw",
             name: "Taiwan",
-            timezone: "CST"
+            timezone: "Asia/Taipei"
         }
     ];
 
