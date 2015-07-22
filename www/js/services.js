@@ -17,17 +17,16 @@ angular.module('sif-assistant.services', [])
 .factory('Accounts', ['$localStorage', function ($localStorage) {
     const ACCOUNTS_KEY = "accounts";
     return {
+        KEY_FOR_LEVEL: "level",
+        KEY_FOR_EXP: "exp",
+        KEY_FOR_LP: "lp",
+        KEY_FOR_LOVECA: "loveca",
+        KEY_FOR_BONUS: "has_claimed_bonus",
         set: function (accounts) {
             $localStorage.set(ACCOUNTS_KEY, accounts)
         },
         get: function () {
             return $localStorage.getArray(ACCOUNTS_KEY);
-        },
-        addAccount: function (new_account) {
-            new_account.has_claimed_bonus = false;
-            var current_accounts = this.get();
-            current_accounts.push(new_account);
-            this.set(current_accounts);
         },
         getAccountIndex: function (account) {
             var current_accounts = this.get();
@@ -36,11 +35,35 @@ angular.module('sif-assistant.services', [])
             });
             return current_aliases.indexOf(account.alias);
         },
+        addAccount: function (new_account) {
+            if (new_account !== undefined) {
+                new_account.has_claimed_bonus = false;
+                var current_accounts = this.get();
+                current_accounts.push(new_account);
+                this.set(current_accounts);
+                return true;
+            }
+            return false;
+        },
         deleteAccount: function (account) {
-            var current_accounts = this.get();
-            var index = this.getAccountIndex(account);
-            current_accounts.splice(index, 1);
-            this.set(current_accounts);
+            if (account !== undefined) {
+                var current_accounts = this.get();
+                var index = this.getAccountIndex(account);
+                current_accounts.splice(index, 1);
+                this.set(current_accounts);
+                return true;
+            }
+            return false;
+        },
+        updateAccount: function (account, key, newData) {
+            if (account !== undefined && key !== undefined && newData !== undefined) {
+                var current_accounts = this.get();
+                var index = this.getAccountIndex(account);
+                current_accounts[index][key] = newData;
+                this.set(current_accounts);
+                return true;
+            }
+            return false;
         }
     }
 }])

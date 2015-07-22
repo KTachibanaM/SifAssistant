@@ -18,8 +18,14 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.addAccountModal = modal;
     });
 
+    $scope.refresh = function () {
+        $scope.$broadcast('refresh', {});
+    };
+
     $scope.addAccount = function (account) {
-        Accounts.addAccount(account);
+        if (Accounts.addAccount(account)) {
+            $scope.refresh();
+        }
         $scope.closeAddAccount();
     };
 
@@ -38,7 +44,15 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
 .controller('AccountsCtrl', function ($scope, $ionicPopup, Accounts) {
     // Show accounts
-    $scope.accounts = Accounts.get();
+    $scope.refresh = function () {
+        $scope.accounts = Accounts.get();
+    };
+
+    $scope.$on('refresh', function (event, args) {
+        $scope.refresh();
+    });
+
+    $scope.refresh();
 
     // Update Account
     $scope.updateAccountData = {
@@ -50,7 +64,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 
     // Update Level
-    $scope.oepnUpdateLevel = function (account) {
+    $scope.openUpdateLevel = function (account) {
         $scope.updateAccountData.updatedLevel = account.level;
         $ionicPopup.show({
             template: '<input type="number" ng-model="updateAccountData.updatedLevel">',
@@ -69,7 +83,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 }
             ]
         }).then(function (result) {
-            console.log(result);
+            $scope.updateAccount(account, Accounts.KEY_FOR_LEVEL, result);
         })
     };
 
@@ -93,7 +107,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 }
             ]
         }).then(function (result) {
-            console.log(result);
+            $scope.updateAccount(account, Accounts.KEY_FOR_EXP, result);
         })
     };
 
@@ -124,7 +138,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 }
             ]
         }).then(function (result) {
-            console.log(result);
+            $scope.updateAccount(account, Accounts.KEY_FOR_LP, result);
         })
     };
 
@@ -148,7 +162,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 }
             ]
         }).then(function (result) {
-            console.log(result);
+            $scope.updateAccount(account, Accounts.KEY_FOR_LOVECA, result);
         })
     };
 
@@ -172,28 +186,31 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 }
             ]
         }).then(function (result) {
-            console.log(result);
+            $scope.updateAccount(account, Accounts.KEY_FOR_BONUS, result);
         })
     };
 
+    $scope.updateAccount = function (account, key, newData) {
+        if (Accounts.updateAccount(account, key, newData)) {
+            $scope.refresh();
+        }
+    };
+
     // Delete account
-    $scope.confirmDeleteAccount = function(confirmation) {
-        var confirmPopup = $ionicPopup.confirm({
+    $scope.openDeleteAccount = function (account) {
+        $ionicPopup.confirm({
             title: 'Delete account',
             template: 'Are you sure you want to delete this account?'
-        });
-        confirmPopup.then(confirmation);
-    };
-
-    $scope.deleteAccount = function (account) {
-        Accounts.deleteAccount(account);
-    };
-
-    $scope.openDeleteAccount = function (account) {
-        $scope.confirmDeleteAccount(function (yes) {
+        }).then(function (yes) {
             if (yes) {
                 $scope.deleteAccount(account);
             }
         });
+    };
+
+    $scope.deleteAccount = function (account) {
+        if (Accounts.deleteAccount(account)) {
+            $scope.refresh();
+        }
     };
 });
