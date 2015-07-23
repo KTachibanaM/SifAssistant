@@ -31,12 +31,14 @@ angular.module('sif-assistant.services', [])
         KEY_FOR_LP: "lp",
         KEY_FOR_LOVECA: "loveca",
         KEY_FOR_BONUS: "has_claimed_bonus",
-        KEY_FOR_MAX_LP: "max_lp",
         set: function (accounts) {
             $localStorage.set(ACCOUNTS_KEY, accounts)
         },
         get: function () {
-            return $localStorage.getArray(ACCOUNTS_KEY);
+            return $localStorage.getArray(ACCOUNTS_KEY).map(function (account) {
+                account.max_lp = Calculators.getMaxLpByLevel(account.level);
+                return account;
+            })
         },
         getAccountIndex: function (account) {
             var current_accounts = this.get();
@@ -48,8 +50,6 @@ angular.module('sif-assistant.services', [])
         addAccount: function (new_account) {
             if (new_account !== undefined) {
                 new_account[this.KEY_FOR_BONUS] = false;
-                var level = new_account[this.KEY_FOR_LEVEL];
-                new_account[this.KEY_FOR_MAX_LP] = Calculators.getMaxLpByLevel(level);
                 var current_accounts = this.get();
                 current_accounts.push(new_account);
                 this.set(current_accounts);
@@ -72,8 +72,6 @@ angular.module('sif-assistant.services', [])
                 var current_accounts = this.get();
                 var index = this.getAccountIndex(account);
                 current_accounts[index][key] = newData;
-                var level = current_accounts[index][this.KEY_FOR_LEVEL];
-                current_accounts[index][this.KEY_FOR_MAX_LP] = Calculators.getMaxLpByLevel(level);
                 this.set(current_accounts);
                 return true;
             }
