@@ -24,32 +24,25 @@ angular.module('sif-assistant.services', [])
 
 .factory('Accounts', ['$localStorage', 'Calculators', function ($localStorage, Calculators) {
     const ACCOUNTS_KEY = "accounts";
+    const LP_INCREMENTAL_MINUTES = 6;
     return {
-        KEY_FOR_ALIAS: "alias",
-        KEY_FOR_LEVEL: "level",
-        KEY_FOR_EXP: "exp",
-        KEY_FOR_LP: "lp",
-        KEY_FOR_LOVECA: "loveca",
-        KEY_FOR_BONUS: "has_claimed_bonus",
         set: function (accounts) {
             $localStorage.set(ACCOUNTS_KEY, accounts)
         },
         get: function () {
-            return $localStorage.getArray(ACCOUNTS_KEY).map(function (account) {
-                account.max_lp = Calculators.getMaxLpByLevel(account.level);
-                return account;
-            })
+            return $localStorage.getArray(ACCOUNTS_KEY);
         },
         getAccountIndex: function (account) {
             var current_accounts = this.get();
             var current_aliases = current_accounts.map(function (item) {
                 return item.alias
             });
-            return current_aliases.indexOf(account[this.KEY_FOR_ALIAS]);
+            return current_aliases.indexOf(account.alias);
         },
         addAccount: function (new_account) {
             if (new_account !== undefined) {
-                new_account[this.KEY_FOR_BONUS] = false;
+                new_account.has_claimed_bonus = false;
+                new_account.last_lp_update = Date.now();
                 var current_accounts = this.get();
                 current_accounts.push(new_account);
                 this.set(current_accounts);
@@ -72,10 +65,33 @@ angular.module('sif-assistant.services', [])
                 var current_accounts = this.get();
                 var index = this.getAccountIndex(account);
                 current_accounts[index][key] = newData;
+                if (key === "lp" || key === "level") {
+                    current_accounts[index].last_lp_update = Date.now();
+                }
                 this.set(current_accounts);
                 return true;
             }
             return false;
+        },
+        incrementAllLp: function () {
+            var now = Date.now();
+            var current_accounts = this.get().map(function (account) {
+                var last_lp_update = account.last_lp_update;
+                var ms_passed = now - last_lp_update;
+                var minutes_passed = Math.floor(ms_passed / 1000 / 60);
+                var lp_incremented = Math.floor(minutes_passed / LP_INCREMENTAL_MINUTES);
+                if (lp_incremented > 0) {
+                    account.last_lp_update = now;
+                    var new_lp = account.lp + lp_incremented;
+                    var max_lp = Calculators.getMaxLpByLevel(account.level);
+                    if (new_lp >= max_lp) {
+                        new_lp = max_lp;
+                    }
+                    account.lp = new_lp;
+                }
+                return account;
+            });
+            this.set(current_accounts);
         }
     }
 }])

@@ -42,15 +42,22 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $ionicPopup, Accounts) {
+.controller('AccountsCtrl', function ($scope, $interval, $ionicPopup, Accounts, Calculators) {
     // Show accounts
     $scope.refresh = function () {
+        Accounts.incrementAllLp();
         $scope.accounts = Accounts.get();
+        $scope.accounts.map(function (account) {
+            account.max_lp = Calculators.getMaxLpByLevel(account.level);
+            return account;
+        })
     };
 
     $scope.$on('refresh', function (event, args) {
         $scope.refresh();
     });
+
+    $interval($scope.refresh, 500);
 
     $scope.refresh();
 
@@ -83,7 +90,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 }
             ]
         }).then(function (result) {
-            $scope.updateAccount(account, Accounts.KEY_FOR_LEVEL, result);
+            $scope.updateAccount(account, "level", result);
         })
     };
 
@@ -107,7 +114,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 }
             ]
         }).then(function (result) {
-            $scope.updateAccount(account, Accounts.KEY_FOR_EXP, result);
+            $scope.updateAccount(account, "exp", result);
         })
     };
 
@@ -138,7 +145,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 }
             ]
         }).then(function (result) {
-            $scope.updateAccount(account, Accounts.KEY_FOR_LP, result);
+            $scope.updateAccount(account, "lp", result);
         })
     };
 
@@ -162,7 +169,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 }
             ]
         }).then(function (result) {
-            $scope.updateAccount(account, Accounts.KEY_FOR_LOVECA, result);
+            $scope.updateAccount(account, "loveca", result);
         })
     };
 
@@ -186,7 +193,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 }
             ]
         }).then(function (result) {
-            $scope.updateAccount(account, Accounts.KEY_FOR_BONUS, result);
+            $scope.updateAccount(account, "has_claimed_bonus", result);
         })
     };
 
