@@ -30,10 +30,17 @@ angular.module('sif-assistant.services', [])
             $localStorage.set(ACCOUNTS_KEY, accounts)
         },
         get: function () {
+            this.incrementAllLp();
+            return this.getRaw().map(function (account) {
+                account.max_lp = Calculators.getMaxLpByLevel(account.level);
+                return account;
+            })
+        },
+        getRaw: function () {
             return $localStorage.getArray(ACCOUNTS_KEY);
         },
         getAccountIndex: function (account) {
-            var current_accounts = this.get();
+            var current_accounts = this.getRaw();
             var current_aliases = current_accounts.map(function (item) {
                 return item.alias
             });
@@ -43,7 +50,7 @@ angular.module('sif-assistant.services', [])
             if (new_account !== undefined) {
                 new_account.has_claimed_bonus = false;
                 new_account.last_lp_update = Date.now();
-                var current_accounts = this.get();
+                var current_accounts = this.getRaw();
                 current_accounts.push(new_account);
                 this.set(current_accounts);
                 return true;
@@ -52,7 +59,7 @@ angular.module('sif-assistant.services', [])
         },
         deleteAccount: function (account) {
             if (account !== undefined) {
-                var current_accounts = this.get();
+                var current_accounts = this.getRaw();
                 var index = this.getAccountIndex(account);
                 current_accounts.splice(index, 1);
                 this.set(current_accounts);
@@ -62,7 +69,7 @@ angular.module('sif-assistant.services', [])
         },
         updateAccount: function (account, key, newData) {
             if (account !== undefined && key !== undefined && newData !== undefined) {
-                var current_accounts = this.get();
+                var current_accounts = this.getRaw();
                 var index = this.getAccountIndex(account);
                 current_accounts[index][key] = newData;
                 if (key === "lp" || key === "level") {
@@ -75,7 +82,7 @@ angular.module('sif-assistant.services', [])
         },
         incrementAllLp: function () {
             var now = Date.now();
-            var current_accounts = this.get().map(function (account) {
+            var current_accounts = this.getRaw().map(function (account) {
                 var last_lp_update = account.last_lp_update;
                 var ms_passed = now - last_lp_update;
                 var minutes_passed = Math.floor(ms_passed / 1000 / 60);
