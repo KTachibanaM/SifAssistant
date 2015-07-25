@@ -22,7 +22,7 @@ angular.module('sif-assistant.services', [])
     }
 })
 
-.factory('Accounts', ['$localStorage', 'Calculators', function ($localStorage, Calculators) {
+.factory('Accounts', ['$localStorage', 'Calculators', 'Regions', function ($localStorage, Calculators, Regions) {
     const ACCOUNTS_KEY = "accounts";
     const LP_INCREMENTAL_MINUTES = 6;
     return {
@@ -66,6 +66,7 @@ angular.module('sif-assistant.services', [])
             if (new_account !== undefined) {
                 new_account.has_claimed_bonus = false;
                 new_account.last_lp_update = Date.now();
+                new_account.last_bonus_update = Date.now();
                 var current_accounts = this.getRaw();
                 current_accounts.push(new_account);
                 this.set(current_accounts);
@@ -99,6 +100,7 @@ angular.module('sif-assistant.services', [])
         refreshAllDataWithTiming: function () {
             var now = Date.now();
             this.incrementAllLp(now);
+            this.checkAllBonus(now);
             return now;
         },
         incrementAllLp: function (now) {
@@ -115,6 +117,20 @@ angular.module('sif-assistant.services', [])
                         new_lp = max_lp;
                     }
                     account.lp = new_lp;
+                }
+                return account;
+            });
+            this.set(current_accounts);
+        },
+        checkAllBonus: function (now) {
+            var current_accounts = this.getRaw().map(function (account) {
+                var timezone = Regions.getTimeZoneById(account.region);
+                var last_bonus_update = account.last_bonus_update;
+                var last_bonus_update_tz = moment(last_bonus_update).tz(timezone);
+                var now_tz = moment(now).tz(timezone);
+                if (!now_tz.isSame(last_bonus_update_tz, "day")) {
+                    account.last_bonus_update = now;
+                    account.has_claimed_bonus = false;
                 }
                 return account;
             });
@@ -158,6 +174,13 @@ angular.module('sif-assistant.services', [])
                 region.local_time = moment().tz(region.timezone).format("YYYY/MM/DD HH:mm:ss");
                 return region;
             })
+        },
+        getTimeZoneById: function (id) {
+            var ids = this.get().map(function (region) {
+                return region.id;
+            });
+            var index = ids.indexOf(id);
+            return this.get()[index].timezone;
         }
     }
 });
