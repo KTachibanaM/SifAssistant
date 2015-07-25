@@ -10,7 +10,7 @@
         <p>Exp: {{account.exp}}</p>
       </div>
       <div class="item item-body">
-        <p>LP: {{account.lp}}/{{account.max_lp}}</p>
+        <p>LP: {{account.lp}}/{{account.max_lp}} (Next LP: {{account.lp_time_remaining}})</p>
         <p>Loveca: {{account.loveca}}</p>
         <p ng-style="{color : account.has_claimed_bonus ? 'black' : 'red'}">Has claimed daily bonus: {{account.has_claimed_bonus ? "Yes" : "No"}}</p>
       </div>

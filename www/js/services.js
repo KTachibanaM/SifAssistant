@@ -30,11 +30,27 @@ angular.module('sif-assistant.services', [])
             $localStorage.set(ACCOUNTS_KEY, accounts)
         },
         get: function () {
-            this.incrementAllLp();
-            return this.getRaw().map(function (account) {
+            var now = this.refreshAllDataWithTiming();
+            var data_with_extra = this.getRaw().map(function (account) {
                 account.max_lp = Calculators.getMaxLpByLevel(account.level);
                 return account;
-            })
+            });
+            data_with_extra.map(function (account) {
+                if (account.lp === account.max_lp) {
+                    account.lp_time_remaining = "Full";
+                }
+                else
+                {
+                    var last_lp_update = account.last_lp_update;
+                    var ms_passed = now - last_lp_update;
+                    ms_passed = ms_passed % (moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds());
+                    var ms_left = moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds() - ms_passed;
+                    var minutes_left = moment.duration(ms_left).minutes();
+                    var seconds_left = moment.duration(ms_left).seconds();
+                    account.lp_time_remaining = minutes_left + ":" + seconds_left;
+                }
+            });
+            return data_with_extra;
         },
         getRaw: function () {
             return $localStorage.getArray(ACCOUNTS_KEY);
@@ -80,12 +96,16 @@ angular.module('sif-assistant.services', [])
             }
             return false;
         },
-        incrementAllLp: function () {
+        refreshAllDataWithTiming: function () {
             var now = Date.now();
+            this.incrementAllLp(now);
+            return now;
+        },
+        incrementAllLp: function (now) {
             var current_accounts = this.getRaw().map(function (account) {
                 var last_lp_update = account.last_lp_update;
                 var ms_passed = now - last_lp_update;
-                var minutes_passed = Math.floor(ms_passed / 1000 / 60);
+                var minutes_passed = Math.floor(moment.duration(ms_passed).asMinutes());
                 var lp_incremented = Math.floor(minutes_passed / LP_INCREMENTAL_MINUTES);
                 if (lp_incremented > 0) {
                     account.last_lp_update = now;
