@@ -47,6 +47,16 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers'])
                 controller: 'RegionsCtrl'
             }
         }
+    })
+
+    .state('app.alerts', {
+        url: '/alerts',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/alerts.html',
+                controller: 'AlertsCtrl'
+            }
+        }
     });
 
     // if none of the above states are matched, use this as the fallback

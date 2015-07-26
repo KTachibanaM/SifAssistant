@@ -225,4 +225,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.refresh();
 
     $interval($scope.refresh, 500);
+})
+
+.controller('AlertsCtrl', function ($scope) {
+    $scope.hello = "Hello from AltersCtrl";
 });
