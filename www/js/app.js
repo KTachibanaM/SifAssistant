@@ -16,6 +16,9 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
+        if (ionic.Platform.isIOS()) {
+            window.plugin.notification.local.promptForPermission();
+        }
     });
 })
 
