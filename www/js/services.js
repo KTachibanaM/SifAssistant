@@ -84,6 +84,9 @@ angular.module('sif-assistant.services', [])
                 new_account.has_claimed_bonus = false;
                 new_account.last_lp_update = Date.now();
                 new_account.last_bonus_update = Date.now();
+                new_account.alerts_lp = false;
+                new_account.alerts_lp_value = 0;
+                new_account.alerts_bonus = false;
                 var current_accounts = this.getRaw();
                 current_accounts.push(new_account);
                 this.set(current_accounts);

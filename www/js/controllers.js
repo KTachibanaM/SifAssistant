@@ -227,12 +227,32 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $interval($scope.refresh, 500);
 })
 
-.controller('AlertsCtrl', function ($scope, NativeNotification) {
-    $scope.fire = function () {
-        NativeNotification.fire({
-            id: "JP-main-lp",
-            message: "JP-main has filled up lp",
-            date: 0
-        });
-    }
+.controller('AlertsCtrl', function ($scope, $interval, Accounts) {
+    // Show accounts
+    $scope.refresh = function () {
+        $scope.accounts = Accounts.get();
+    };
+
+    $scope.$on('refresh', function (event, args) {
+        $scope.refresh();
+    });
+
+    $scope.refresh();
+
+    // Update account
+    $scope.toggleLpAlerts = function (account) {
+        $scope.updateAccount(account, "alerts_lp", account.alerts_lp);
+    };
+
+    $scope.saveLpAlertsValue = function (account) {
+        $scope.updateAccount(account, "alerts_lp_value", account.alerts_lp_value);
+    };
+
+    $scope.toggleBonusAlerts = function (account) {
+        $scope.updateAccount(account, "alerts_bonus", account.alerts_bonus);
+    };
+
+    $scope.updateAccount = function (account, key, newData) {
+        Accounts.updateAccount(account, key, newData);
+    };
 });

@@ -1,5 +1,46 @@
 <ion-view view-title="Alerts">
     <ion-content>
-        <button class="button" ng-click="fire()">Test fire</button>
+        <div class="card" ng-repeat="account in accounts">
+            <div class="item item-divider">
+                {{account.alias}}
+            </div>
+            <div class="item item-avatar">
+                <img ng-src="img/region_flags/{{account.region}}.png">
+                <h2>Level: {{account.level}}</h2>
+                <p>Exp: {{account.exp}}</p>
+            </div>
+            <div class="item item-body">
+                <ul class="list">
+                    <li class="item item-toggle">
+                        Enable LP alert
+                        <label class="toggle">
+                            <input type="checkbox" ng-model="account.alerts_lp" ng-click="toggleLpAlerts(account)">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </li>
+                    <div class="item item-input">
+                        <span class="input-label">LP alert value</span>
+                        <input type="number" ng-model="account.alerts_lp_value">
+                        <button class="button" ng-click="account.alerts_lp_value = account.max_lp">
+                            Max
+                        </button>
+                        <button class="button button-positive" ng-click="saveLpAlertsValue(account)">
+                            Save
+                        </button>
+                    </div>
+                    <li class="item item-toggle">
+                        Enable daily bonus alert
+                        <label class="toggle">
+                            <input type="checkbox" ng-model="account.alerts_bonus" ng-click="toggleBonusAlerts(account)">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </ion-content>
 </ion-view>
