@@ -14,6 +14,23 @@ angular.module('sif-assistant.services', [])
     }
 }])
 
+.factory('NativeNotification', ['$cordovaLocalNotification', function ($cordovaLocalNotification) {
+    const isBrowser = window.cordova === undefined;
+    return {
+        fire: function (options) {
+            options.title = "SIF Assistant";
+            options.autoCancel = true;
+            if (isBrowser) {
+                console.log("Firing native notification", options)
+            }
+            else
+            {
+                $cordovaLocalNotification.schedule(options);
+            }
+        }
+    }
+}])
+
 .factory('Calculators', function () {
     return {
         getMaxLpByLevel: function (level) {

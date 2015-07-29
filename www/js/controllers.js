@@ -227,6 +227,12 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $interval($scope.refresh, 500);
 })
 
-.controller('AlertsCtrl', function ($scope) {
-    $scope.hello = "Hello from AltersCtrl";
+.controller('AlertsCtrl', function ($scope, NativeNotification) {
+    $scope.fire = function () {
+        NativeNotification.fire({
+            id: "JP-main-lp",
+            message: "JP-main has filled up lp",
+            date: 0
+        });
+    }
 });
