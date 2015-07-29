@@ -50,6 +50,7 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
     })
 
     .state('app.alerts', {
+        cache: false,
         url: '/alerts',
         views: {
             'menuContent': {
