@@ -19,7 +19,6 @@ angular.module('sif-assistant.services', [])
     return {
         schedule: function (options) {
             options.title = "SIF Assistant";
-            options.autoCancel = true;
             if (isBrowser) {
                 console.log("Schedule native notification");
                 console.log(options)
@@ -38,6 +37,16 @@ angular.module('sif-assistant.services', [])
             {
                 $cordovaLocalNotification.cancel(id);
             }
+        },
+        isPresent: function (id, callback) {
+            if (isBrowser) {
+                console.log("isPresent is unimplemented, always return true");
+                callback(true);
+            }
+            else
+            {
+                $cordovaLocalNotification.isPresent(id, callback);
+            }
         }
     }
 }])
@@ -53,7 +62,7 @@ angular.module('sif-assistant.services', [])
     }
 })
 
-.factory('Accounts', ['$localStorage', 'Calculators', 'Regions', function ($localStorage, Calculators, Regions) {
+.factory('Accounts', ['$localStorage', 'Calculators', 'Regions', 'NativeNotification', function ($localStorage, Calculators, Regions, NativeNotification) {
     const ACCOUNTS_KEY = "accounts";
     const LP_INCREMENTAL_MINUTES = 6;
     return {
@@ -112,6 +121,7 @@ angular.module('sif-assistant.services', [])
         },
         deleteAccount: function (account) {
             if (account !== undefined) {
+                this.cancelAllNativeNotification(account);
                 var current_accounts = this.getRaw();
                 var index = this.getAccountIndex(account);
                 current_accounts.splice(index, 1);
@@ -120,15 +130,70 @@ angular.module('sif-assistant.services', [])
             }
             return false;
         },
+        cancelAllNativeNotification: function (account) {
+            var self = this;
+            const ALL_TYPES_OF_NATIVE_NOTIFICATIONS = ["lp", "bonus"];
+            var all_ids = ALL_TYPES_OF_NATIVE_NOTIFICATIONS.map(function (type) {
+                return self.getNativeNotificationId(account, type);
+            });
+            all_ids.forEach(function (id) {
+                NativeNotification.isPresent(id, function (present) {
+                    console.log(id, present);
+                    if (present) {
+                        NativeNotification.cancel(id);
+                    }
+                });
+            });
+        },
         updateAccount: function (account, key, newData) {
             if (account !== undefined && key !== undefined && newData !== undefined) {
+                const ALERTS_KEYS = ["alerts_lp", "alerts_lp_value", "alerts_bonus"];
                 var current_accounts = this.getRaw();
                 var index = this.getAccountIndex(account);
                 current_accounts[index][key] = newData;
+                if (ALERTS_KEYS.indexOf(key) !== -1) {
+                    this.syncNativeNotificationState(current_accounts[index]);
+                }
                 this.set(current_accounts);
                 return true;
             }
             return false;
+        },
+        syncNativeNotificationState: function (account) {
+            var lp_notification_id = this.getNativeNotificationId(account, "lp");
+            NativeNotification.isPresent(lp_notification_id, function (present) {
+                if (account.alerts_lp) {
+
+                }
+                else
+                {
+                    if (present) {
+                        NativeNotification.cancel(lp_notification_id);
+                    }
+                }
+            });
+
+            var bonus_notification_id = this.getNativeNotificationId(account, "bonus");
+            if (account.alerts_bonus) {
+                var now = Date.now();
+                var timezone = Regions.getTimeZoneById(account.region);
+                var now_tz = moment(now).tz(timezone);
+                var start_of_next_day_tz = now_tz.add(1, "days").tz(timezone);
+                start_of_next_day_tz.millisecond(0);
+                start_of_next_day_tz.second(0);
+                start_of_next_day_tz.minute(0);
+                start_of_next_day_tz.hour(0);
+                NativeNotification.schedule({
+                    id: bonus_notification_id,
+                    text: "Daily bonus for " + account.alias + " is available!",
+                    firstAt: start_of_next_day_tz.valueOf(),
+                    every: "day"
+                });
+            }
+            else
+            {
+                NativeNotification.cancel(bonus_notification_id);
+            }
         },
         refreshAllDataWithTiming: function () {
             var now = Date.now();
@@ -178,8 +243,8 @@ angular.module('sif-assistant.services', [])
             ms_passed = ms_passed % (moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds());
             return moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds() - ms_passed;
         },
-        get_native_notification_id: function (alias, type) {
-            return alias + ":" + type;
+        getNativeNotificationId: function (account, type) {
+            return account.alias + ":" + type;
         }
     }
 }])
