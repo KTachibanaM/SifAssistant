@@ -145,52 +145,71 @@ angular.module('sif-assistant.services', [])
         },
         updateAccount: function (account, key, newData) {
             if (account !== undefined && key !== undefined && newData !== undefined) {
-                const ALERTS_KEYS = ["alerts_lp", "alerts_lp_value", "alerts_bonus"];
                 var current_accounts = this.getRaw();
                 var index = this.getAccountIndex(account);
                 current_accounts[index][key] = newData;
-                if (ALERTS_KEYS.indexOf(key) !== -1) {
-                    this.syncNativeNotificationState(current_accounts[index]);
-                }
+                this.syncNativeNotificationState(current_accounts[index], key);
                 this.set(current_accounts);
                 return true;
             }
             return false;
         },
-        syncNativeNotificationState: function (account) {
-            var lp_notification_id = this.getNativeNotificationId(account, "lp");
-            NativeNotification.isPresent(lp_notification_id, function (present) {
+        syncNativeNotificationState: function (account, key) {
+            if (key === "alerts_lp" || key === "alerts_lp_value" || key === "lp") {
+                const lp_notification_id = this.getNativeNotificationId(account, "lp");
                 if (account.alerts_lp) {
-
+                    if (account.lp < account.alerts_lp_value) {
+                        var self = this;
+                        NativeNotification.isPresent(lp_notification_id, function (present) {
+                            if (present) {
+                                NativeNotification.cancel(lp_notification_id);
+                            }
+                            var now = Date.now();
+                            var ms_one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
+                            var current_lp = account.lp;
+                            var target_lp = account.alerts_lp_value;
+                            var ms_rest_lp_time_remaining = moment.duration(LP_INCREMENTAL_MINUTES * (target_lp - current_lp - 1), "minutes").asMilliseconds();
+                            var ms_total_lp_time = ms_one_lp_time_remaining + ms_rest_lp_time_remaining;
+                            console.log(ms_total_lp_time);
+                        })
+                    }
                 }
                 else
                 {
-                    if (present) {
-                        NativeNotification.cancel(lp_notification_id);
-                    }
+                    NativeNotification.isPresent(lp_notification_id, function (present) {
+                        if (present) {
+                            NativeNotification.cancel(lp_notification_id);
+                        }
+                    })
                 }
-            });
-
-            var bonus_notification_id = this.getNativeNotificationId(account, "bonus");
-            if (account.alerts_bonus) {
-                var now = Date.now();
-                var timezone = Regions.getTimeZoneById(account.region);
-                var now_tz = moment(now).tz(timezone);
-                var start_of_next_day_tz = now_tz.add(1, "days").tz(timezone);
-                start_of_next_day_tz.millisecond(0);
-                start_of_next_day_tz.second(0);
-                start_of_next_day_tz.minute(0);
-                start_of_next_day_tz.hour(0);
-                NativeNotification.schedule({
-                    id: bonus_notification_id,
-                    text: "Daily bonus for " + account.alias + " is available!",
-                    firstAt: start_of_next_day_tz.valueOf(),
-                    every: "day"
-                });
             }
-            else
-            {
-                NativeNotification.cancel(bonus_notification_id);
+
+            if (key === "alerts_bonus") {
+                const bonus_notification_id = this.getNativeNotificationId(account, "bonus");
+                if (account.alerts_bonus) {
+                    var now = Date.now();
+                    var timezone = Regions.getTimeZoneById(account.region);
+                    var now_tz = moment(now).tz(timezone);
+                    var start_of_next_day_tz = now_tz.add(1, "days").tz(timezone);
+                    start_of_next_day_tz.millisecond(0);
+                    start_of_next_day_tz.second(0);
+                    start_of_next_day_tz.minute(0);
+                    start_of_next_day_tz.hour(0);
+                    NativeNotification.schedule({
+                        id: bonus_notification_id,
+                        text: "Daily bonus for " + account.alias + " is available!",
+                        firstAt: start_of_next_day_tz.valueOf(),
+                        every: "day"
+                    });
+                }
+                else
+                {
+                    NativeNotification.isPresent(bonus_notification_id, function (present) {
+                        if (present) {
+                            NativeNotification.cancel(bonus_notification_id);
+                        }
+                    })
+                }
             }
         },
         refreshAllDataWithTiming: function () {
