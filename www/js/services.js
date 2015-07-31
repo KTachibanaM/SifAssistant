@@ -46,6 +46,9 @@ angular.module('sif-assistant.services', [])
     return {
         getMaxLpByLevel: function (level) {
             return 25 + Math.floor(Math.min(level, 300) / 2) + Math.floor(Math.max((level - 300), 0) / 3);
+        },
+        getMaxExpByLevel: function(level) {
+            return level < 100 ? Math.round(34.45 * level - 551) / 2 : Math.round(34.45 * level - 551);
         }
     }
 })
@@ -62,6 +65,10 @@ angular.module('sif-assistant.services', [])
             var now = this.refreshAllDataWithTiming();
             var data_with_extra = this.getRaw().map(function (account) {
                 account.max_lp = Calculators.getMaxLpByLevel(account.level);
+                return account;
+            });
+            data_with_extra.map(function (account) {
+                account.max_exp = Calculators.getMaxExpByLevel(account.level);
                 return account;
             });
             data_with_extra.map(function (account) {
