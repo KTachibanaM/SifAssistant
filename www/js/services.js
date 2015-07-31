@@ -87,9 +87,7 @@ angular.module('sif-assistant.services', [])
                 }
                 else
                 {
-                    var minutes_left = moment.duration(one_lp_time_remaining).minutes();
-                    var seconds_left = moment.duration(one_lp_time_remaining).seconds();
-                    account.one_lp_time_remaining_literal = minutes_left + ":" + seconds_left;
+                    account.one_lp_time_remaining_literal = moment.duration(one_lp_time_remaining).format("mm:ss");
                 }
             });
             return data_with_extra;
