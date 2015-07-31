@@ -17,15 +17,26 @@ angular.module('sif-assistant.services', [])
 .factory('NativeNotification', ['$cordovaLocalNotification', function ($cordovaLocalNotification) {
     const isBrowser = window.cordova === undefined;
     return {
-        fire: function (options) {
+        schedule: function (options) {
             options.title = "SIF Assistant";
             options.autoCancel = true;
             if (isBrowser) {
-                console.log("Firing native notification", options)
+                console.log("Schedule native notification");
+                console.log(options)
             }
             else
             {
                 $cordovaLocalNotification.schedule(options);
+            }
+        },
+        cancel: function (id) {
+            if (isBrowser) {
+                console.log("Cancel native notification");
+                console.log(id)
+            }
+            else
+            {
+                $cordovaLocalNotification.cancel(id);
             }
         }
     }
@@ -109,9 +120,6 @@ angular.module('sif-assistant.services', [])
                 var current_accounts = this.getRaw();
                 var index = this.getAccountIndex(account);
                 current_accounts[index][key] = newData;
-                if (key === "lp" || key === "level") {
-                    current_accounts[index].last_lp_update = Date.now();
-                }
                 this.set(current_accounts);
                 return true;
             }
@@ -155,6 +163,9 @@ angular.module('sif-assistant.services', [])
                 return account;
             });
             this.set(current_accounts);
+        },
+        get_native_notification_id: function (alias, type) {
+            return alias + ":" + type;
         }
     }
 }])
