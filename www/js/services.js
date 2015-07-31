@@ -58,24 +58,22 @@ angular.module('sif-assistant.services', [])
             $localStorage.set(ACCOUNTS_KEY, accounts)
         },
         get: function () {
+            var self = this;
             var now = this.refreshAllDataWithTiming();
             var data_with_extra = this.getRaw().map(function (account) {
                 account.max_lp = Calculators.getMaxLpByLevel(account.level);
                 return account;
             });
             data_with_extra.map(function (account) {
-                if (account.lp === account.max_lp) {
-                    account.lp_time_remaining = "Full";
+                var one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
+                if (one_lp_time_remaining === -1) {
+                    account.one_lp_time_remaining_literal = "Full";
                 }
                 else
                 {
-                    var last_lp_update = account.last_lp_update;
-                    var ms_passed = now - last_lp_update;
-                    ms_passed = ms_passed % (moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds());
-                    var ms_left = moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds() - ms_passed;
-                    var minutes_left = moment.duration(ms_left).minutes();
-                    var seconds_left = moment.duration(ms_left).seconds();
-                    account.lp_time_remaining = minutes_left + ":" + seconds_left;
+                    var minutes_left = moment.duration(one_lp_time_remaining).minutes();
+                    var seconds_left = moment.duration(one_lp_time_remaining).seconds();
+                    account.one_lp_time_remaining_literal = minutes_left + ":" + seconds_left;
                 }
             });
             return data_with_extra;
@@ -163,6 +161,15 @@ angular.module('sif-assistant.services', [])
                 return account;
             });
             this.set(current_accounts);
+        },
+        calculateOneLpTimeRemaining: function (account, now) {
+            if (account.lp === account.max_lp) {
+                return -1;
+            }
+            var last_lp_update = account.last_lp_update;
+            var ms_passed = now - last_lp_update;
+            ms_passed = ms_passed % (moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds());
+            return moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds() - ms_passed;
         },
         get_native_notification_id: function (alias, type) {
             return alias + ":" + type;
