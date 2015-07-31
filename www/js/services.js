@@ -170,7 +170,11 @@ angular.module('sif-assistant.services', [])
                             var target_lp = account.alerts_lp_value;
                             var ms_rest_lp_time_remaining = moment.duration(LP_INCREMENTAL_MINUTES * (target_lp - current_lp - 1), "minutes").asMilliseconds();
                             var ms_total_lp_time = ms_one_lp_time_remaining + ms_rest_lp_time_remaining;
-                            console.log(ms_total_lp_time);
+                            NativeNotification.schedule({
+                                id: lp_notification_id,
+                                text: account.alias + ": LP has reached " + account.alerts_lp_value,
+                                at: now + ms_total_lp_time
+                            })
                         })
                     }
                 }
@@ -197,7 +201,7 @@ angular.module('sif-assistant.services', [])
                     start_of_next_day_tz.hour(0);
                     NativeNotification.schedule({
                         id: bonus_notification_id,
-                        text: "Daily bonus for " + account.alias + " is available!",
+                        text: account.alias + ": Daily bonus is available!",
                         firstAt: start_of_next_day_tz.valueOf(),
                         every: "day"
                     });
