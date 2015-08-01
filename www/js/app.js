@@ -22,6 +22,8 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
     });
 })
 
+.constant("FREQUENT_REFRESH_INTERVAL", 500)
+
 .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 

@@ -42,7 +42,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $interval, $ionicPopup, Accounts, Calculators) {
+.controller('AccountsCtrl', function ($scope, $interval, $ionicPopup, Accounts, FREQUENT_REFRESH_INTERVAL) {
     // Show accounts
     $scope.refresh = function () {
         $scope.accounts = Accounts.get();
@@ -52,7 +52,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.refresh();
     });
 
-    $interval($scope.refresh, 500);
+    $interval($scope.refresh, FREQUENT_REFRESH_INTERVAL);
 
     $scope.refresh();
 
@@ -217,17 +217,17 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 })
 
-.controller('RegionsCtrl', function ($scope, $interval, Regions) {
+.controller('RegionsCtrl', function ($scope, $interval, Regions, FREQUENT_REFRESH_INTERVAL) {
     $scope.refresh = function () {
         $scope.regions = Regions.get();
     };
 
     $scope.refresh();
 
-    $interval($scope.refresh, 500);
+    $interval($scope.refresh, FREQUENT_REFRESH_INTERVAL);
 })
 
-.controller('AlertsCtrl', function ($scope, $interval, Accounts) {
+.controller('AlertsCtrl', function ($scope, Accounts) {
     // Show accounts
     $scope.refresh = function () {
         $scope.accounts = Accounts.get();
