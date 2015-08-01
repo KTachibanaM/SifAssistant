@@ -66,7 +66,9 @@ angular.module('sif-assistant.services', [])
     const ACCOUNTS_KEY = "accounts";
     const LP_INCREMENTAL_MINUTES = 6;
     return {
+        CACHE: undefined,
         set: function (accounts) {
+            this.CACHE = accounts;
             $localStorage.set(ACCOUNTS_KEY, accounts)
         },
         get: function () {
@@ -93,7 +95,13 @@ angular.module('sif-assistant.services', [])
             return data_with_extra;
         },
         getRaw: function () {
-            return $localStorage.getArray(ACCOUNTS_KEY);
+            if (this.CACHE === undefined) {
+                return $localStorage.getArray(ACCOUNTS_KEY);
+            }
+            else
+            {
+                return this.CACHE;
+            }
         },
         getAccountIndex: function (account) {
             var current_accounts = this.getRaw();
