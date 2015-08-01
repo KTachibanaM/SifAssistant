@@ -4,7 +4,6 @@
 
 ```
 npm install -g cordova ionic
-ionic lib update
 bower install
 ionic serve
 ```
