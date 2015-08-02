@@ -277,7 +277,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     $scope.five_seconds = function () {
         NativeNotification.schedule(
-            "five_seconds",
+            "five seconds later",
             "Notification scheduled five seconds later",
             Date.now() + 5 * 1000
         )
@@ -285,9 +285,22 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     $scope.one_minute = function () {
         NativeNotification.schedule(
-            "one_minute",
+            "one minute later",
             "Notification scheduled one minute later",
             Date.now() + 60 * 1000
         )
+    };
+
+    $scope.every_second = function () {
+        NativeNotification.schedule(
+            "every second",
+            "Notification scheduled every second",
+            0,
+            "second"
+        )
+    },
+
+    $scope.cancel = function (id) {
+        NativeNotification.cancelByRawHashedId(id);
     }
 });

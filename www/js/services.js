@@ -1,3 +1,14 @@
+String.prototype.hashCode = function() {
+    var hash = 0, i, chr, len;
+    if (this.length == 0) return hash;
+    for (i = 0, len = this.length; i < len; i++) {
+        chr   = this.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    return hash;
+};
+
 angular.module('sif-assistant.services', [])
 
 .factory('$localStorage', ['$window', function($window) {
@@ -18,6 +29,7 @@ angular.module('sif-assistant.services', [])
     const isBrowser = window.cordova === undefined;
     return {
         schedule: function (id, text, time, every) {
+            id = id.hashCode();
             every = every !== undefined ? every : 0;
             time = time !== undefined ? time : 0;
             var options = {
@@ -37,6 +49,17 @@ angular.module('sif-assistant.services', [])
             }
         },
         cancel: function (id) {
+            id = id.hashCode();
+            if (isBrowser) {
+                console.log("Cancel native notification");
+                console.log(id)
+            }
+            else
+            {
+                cordova.plugins.notification.local.cancel(id);
+            }
+        },
+        cancelByRawHashedId: function (id) {
             if (isBrowser) {
                 console.log("Cancel native notification");
                 console.log(id)
@@ -47,6 +70,7 @@ angular.module('sif-assistant.services', [])
             }
         },
         isPresent: function (id, callback) {
+            id = id.hashCode();
             if (isBrowser) {
                 console.log("isPresent is unimplemented, always return true");
                 callback(true);
