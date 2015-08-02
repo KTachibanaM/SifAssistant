@@ -298,7 +298,8 @@ angular.module('sif-assistant.services', [])
             this.set(current_accounts);
         },
         calculateOneLpTimeRemaining: function (account, now) {
-            if (account.lp === account.max_lp) {
+            var max_lp = Calculators.getMaxLpByLevel(account.level);
+            if (account.lp === max_lp) {
                 return -1;
             }
             var last_lp_update = account.last_lp_update;
