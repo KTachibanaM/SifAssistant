@@ -259,7 +259,7 @@ angular.module('sif-assistant.services', [])
                 }
             }
         },
-        refreshAllDataWithTiming: function () {
+        refreshInfrequentData: function () {
             var now = Date.now();
             this.incrementAllLp(now);
             this.checkAllBonus(now);

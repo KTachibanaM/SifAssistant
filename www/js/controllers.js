@@ -54,7 +54,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     // Show infrequently refreshed data
     $scope.refreshInfrequent = function () {
-        Accounts.refreshAllDataWithTiming();
+        Accounts.refreshInfrequentData();
         $scope.refresh();
     };
 
@@ -69,7 +69,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     $scope.refresh();
 
-    $scope.$on('refresh', function (event, args) {
+    $scope.$on('refresh', function () {
         $scope.refresh();
     });
 
@@ -250,7 +250,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.accounts = Accounts.get();
     };
 
-    $scope.$on('refresh', function (event, args) {
+    $scope.$on('refresh', function () {
         $scope.refresh();
     });
 
@@ -315,9 +315,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             0,
             "second"
         )
-    },
+    };
 
     $scope.cancel = function (id) {
         NativeNotification.cancelByRawHashedId(id);
-    }
+    };
 });
