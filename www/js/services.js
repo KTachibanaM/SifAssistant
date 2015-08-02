@@ -263,7 +263,6 @@ angular.module('sif-assistant.services', [])
             var now = Date.now();
             this.incrementAllLp(now);
             this.checkAllBonus(now);
-            return now;
         },
         incrementAllLp: function (now) {
             var current_accounts = this.getRaw().map(function (account) {

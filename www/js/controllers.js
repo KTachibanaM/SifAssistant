@@ -42,7 +42,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $interval, $ionicPopup, Accounts, FREQUENT) {
+.controller('AccountsCtrl', function ($scope, $interval, $ionicPopup, Accounts, FREQUENT, INFREQUENT) {
     // Show frequently refreshed data
     $scope.refreshFrequent = function () {
         $scope.frequentRefreshData = Accounts.getFrequentRefreshData();
@@ -52,16 +52,26 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     $interval($scope.refreshFrequent, FREQUENT);
 
+    // Show infrequently refreshed data
+    $scope.refreshInfrequent = function () {
+        Accounts.refreshAllDataWithTiming();
+        $scope.refresh();
+    };
+
+    $scope.refreshInfrequent();
+
+    $interval($scope.refreshInfrequent, INFREQUENT);
+
     // Show accounts
     $scope.refresh = function () {
         $scope.accounts = Accounts.get();
     };
 
+    $scope.refresh();
+
     $scope.$on('refresh', function (event, args) {
         $scope.refresh();
     });
-
-    $scope.refresh();
 
     // Update Account
     $scope.updateAccountData = {
