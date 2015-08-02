@@ -42,7 +42,16 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $interval, $ionicPopup, Accounts, FREQUENT_REFRESH_INTERVAL) {
+.controller('AccountsCtrl', function ($scope, $interval, $ionicPopup, Accounts, FREQUENT) {
+    // Show frequently refreshed data
+    $scope.refreshFrequent = function () {
+        $scope.frequentRefreshData = Accounts.getFrequentRefreshData();
+    };
+
+    $scope.refreshFrequent();
+
+    $interval($scope.refreshFrequent, FREQUENT);
+
     // Show accounts
     $scope.refresh = function () {
         $scope.accounts = Accounts.get();
@@ -51,8 +60,6 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.$on('refresh', function (event, args) {
         $scope.refresh();
     });
-
-    $interval($scope.refresh, FREQUENT_REFRESH_INTERVAL);
 
     $scope.refresh();
 
@@ -217,14 +224,14 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 })
 
-.controller('RegionsCtrl', function ($scope, $interval, Regions, FREQUENT_REFRESH_INTERVAL) {
+.controller('RegionsCtrl', function ($scope, $interval, Regions, FREQUENT) {
     $scope.refresh = function () {
         $scope.regions = Regions.get();
     };
 
     $scope.refresh();
 
-    $interval($scope.refresh, FREQUENT_REFRESH_INTERVAL);
+    $interval($scope.refresh, FREQUENT);
 })
 
 .controller('AlertsCtrl', function ($scope, Accounts) {
@@ -257,14 +264,14 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 })
 
-.controller('DebugCtrl', function ($scope, $interval, NativeNotification, FREQUENT_REFRESH_INTERVAL) {
+.controller('DebugCtrl', function ($scope, $interval, NativeNotification, FREQUENT) {
     $scope.refresh = function () {
         NativeNotification.getAll(function (notifications) {
             $scope.all_notifications = notifications;
         });
     };
 
-    $interval($scope.refresh, FREQUENT_REFRESH_INTERVAL);
+    $interval($scope.refresh, FREQUENT);
 
     $scope.refresh();
 

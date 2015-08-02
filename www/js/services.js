@@ -114,27 +114,26 @@ angular.module('sif-assistant.services', [])
             $localStorage.set(ACCOUNTS_KEY, accounts)
         },
         get: function () {
-            var self = this;
-            var now = this.refreshAllDataWithTiming();
-            var data_with_extra = this.getRaw().map(function (account) {
+            return this.getRaw().map(function (account) {
+                account.max_exp = Calculators.getMaxExpByLevel(account.level);
                 account.max_lp = Calculators.getMaxLpByLevel(account.level);
                 return account;
             });
-            data_with_extra.map(function (account) {
-                account.max_exp = Calculators.getMaxExpByLevel(account.level);
-                return account;
-            });
-            data_with_extra.map(function (account) {
+        },
+        getFrequentRefreshData: function () {
+            var self = this;
+            var now = Date.now();
+            return this.getRaw().map(function (account) {
                 var one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
                 if (one_lp_time_remaining === -1) {
-                    account.one_lp_time_remaining_literal = "Full";
+                    account.one_lp_time_remaining = "Full";
                 }
                 else
                 {
-                    account.one_lp_time_remaining_literal = moment.duration(one_lp_time_remaining).format("mm:ss");
+                    account.one_lp_time_remaining = moment.duration(one_lp_time_remaining).format("mm:ss");
                 }
+                return account;
             });
-            return data_with_extra;
         },
         getRaw: function () {
             return $localStorage.getArray(ACCOUNTS_KEY);
