@@ -55,6 +55,18 @@ angular.module('sif-assistant.services', [])
             {
                 cordova.plugins.notification.local.isPresent(id, callback);
             }
+        },
+        getAll: function (callback) {
+            if (isBrowser) {
+                console.log("getAll is unimplemented, always return empty array");
+                callback([]);
+            }
+            else
+            {
+                cordova.plugins.notification.local.getAll(function (notifications) {
+                    callback(notifications);
+                });
+            }
         }
     }
 })

@@ -257,7 +257,17 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 })
 
-.controller('DebugCtrl', function ($scope, NativeNotification) {
+.controller('DebugCtrl', function ($scope, $interval, NativeNotification, FREQUENT_REFRESH_INTERVAL) {
+    $scope.refresh = function () {
+        NativeNotification.getAll(function (notifications) {
+            $scope.all_notifications = notifications;
+        });
+    };
+
+    $interval($scope.refresh, FREQUENT_REFRESH_INTERVAL);
+
+    $scope.refresh();
+
     $scope.immediately = function () {
         NativeNotification.schedule(
             "immediately",

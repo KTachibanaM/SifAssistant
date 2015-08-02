@@ -3,5 +3,10 @@
         <button class="button button-positive" ng-click="immediately()">Schedule notification immediately</button>
         <button class="button button-positive" ng-click="five_seconds()">Schedule notification five seconds later</button>
         <button class="button button-positive" ng-click="one_minute()">Schedule notification one minute later</button>
+        <ul class="list">
+            <li ng-repeat="notification in all_notifications" class="item">
+                {{notification}}
+            </li>
+        </ul>
     </ion-content>
 </ion-view>
