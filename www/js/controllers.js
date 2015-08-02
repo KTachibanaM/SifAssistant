@@ -255,4 +255,29 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.updateAccount = function (account, key, newData) {
         Accounts.updateAccount(account, key, newData);
     };
+})
+
+.controller('DebugCtrl', function ($scope, NativeNotification) {
+    $scope.immediately = function () {
+        NativeNotification.schedule(
+            "immediately",
+            "Notification scheduled immediately"
+        );
+    };
+
+    $scope.five_seconds = function () {
+        NativeNotification.schedule(
+            "five_seconds",
+            "Notification scheduled five seconds later",
+            Date.now() + 5 * 1000
+        )
+    };
+
+    $scope.one_minute = function () {
+        NativeNotification.schedule(
+            "one_minute",
+            "Notification scheduled one minute later",
+            Date.now() + 60 * 1000
+        )
+    }
 });

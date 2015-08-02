@@ -63,6 +63,17 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
                 controller: 'AlertsCtrl'
             }
         }
+    })
+
+    .state('app.debug', {
+        cache: false,
+        url: '/debug',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/debug.html',
+                controller: 'DebugCtrl'
+            }
+        }
     });
 
     // if none of the above states are matched, use this as the fallback

@@ -14,18 +14,26 @@ angular.module('sif-assistant.services', [])
     }
 }])
 
-.factory('NativeNotification', ['$cordovaLocalNotification', function ($cordovaLocalNotification) {
+.factory('NativeNotification', function () {
     const isBrowser = window.cordova === undefined;
     return {
-        schedule: function (options) {
-            options.title = "SIF Assistant";
+        schedule: function (id, text, time, every) {
+            every = every !== undefined ? every : 0;
+            time = time !== undefined ? time : 0;
+            var options = {
+                id: id,
+                title: "SIF Assistant",
+                text: text,
+                at: time,
+                every: every
+            };
             if (isBrowser) {
                 console.log("Schedule native notification");
                 console.log(options)
             }
             else
             {
-                $cordovaLocalNotification.schedule(options);
+                cordova.plugins.notification.local.schedule(options);
             }
         },
         cancel: function (id) {
@@ -35,7 +43,7 @@ angular.module('sif-assistant.services', [])
             }
             else
             {
-                $cordovaLocalNotification.cancel(id);
+                cordova.plugins.notification.local.cancel(id);
             }
         },
         isPresent: function (id, callback) {
@@ -45,11 +53,11 @@ angular.module('sif-assistant.services', [])
             }
             else
             {
-                $cordovaLocalNotification.isPresent(id, callback);
+                cordova.plugins.notification.local.isPresent(id, callback);
             }
         }
     }
-}])
+})
 
 .factory('Calculators', function () {
     return {
@@ -170,11 +178,11 @@ angular.module('sif-assistant.services', [])
                             var target_lp = account.alerts_lp_value;
                             var ms_rest_lp_time_remaining = moment.duration(LP_INCREMENTAL_MINUTES * (target_lp - current_lp - 1), "minutes").asMilliseconds();
                             var ms_total_lp_time = ms_one_lp_time_remaining + ms_rest_lp_time_remaining;
-                            NativeNotification.schedule({
-                                id: lp_notification_id,
-                                text: account.alias + ": LP has reached " + account.alerts_lp_value,
-                                at: now + ms_total_lp_time
-                            })
+                            NativeNotification.schedule(
+                                lp_notification_id,
+                                account.alias + ": LP has reached " + account.alerts_lp_value,
+                                now + ms_total_lp_time
+                            )
                         })
                     }
                 }
@@ -199,12 +207,12 @@ angular.module('sif-assistant.services', [])
                     start_of_next_day_tz.second(0);
                     start_of_next_day_tz.minute(0);
                     start_of_next_day_tz.hour(0);
-                    NativeNotification.schedule({
-                        id: bonus_notification_id,
-                        text: account.alias + ": Daily bonus is available!",
-                        firstAt: start_of_next_day_tz.valueOf(),
-                        every: "day"
-                    });
+                    NativeNotification.schedule(
+                        bonus_notification_id,
+                        account.alias + ": Daily bonus is available!",
+                        start_of_next_day_tz.valueOf(),
+                        "day"
+                    );
                 }
                 else
                 {
