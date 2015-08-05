@@ -109,6 +109,7 @@ angular.module('sif-assistant.services', [])
 .factory('Accounts', ['$localStorage', 'Calculators', 'Regions', 'NativeNotification', function ($localStorage, Calculators, Regions, NativeNotification) {
     const ACCOUNTS_KEY = "accounts";
     const LP_INCREMENTAL_MINUTES = 6;
+    const LP_INCREMENTAL_MS = moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds();
     return {
         set: function (accounts) {
             $localStorage.set(ACCOUNTS_KEY, accounts)
@@ -266,18 +267,22 @@ angular.module('sif-assistant.services', [])
         },
         incrementAllLp: function (now) {
             var current_accounts = this.getRaw().map(function (account) {
+                var current_lp = account.lp;
+                var max_lp = Calculators.getMaxLpByLevel(account.level);
+                if (current_lp === max_lp) {
+                    account.last_lp_update = now;
+                    return account;
+                }
                 var last_lp_update = account.last_lp_update;
                 var ms_passed = now - last_lp_update;
                 var minutes_passed = Math.floor(moment.duration(ms_passed).asMinutes());
                 var lp_incremented = Math.floor(minutes_passed / LP_INCREMENTAL_MINUTES);
                 if (lp_incremented > 0) {
-                    account.last_lp_update = now;
-                    var new_lp = account.lp + lp_incremented;
-                    var max_lp = Calculators.getMaxLpByLevel(account.level);
-                    if (new_lp >= max_lp) {
-                        new_lp = max_lp;
+                    if (current_lp + lp_incremented > max_lp) {
+                        lp_incremented = max_lp - current_lp;
                     }
-                    account.lp = new_lp;
+                    account.lp = current_lp + lp_incremented;
+                    account.last_lp_update = last_lp_update + lp_incremented * LP_INCREMENTAL_MS;
                 }
                 return account;
             });
@@ -298,14 +303,13 @@ angular.module('sif-assistant.services', [])
             this.set(current_accounts);
         },
         calculateOneLpTimeRemaining: function (account, now) {
+            var current_lp = account.lp;
             var max_lp = Calculators.getMaxLpByLevel(account.level);
-            if (account.lp === max_lp) {
+            if (current_lp === max_lp) {
                 return -1;
             }
-            var last_lp_update = account.last_lp_update;
-            var ms_passed = now - last_lp_update;
-            ms_passed = ms_passed % (moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds());
-            return moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds() - ms_passed;
+            var ms_passed = (now - account.last_lp_update) % LP_INCREMENTAL_MS;
+            return LP_INCREMENTAL_MS - ms_passed;
         },
         getNativeNotificationId: function (account, type) {
             return account.alias + ":" + type;
