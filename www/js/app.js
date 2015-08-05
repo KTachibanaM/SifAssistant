@@ -25,7 +25,13 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
 .constant("FREQUENT", 1000)
 
 .constant("INFREQUENT", 5 * 1000)
-
+    
+.config(function ($ionicConfigProvider) {
+    if(!ionic.Platform.isIOS()) {
+        $ionicConfigProvider.scrolling.jsScrolling(false);
+    }
+})
+    
 .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 
