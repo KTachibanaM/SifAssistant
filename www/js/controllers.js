@@ -56,7 +56,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $interval, $ionicPopup, Accounts, FREQUENT, INFREQUENT) {
+.controller('AccountsCtrl', function ($scope, $interval, $ionicPopup, Accounts, FREQUENT, INFREQUENT, gettext) {
     // Show frequently refreshed data
     $scope.refreshFrequent = function () {
         $scope.frequentRefreshData = Accounts.getFrequentRefreshData();
@@ -110,21 +110,21 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.updateAccountData.updatedLevel = account.level;
         $ionicPopup.show({
             templateUrl: "templates/update-level.html",
-            title: "Enter your updated rank",
+            title: gettext("Enter your updated rank"),
             scope: $scope,
             buttons: [
                 {
-                    text: "Cancel"
+                    text: gettext("Cancel")
                 },
                 {
-                    text: "+1",
+                    text: gettext("+1"),
                     onTap: function (e) {
                         e.preventDefault();
                         $scope.updateAccountData.updatedLevel = $scope.updateAccountData.updatedLevel + 1;
                     }
                 },
                 {
-                    text: '<b>Save</b>',
+                    text: '<b>' + gettext("Save") + '</b>',
                     type: 'button-positive',
                     onTap: function () {
                         return $scope.updateAccountData.updatedLevel;
@@ -145,10 +145,10 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             scope: $scope,
             buttons: [
                 {
-                    text: "Cancel"
+                    text: gettext("Cancel")
                 },
                 {
-                    text: '<b>Save</b>',
+                    text: '<b>' + gettext("Save") + '</b>',
                     type: 'button-positive',
                     onTap: function () {
                         return $scope.updateAccountData.updatedExp;
@@ -170,17 +170,17 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             scope: $scope,
             buttons: [
                 {
-                    text: "Cancel"
+                    text: gettext("Cancel")
                 },
                 {
-                    text: "Clear",
+                    text: gettext("Clear"),
                     onTap: function (e) {
                         e.preventDefault();
                         $scope.updateAccountData.updatedLp = 0;
                     }
                 },
                 {
-                    text: '<b>Save</b>',
+                    text: '<b>' + gettext("Save") + '</b>',
                     type: 'button-positive',
                     onTap: function () {
                         $scope.updateAccountData.updatedLp
@@ -205,17 +205,17 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             scope: $scope,
             buttons: [
                 {
-                    text: "Cancel"
+                    text: gettext("Cancel")
                 },
                 {
-                    text: "Clear",
+                    text: gettext("Clear"),
                     onTap: function (e) {
                         e.preventDefault();
                         $scope.updateAccountData.updatedLoveca = 0;
                     }
                 },
                 {
-                    text: '<b>Save</b>',
+                    text: '<b>' + gettext("Save") + '</b>',
                     type: 'button-positive',
                     onTap: function () {
                         $scope.updateAccountData.updatedLoveca
@@ -244,7 +244,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     // Delete account
     $scope.openDeleteAccount = function (account) {
         $ionicPopup.confirm({
-            title: 'Delete account',
+            title: gettext('Delete account'),
             templateUrl: 'templates/delete-account.html'
         }).then(function (yes) {
             if (yes) {
