@@ -12,7 +12,14 @@
       <div class="item item-body">
         <p>LP: {{account.lp}}/{{account.max_lp}} (Next LP: {{frequentRefreshData[$index].one_lp_time_remaining}})</p>
         <p>Loveca: {{account.loveca}}</p>
-        <p ng-style="{color : account.has_claimed_bonus ? 'black' : 'red'}">Has claimed daily bonus: {{account.has_claimed_bonus ? "Yes" : "No"}}</p>
+        <p>Has claimed daily bonus:</p>
+        <label class="toggle" ng-click="toggleBonus(account)">
+          <input type="checkbox" ng-model="account.has_claimed_bonus">
+          <div class="track">
+            <div class="handle">
+            </div>
+          </div>
+        </label>
       </div>
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item" ng-click="openUpdateLevel(account)">
@@ -30,10 +37,6 @@
         <a class="tab-item" ng-click="openUpdateLoveca(account)">
           <i class="icon ion-heart"></i>
           Loveca
-        </a>
-        <a class="tab-item" ng-click="openUpdateBonus(account)">
-          <i class="icon ion-checkmark"></i>
-          Bonus
         </a>
         <a class="tab-item" ng-click="openDeleteAccount(account)">
           <i class="icon ion-trash-a"></i>

@@ -92,8 +92,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         updatedLevel: 0,
         updatedExp: 0,
         updatedLp: 0,
-        updatedLoveca: 0,
-        updatedBonus: true
+        updatedLoveca: 0
     };
     $scope.reset_subtractions = function () {
         $scope.subtractions = {
@@ -224,33 +223,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         })
     };
 
-    // Update Bonus
-    $scope.openUpdateBonus = function (account) {
-        $scope.updateAccountData.updatedBonus = account.has_claimed_bonus;
-        $ionicPopup.show({
-            template: '<label class="toggle">' +
-            '<input type="checkbox" ng-model="updateAccountData.updatedBonus"">' +
-            '<div class="track">' +
-            '<div class="handle"></div>' +
-            '</div>' +
-            '</label>',
-            title: 'Has claimed daily bonus',
-            scope: $scope,
-            buttons: [
-                {
-                    text: "Cancel"
-                },
-                {
-                    text: '<b>Save</b>',
-                    type: 'button-positive',
-                    onTap: function () {
-                        return $scope.updateAccountData.updatedBonus;
-                    }
-                }
-            ]
-        }).then(function (result) {
-            $scope.updateAccount(account, "has_claimed_bonus", result);
-        })
+    // Update bonus
+    $scope.toggleBonus = function (account) {
+        $scope.updateAccount(account, "has_claimed_bonus", account.has_claimed_bonus);
     };
 
     $scope.updateAccount = function (account, key, newData) {
