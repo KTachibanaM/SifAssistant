@@ -81,11 +81,16 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         updatedLoveca: 0,
         updatedBonus: true
     };
-    $scope.subtractions = {
-        lp: 0,
-        loveca: 0,
-        loveca_multiplier: 0
+    $scope.reset_subtractions = function () {
+        $scope.subtractions = {
+            lp: 0,
+            lp_multiplier: 0,
+            loveca: 0,
+            loveca_multiplier: 0
+        };
     };
+
+    $scope.reset_subtractions();
 
     // Update Level
     $scope.openUpdateLevel = function (account) {
@@ -144,6 +149,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     // Update LP
     $scope.openUpdateLp = function (account) {
+        $scope.reset_subtractions();
         $scope.updateAccountData.updatedLp = account.lp;
         $ionicPopup.show({
             templateUrl: "templates/update-lp.html",
@@ -164,7 +170,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     text: '<b>Save</b>',
                     type: 'button-positive',
                     onTap: function () {
-                        $scope.updateAccountData.updatedLp = $scope.updateAccountData.updatedLp - $scope.subtractions.lp;
+                        $scope.updateAccountData.updatedLp
+                            = $scope.updateAccountData.updatedLp
+                            - $scope.subtractions.lp * $scope.subtractions.lp_multiplier;
                         return $scope.updateAccountData.updatedLp;
                     }
                 }
@@ -176,6 +184,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     // Update Loveca
     $scope.openUpdateLoveca = function (account) {
+        $scope.reset_subtractions();
         $scope.updateAccountData.updatedLoveca = account.loveca;
         $ionicPopup.show({
             templateUrl: 'templates/update-loveca.html',
@@ -189,7 +198,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     text: '<b>Save</b>',
                     type: 'button-positive',
                     onTap: function () {
-                        $scope.updateAccountData.updatedLoveca = $scope.updateAccountData.updatedLoveca - $scope.subtractions.loveca * $scope.subtractions.loveca_multiplier;
+                        $scope.updateAccountData.updatedLoveca
+                            = $scope.updateAccountData.updatedLoveca
+                            - $scope.subtractions.loveca * $scope.subtractions.loveca_multiplier;
                         return $scope.updateAccountData.updatedLoveca;
                     }
                 }
