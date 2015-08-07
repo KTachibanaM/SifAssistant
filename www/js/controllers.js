@@ -94,6 +94,13 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     text: "Cancel"
                 },
                 {
+                    text: "+1",
+                    onTap: function (e) {
+                        e.preventDefault();
+                        $scope.updateAccountData.updatedLevel = $scope.updateAccountData.updatedLevel + 1;
+                    }
+                },
+                {
                     text: '<b>Save</b>',
                     type: 'button-positive',
                     onTap: function () {
