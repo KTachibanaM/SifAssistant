@@ -109,7 +109,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.openUpdateLevel = function (account) {
         $scope.updateAccountData.updatedLevel = account.level;
         $ionicPopup.show({
-            template: '<input type="number" ng-model="updateAccountData.updatedLevel">',
+            templateUrl: "templates/update-level.html",
             title: "Enter your updated rank",
             scope: $scope,
             buttons: [
@@ -140,7 +140,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.openUpdateExp = function (account) {
         $scope.updateAccountData.updatedExp = account.exp;
         $ionicPopup.show({
-            template: '<input type="number" ng-model="updateAccountData.updatedExp">',
+            templateUrl: "templates/update-exp.html",
             title: "Enter your updated EXP",
             scope: $scope,
             buttons: [
@@ -245,7 +245,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.openDeleteAccount = function (account) {
         $ionicPopup.confirm({
             title: 'Delete account',
-            template: 'Are you sure you want to delete this account?'
+            templateUrl: 'templates/delete-account.html'
         }).then(function (yes) {
             if (yes) {
                 $scope.deleteAccount(account);
