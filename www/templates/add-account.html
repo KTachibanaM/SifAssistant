@@ -1,24 +1,24 @@
 <ion-modal-view>
     <ion-header-bar>
-        <h1 class="title">Add Account</h1>
+        <h1 class="title" translate>Add Account</h1>
         <button ng-click="closeAddAccount()" class="button button-icon button-clear ion-close"></button>
     </ion-header-bar>
     <ion-content>
         <div class="list">
             <label class="item item-input">
-                <span class="input-label">Alias</span>
+                <span class="input-label" translate>Alias</span>
                 <input type="text" ng-model="newAccount.alias">
             </label>
             <label class="item item-input item-select">
-                <span class="input-label">Region</span>
+                <span class="input-label" translate>Region</span>
                 <select ng-model="newAccount.region" ng-options="region.id as region.name for region in regions"></select>
             </label>
             <label class="item item-input">
-                <span class="input-label">Rank</span>
+                <span class="input-label" translate>Rank</span>
                 <input type="number" ng-model="newAccount.level">
             </label>
             <label class="item item-input">
-                <span class="input-label">EXP</span>
+                <span class="input-label" translate>EXP</span>
                 <input type="number" ng-model="newAccount.exp">
             </label>
             <label class="item item-input">
@@ -26,10 +26,10 @@
                 <input type="number" ng-model="newAccount.lp">
             </label>
             <label class="item item-input">
-                <span class="input-label">Love gems</span>
+                <span class="input-label" translate>Love gems</span>
                 <input type="number" ng-model="newAccount.loveca">
             </label>
         </div>
-        <button class="button button-block button-positive" ng-click="addAccount(newAccount)">Add</button>
+        <button class="button button-block button-positive" ng-click="addAccount(newAccount)" translate>Add</button>
     </ion-content>
 </ion-modal-view>

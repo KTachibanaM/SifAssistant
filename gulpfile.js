@@ -6,6 +6,7 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var gettext = require('gulp-angular-gettext');
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -49,4 +50,21 @@ gulp.task('git-check', function(done) {
     process.exit(1);
   }
   done();
+});
+
+gulp.task('pot', function () {
+    return gulp.src(['./www/templates/*.html', './www/js/*.js'])
+        .pipe(gettext.extract('template.pot', {
+            // options to pass to angular-gettext-tools...
+        }))
+        .pipe(gulp.dest('./po/'));
+});
+
+gulp.task('translations', function () {
+    return gulp.src('./po/**/*.po')
+        .pipe(gettext.compile({
+            // options to pass to angular-gettext-tools...
+            format: 'json'
+        }))
+        .pipe(gulp.dest('./www/js/translations/'));
 });

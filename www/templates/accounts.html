@@ -1,4 +1,4 @@
-<ion-view view-title="Accounts">
+<ion-view view-title="{{'Accounts'|translate}}">
   <ion-content>
     <div class="card" ng-repeat="account in accounts">
       <div class="item item-divider">
@@ -6,13 +6,13 @@
       </div>
       <div class="item item-avatar">
         <img ng-src="img/region_flags/{{account.region}}.png">
-        <h2>Rank: {{account.level}}</h2>
-        <p>EXP: {{account.exp}}/{{account.max_exp}}</p>
+        <h2 translate>Rank: {{account.level}}</h2>
+        <p translate>EXP: {{account.exp}}/{{account.max_exp}}</p>
       </div>
       <div class="item item-body">
         <p>LP: {{account.lp}}/{{account.max_lp}} (Next LP: {{frequentRefreshData[$index].one_lp_time_remaining}})</p>
-        <p>Love gems: {{account.loveca}}</p>
-        <p>Has claimed daily bonus:</p>
+        <p translate>Love gems: {{account.loveca}}</p>
+        <p translate>Has claimed daily bonus:</p>
         <label class="toggle" ng-click="toggleBonus(account)">
           <input type="checkbox" ng-model="account.has_claimed_bonus">
           <div class="track">
@@ -24,23 +24,23 @@
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item" ng-click="openUpdateLevel(account)">
           <i class="icon ion-arrow-up-a"></i>
-          Rank
+          <translate>Rank</translate>
         </a>
         <a class="tab-item" ng-click="openUpdateExp(account)">
           <i class="icon ion-plus"></i>
-          EXP
+          <translate>EXP</translate>
         </a>
         <a class="tab-item" ng-click="openUpdateLp(account)">
           <i class="icon ion-battery-half"></i>
-          LP
+          <translate>LP</translate>
         </a>
         <a class="tab-item" ng-click="openUpdateLoveca(account)">
           <i class="icon ion-heart"></i>
-          Love gems
+          <translate>Love gems</translate>
         </a>
         <a class="tab-item" ng-click="openDeleteAccount(account)">
           <i class="icon ion-trash-a"></i>
-          Delete
+          <translate>Delete</translate>
         </a>
       </div>
     </div>

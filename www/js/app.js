@@ -22,6 +22,11 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
     });
 })
 
+.run(function (gettextCatalog) {
+    gettextCatalog.loadRemote("js/translations/zh_CN.json");
+    gettextCatalog.setCurrentLanguage('zh_CN');
+})
+
 .constant("FREQUENT", 1000)
 
 .constant("INFREQUENT", 5 * 1000)

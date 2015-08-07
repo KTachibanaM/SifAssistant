@@ -6,13 +6,13 @@
             </div>
             <div class="item item-avatar">
                 <img ng-src="img/region_flags/{{account.region}}.png">
-                <h2>Rank: {{account.level}}</h2>
-                <p>EXP: {{account.exp}}/{{account.max_exp}}</p>
+                <h2 translate>Rank: {{account.level}}</h2>
+                <p translate>EXP: {{account.exp}}/{{account.max_exp}}</p>
             </div>
             <div class="item item-body">
                 <div class="list">
                     <label class="item item-input">
-                        <span class="input-label">Enable LP alert</span>
+                        <span translate class="input-label">Enable LP alert</span>
                         <label class="toggle">
                             <input type="checkbox" ng-model="account.alerts_lp" ng-click="toggleLpAlerts(account)">
                             <div class="track">
@@ -21,17 +21,17 @@
                         </label>
                     </label>
                     <label class="item item-input">
-                        <span class="input-label">LP alert value</span>
+                        <span translate class="input-label">LP alert value</span>
                         <input type="number" ng-model="account.alerts_lp_value">
-                        <button class="button" ng-click="account.alerts_lp_value = account.max_lp">
+                        <button translate class="button" ng-click="account.alerts_lp_value = account.max_lp">
                             Max
                         </button>
-                        <button style="margin-left: 2px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
+                        <button translate style="margin-left: 2px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
                             Save
                         </button>
                     </label>
                     <label class="item item-input">
-                        <span class="input-label">Enable daily bonus alert</span>
+                        <span translate class="input-label">Enable daily bonus alert</span>
                         <label class="toggle">
                             <input type="checkbox" ng-model="account.alerts_bonus" ng-click="toggleBonusAlerts(account)">
                             <div class="track">
