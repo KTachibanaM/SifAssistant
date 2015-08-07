@@ -83,7 +83,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
     $scope.subtractions = {
         lp: 0,
-        loveca: 0
+        loveca: 0,
+        loveca_multiplier: 0
     };
 
     // Update Level
@@ -164,7 +165,6 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     type: 'button-positive',
                     onTap: function () {
                         $scope.updateAccountData.updatedLp = $scope.updateAccountData.updatedLp - $scope.subtractions.lp;
-                        $scope.subtractions.lp = 0;
                         return $scope.updateAccountData.updatedLp;
                     }
                 }
@@ -189,8 +189,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     text: '<b>Save</b>',
                     type: 'button-positive',
                     onTap: function () {
-                        $scope.updateAccountData.updatedLoveca = $scope.updateAccountData.updatedLoveca - $scope.subtractions.loveca;
-                        $scope.subtractions.loveca = 0;
+                        $scope.updateAccountData.updatedLoveca = $scope.updateAccountData.updatedLoveca - $scope.subtractions.loveca * $scope.subtractions.loveca_multiplier;
                         return $scope.updateAccountData.updatedLoveca;
                     }
                 }
