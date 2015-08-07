@@ -82,7 +82,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         updatedBonus: true
     };
     $scope.subtractions = {
-        loveca: 0,
+        lp: 0,
+        loveca: 0
     };
 
     // Update Level
@@ -144,7 +145,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.openUpdateLp = function (account) {
         $scope.updateAccountData.updatedLp = account.lp;
         $ionicPopup.show({
-            template: '<input type="number" ng-model="updateAccountData.updatedLp">',
+            templateUrl: "templates/update-lp.html",
             title: "Enter your updated LP",
             scope: $scope,
             buttons: [
@@ -162,6 +163,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     text: '<b>Save</b>',
                     type: 'button-positive',
                     onTap: function () {
+                        $scope.updateAccountData.updatedLp = $scope.updateAccountData.updatedLp - $scope.subtractions.lp;
+                        $scope.subtractions.lp = 0;
                         return $scope.updateAccountData.updatedLp;
                     }
                 }
@@ -187,6 +190,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     type: 'button-positive',
                     onTap: function () {
                         $scope.updateAccountData.updatedLoveca = $scope.updateAccountData.updatedLoveca - $scope.subtractions.loveca;
+                        $scope.subtractions.loveca = 0;
                         return $scope.updateAccountData.updatedLoveca;
                     }
                 }
