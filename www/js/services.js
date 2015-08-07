@@ -25,8 +25,7 @@ angular.module('sif-assistant.services', [])
     }
 }])
 
-.factory('NativeNotification', function () {
-    const isBrowser = window.cordova === undefined;
+.factory('NativeNotification', function (isBrowser) {
     return {
         schedule: function (id, text, time, every) {
             id = id.hashCode();
@@ -362,4 +361,12 @@ angular.module('sif-assistant.services', [])
             return this.get()[index].timezone;
         }
     }
-}]);
+}])
+
+.factory('Platform', function (isBrowser) {
+    return {
+        nativeScrollingCapable: function () {
+            if (isBrowser) return true;
+        }
+    }
+});
