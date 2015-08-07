@@ -6,12 +6,12 @@
       </div>
       <div class="item item-avatar">
         <img ng-src="img/region_flags/{{account.region}}.png">
-        <h2>Level: {{account.level}}</h2>
-        <p>Exp: {{account.exp}}/{{account.max_exp}}</p>
+        <h2>Rank: {{account.level}}</h2>
+        <p>EXP: {{account.exp}}/{{account.max_exp}}</p>
       </div>
       <div class="item item-body">
         <p>LP: {{account.lp}}/{{account.max_lp}} (Next LP: {{frequentRefreshData[$index].one_lp_time_remaining}})</p>
-        <p>Loveca: {{account.loveca}}</p>
+        <p>Love gems: {{account.loveca}}</p>
         <p>Has claimed daily bonus:</p>
         <label class="toggle" ng-click="toggleBonus(account)">
           <input type="checkbox" ng-model="account.has_claimed_bonus">
@@ -24,11 +24,11 @@
       <div class="item tabs tabs-secondary tabs-icon-left">
         <a class="tab-item" ng-click="openUpdateLevel(account)">
           <i class="icon ion-arrow-up-a"></i>
-          Level
+          Rank
         </a>
         <a class="tab-item" ng-click="openUpdateExp(account)">
           <i class="icon ion-plus"></i>
-          Exp
+          EXP
         </a>
         <a class="tab-item" ng-click="openUpdateLp(account)">
           <i class="icon ion-battery-half"></i>
@@ -36,7 +36,7 @@
         </a>
         <a class="tab-item" ng-click="openUpdateLoveca(account)">
           <i class="icon ion-heart"></i>
-          Loveca
+          Love gems
         </a>
         <a class="tab-item" ng-click="openDeleteAccount(account)">
           <i class="icon ion-trash-a"></i>

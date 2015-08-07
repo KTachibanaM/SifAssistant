@@ -110,7 +110,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.updateAccountData.updatedLevel = account.level;
         $ionicPopup.show({
             template: '<input type="number" ng-model="updateAccountData.updatedLevel">',
-            title: "Enter your updated Level",
+            title: "Enter your updated rank",
             scope: $scope,
             buttons: [
                 {
@@ -141,7 +141,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.updateAccountData.updatedExp = account.exp;
         $ionicPopup.show({
             template: '<input type="number" ng-model="updateAccountData.updatedExp">',
-            title: "Enter your updated Exp",
+            title: "Enter your updated EXP",
             scope: $scope,
             buttons: [
                 {
@@ -201,7 +201,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.updateAccountData.updatedLoveca = account.loveca;
         $ionicPopup.show({
             templateUrl: 'templates/update-loveca.html',
-            title: "Enter your updated Loveca",
+            title: "Enter your updated Love gems",
             scope: $scope,
             buttons: [
                 {

@@ -6,8 +6,8 @@
             </div>
             <div class="item item-avatar">
                 <img ng-src="img/region_flags/{{account.region}}.png">
-                <h2>Level: {{account.level}}</h2>
-                <p>Exp: {{account.exp}}/{{account.max_exp}}</p>
+                <h2>Rank: {{account.level}}</h2>
+                <p>EXP: {{account.exp}}/{{account.max_exp}}</p>
             </div>
             <div class="item item-body">
                 <ul class="list">
@@ -26,7 +26,7 @@
                         <button class="button" ng-click="account.alerts_lp_value = account.max_lp">
                             Max
                         </button>
-                        <button style="margin-left: 6px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
+                        <button style="margin-left: 2px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
                             Save
                         </button>
                     </div>
