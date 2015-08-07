@@ -12,6 +12,7 @@ ionic serve
 
 ```
 ionic platform add android
+cordova plugin add https://github.com/whiteoctober/cordova-plugin-app-version.git
 cordova plugin add https://github.com/katzer/cordova-plugin-local-notifications.git
 ionic run android
 ```

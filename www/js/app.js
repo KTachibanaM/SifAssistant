@@ -28,10 +28,6 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
     gettextCatalog.setCurrentLanguage(locale);
 })
 
-.constant("BINARY_VERSION", "0.0.3")
-
-.constant("APP_VERSION", undefined)
-
 .constant("FREQUENT", 1000)
 
 .constant("INFREQUENT", 5 * 1000)

@@ -348,9 +348,12 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 })
 
-.controller('AboutCtrl', function ($scope, BINARY_VERSION, APP_VERSION) {
-    $scope.binary_version = BINARY_VERSION;
-    $scope.app_version = APP_VERSION;
+.controller('AboutCtrl', function ($scope) {
+    if (window.cordova) {
+        window.cordova.getAppVersion(function(version) {
+            $scope.app_version = version;
+        });
+    }
     $scope.platform = ionic.Platform.platform();
     $scope.platform_version = ionic.Platform.version();
 });
