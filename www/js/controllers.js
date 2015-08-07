@@ -228,7 +228,12 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.openUpdateBonus = function (account) {
         $scope.updateAccountData.updatedBonus = account.has_claimed_bonus;
         $ionicPopup.show({
-            template: '<label class="checkbox"><input type="checkbox" ng-model="updateAccountData.updatedBonus"></label>',
+            template: '<label class="toggle">' +
+            '<input type="checkbox" ng-model="updateAccountData.updatedBonus"">' +
+            '<div class="track">' +
+            '<div class="handle"></div>' +
+            '</div>' +
+            '</label>',
             title: 'Has claimed daily bonus',
             scope: $scope,
             buttons: [
