@@ -11,6 +11,19 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.regions = Regions.get();
 
     // Add account
+    $scope.reset_new_account = function () {
+        $scope.newAccount = {
+            alias: "",
+            region: "jp",
+            level: 1,
+            exp: 0,
+            lp: 0,
+            loveca: 0
+        };
+    };
+
+    $scope.reset_new_account();
+
     $ionicModal.fromTemplateUrl('templates/add-account.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -30,6 +43,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 
     $scope.openAddAccount = function () {
+        $scope.reset_new_account();
         $scope.addAccountModal.show();
     };
 
@@ -84,9 +98,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.reset_subtractions = function () {
         $scope.subtractions = {
             lp: 0,
-            lp_multiplier: 0,
+            lpMultiplier: 0,
             loveca: 0,
-            loveca_multiplier: 0
+            lovecaMultiplier: 0
         };
     };
 
@@ -172,7 +186,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     onTap: function () {
                         $scope.updateAccountData.updatedLp
                             = $scope.updateAccountData.updatedLp
-                            - $scope.subtractions.lp * $scope.subtractions.lp_multiplier;
+                            - $scope.subtractions.lp * $scope.subtractions.lpMultiplier;
                         return $scope.updateAccountData.updatedLp;
                     }
                 }
@@ -200,7 +214,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     onTap: function () {
                         $scope.updateAccountData.updatedLoveca
                             = $scope.updateAccountData.updatedLoveca
-                            - $scope.subtractions.loveca * $scope.subtractions.loveca_multiplier;
+                            - $scope.subtractions.loveca * $scope.subtractions.lovecaMultiplier;
                         return $scope.updateAccountData.updatedLoveca;
                     }
                 }

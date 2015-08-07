@@ -7,29 +7,29 @@
         <div class="list">
             <label class="item item-input">
                 <span class="input-label">Alias</span>
-                <input type="text" ng-model="account.alias">
+                <input type="text" ng-model="newAccount.alias">
             </label>
             <label class="item item-input item-select">
                 <span class="input-label">Region</span>
-                <select ng-model="account.region" ng-options="region.id as region.name for region in regions"></select>
+                <select ng-model="newAccount.region" ng-options="region.id as region.name for region in regions"></select>
             </label>
             <label class="item item-input">
                 <span class="input-label">Level</span>
-                <input type="number" ng-model="account.level">
+                <input type="number" ng-model="newAccount.level">
             </label>
             <label class="item item-input">
                 <span class="input-label">Exp</span>
-                <input type="number" ng-model="account.exp">
+                <input type="number" ng-model="newAccount.exp">
             </label>
             <label class="item item-input">
                 <span class="input-label">LP</span>
-                <input type="number" ng-model="account.lp">
+                <input type="number" ng-model="newAccount.lp">
             </label>
             <label class="item item-input">
                 <span class="input-label">Loveca</span>
-                <input type="number" ng-model="account.loveca">
+                <input type="number" ng-model="newAccount.loveca">
             </label>
         </div>
-        <button class="button button-block button-positive" ng-click="addAccount(account)">Add</button>
+        <button class="button button-block button-positive" ng-click="addAccount(newAccount)">Add</button>
     </ion-content>
 </ion-modal-view>
