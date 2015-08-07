@@ -34,18 +34,6 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
 
 .constant("INFREQUENT", 5 * 1000)
     
-.config(function ($ionicConfigProvider) {
-    var native_scrolling = true;
-    if (ionic.Platform.isIOS()) {
-        native_scrolling = false;
-    }
-    else if (ionic.Platform.isAndroid())
-    {
-        native_scrolling = true;
-    }
-    $ionicConfigProvider.scrolling.jsScrolling(!native_scrolling);
-})
-    
 .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 

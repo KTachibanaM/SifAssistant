@@ -362,11 +362,3 @@ angular.module('sif-assistant.services', [])
         }
     }
 }])
-
-.factory('Platform', function (isBrowser) {
-    return {
-        nativeScrollingCapable: function () {
-            if (isBrowser) return true;
-        }
-    }
-});
