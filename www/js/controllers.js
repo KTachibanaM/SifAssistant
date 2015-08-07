@@ -346,4 +346,11 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.cancel = function (id) {
         NativeNotification.cancelByRawHashedId(id);
     };
+})
+
+.controller('AboutCtrl', function ($scope, BINARY_VERSION, APP_VERSION) {
+    $scope.binary_version = BINARY_VERSION;
+    $scope.app_version = APP_VERSION;
+    $scope.platform = ionic.Platform.platform();
+    $scope.platform_version = ionic.Platform.version();
 });

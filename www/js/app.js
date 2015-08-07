@@ -28,14 +28,24 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
     gettextCatalog.setCurrentLanguage(locale);
 })
 
+.constant("BINARY_VERSION", "0.0.3")
+
+.constant("APP_VERSION", undefined)
+
 .constant("FREQUENT", 1000)
 
 .constant("INFREQUENT", 5 * 1000)
     
 .config(function ($ionicConfigProvider) {
-    if(!ionic.Platform.isIOS()) {
-        $ionicConfigProvider.scrolling.jsScrolling(false);
+    var native_scrolling = true;
+    if (ionic.Platform.isIOS()) {
+        native_scrolling = false;
     }
+    else if (ionic.Platform.isAndroid())
+    {
+        native_scrolling = true;
+    }
+    $ionicConfigProvider.scrolling.jsScrolling(!native_scrolling);
 })
     
 .config(function($stateProvider, $urlRouterProvider) {
@@ -80,12 +90,21 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
     })
 
     .state('app.debug', {
-        cache: false,
         url: '/debug',
         views: {
             'menuContent': {
                 templateUrl: 'templates/debug.html',
                 controller: 'DebugCtrl'
+            }
+        }
+    })
+
+    .state('app.about', {
+        url: '/about',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/about.html',
+                controller: 'AboutCtrl'
             }
         }
     });
