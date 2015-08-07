@@ -10,17 +10,17 @@
                 <p>EXP: {{account.exp}}/{{account.max_exp}}</p>
             </div>
             <div class="item item-body">
-                <ul class="list">
-                    <li class="item item-toggle">
-                        Enable LP alert
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">Enable LP alert</span>
                         <label class="toggle">
                             <input type="checkbox" ng-model="account.alerts_lp" ng-click="toggleLpAlerts(account)">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
                         </label>
-                    </li>
-                    <div class="item item-input">
+                    </label>
+                    <label class="item item-input">
                         <span class="input-label">LP alert value</span>
                         <input type="number" ng-model="account.alerts_lp_value">
                         <button class="button" ng-click="account.alerts_lp_value = account.max_lp">
@@ -29,17 +29,17 @@
                         <button style="margin-left: 2px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
                             Save
                         </button>
-                    </div>
-                    <li class="item item-toggle">
-                        Enable daily bonus alert
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Enable daily bonus alert</span>
                         <label class="toggle">
                             <input type="checkbox" ng-model="account.alerts_bonus" ng-click="toggleBonusAlerts(account)">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
                         </label>
-                    </li>
-                </ul>
+                    </label>
+                </div>
             </div>
         </div>
     </ion-content>
