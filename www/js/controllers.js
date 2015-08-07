@@ -208,6 +208,13 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     text: "Cancel"
                 },
                 {
+                    text: "Clear",
+                    onTap: function (e) {
+                        e.preventDefault();
+                        $scope.updateAccountData.updatedLoveca = 0;
+                    }
+                },
+                {
                     text: '<b>Save</b>',
                     type: 'button-positive',
                     onTap: function () {
