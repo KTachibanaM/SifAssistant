@@ -317,38 +317,39 @@ angular.module('sif-assistant.services', [])
     }
 }])
 
-.factory('Regions', function () {
-    const DATA = [
-        {
-            id: "jp",
-            name: "Japan",
-            timezone: "Asia/Tokyo"
-        },
-        {
-            id: "cn",
-            name: "China",
-            timezone: "Asia/Shanghai"
-        },
-        {
-            id: "us",
-            name: "United States",
-            timezone: "Etc/UTC"
-        },
-        {
-            id: "kr",
-            name: "Korea",
-            timezone: "Asia/Seoul"
-        },
-        {
-            id: "tw",
-            name: "Taiwan",
-            timezone: "Asia/Taipei"
-        }
-    ];
-
+.factory('Regions', ['gettext', function (gettext) {
     return {
+        getRaw: function () {
+            return [
+                {
+                    id: "jp",
+                    name: gettext("Japan"),
+                    timezone: "Asia/Tokyo"
+                },
+                {
+                    id: "cn",
+                    name: gettext("China"),
+                    timezone: "Asia/Shanghai"
+                },
+                {
+                    id: "us",
+                    name: gettext("United States"),
+                    timezone: "Etc/UTC"
+                },
+                {
+                    id: "kr",
+                    name: gettext("Korea"),
+                    timezone: "Asia/Seoul"
+                },
+                {
+                    id: "tw",
+                    name: gettext("Taiwan"),
+                    timezone: "Asia/Taipei"
+                }
+            ];
+        },
         get: function () {
-            return DATA.map(function (region) {
+            return this.getRaw().map(function (region) {
                 region.local_time = moment().tz(region.timezone).format("YYYY/MM/DD HH:mm:ss");
                 return region;
             })
@@ -361,4 +362,4 @@ angular.module('sif-assistant.services', [])
             return this.get()[index].timezone;
         }
     }
-});
+}]);
