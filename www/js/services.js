@@ -95,12 +95,55 @@ angular.module('sif-assistant.services', [])
 })
 
 .factory('Calculators', function () {
+    const BELOW_LEVEL_33_TO_EXP_MAPPING = {
+        1: 11,
+        2: 13,
+        3: 16,
+        4: 20,
+        5: 26,
+        6: 32,
+        7: 39,
+        8: 48,
+        9: 57,
+        10: 67,
+        11: 79,
+        12: 91,
+        13: 105,
+        14: 120,
+        15: 135,
+        16: 152,
+        17: 170,
+        18: 189,
+        19: 208,
+        20: 229,
+        21: 251,
+        22: 274,
+        23: 298,
+        24: 323,
+        25: 349,
+        26: 376,
+        27: 405,
+        28: 434,
+        29: 464,
+        30: 495,
+        31: 528,
+        32: 561,
+        33: 596
+    };
     return {
         getMaxLpByLevel: function (level) {
             return 25 + Math.floor(Math.min(level, 300) / 2) + Math.floor(Math.max((level - 300), 0) / 3);
         },
-        getMaxExpByLevel: function(level) {
-            return level < 100 ? Math.round(34.45 * level - 551) / 2 : Math.round(34.45 * level - 551);
+        getMaxExpByLevel: function(account) {
+            var level = account.level;
+            var base_exp = level <= 33 ? BELOW_LEVEL_33_TO_EXP_MAPPING[level] : Math.round(34.45 * level - 551);
+            if (account.region === "jp") {
+                return level < 100 ? Math.round(base_exp / 2) : base_exp;
+            }
+            else
+            {
+                return base_exp;
+            }
         }
     }
 })
@@ -115,7 +158,7 @@ angular.module('sif-assistant.services', [])
         },
         get: function () {
             return this.getRaw().map(function (account) {
-                account.max_exp = Calculators.getMaxExpByLevel(account.level);
+                account.max_exp = Calculators.getMaxExpByLevel(account);
                 account.max_lp = Calculators.getMaxLpByLevel(account.level);
                 return account;
             });
