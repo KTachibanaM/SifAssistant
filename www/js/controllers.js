@@ -94,7 +94,14 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         updatedLp: 0,
         updatedLoveca: 0
     };
+    $scope.reset_additions = function () {
+        $scope.additions = {
+            exp: 0,
+            expMultiplier: 0
+        };
+    };
     $scope.reset_subtractions = function () {
+
         $scope.subtractions = {
             lp: 0,
             lpMultiplier: 0,
@@ -103,6 +110,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
     };
 
+    $scope.reset_additions();
     $scope.reset_subtractions();
 
     // Update Level
@@ -138,6 +146,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     // Update Exp
     $scope.openUpdateExp = function (account) {
+        $scope.reset_additions();
         $scope.updateAccountData.updatedExp = account.exp;
         $ionicPopup.show({
             templateUrl: "templates/update-exp.html",
@@ -151,6 +160,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     text: '<b>' + gettext("Save") + '</b>',
                     type: 'button-positive',
                     onTap: function () {
+                        $scope.updateAccountData.updatedExp
+                            = $scope.updateAccountData.updatedExp
+                            + $scope.additions.exp * $scope.additions.expMultiplier
                         return $scope.updateAccountData.updatedExp;
                     }
                 }
