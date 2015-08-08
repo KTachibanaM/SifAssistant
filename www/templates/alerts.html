@@ -11,7 +11,7 @@
             </div>
             <div class="item item-body">
                 <div class="list">
-                    <label class="item item-input">
+                    <div class="item item-input">
                         <span translate class="input-label">Enable LP alert</span>
                         <label class="toggle">
                             <input type="checkbox" ng-model="account.alerts_lp" ng-click="toggleLpAlerts(account)">
@@ -19,8 +19,8 @@
                                 <div class="handle"></div>
                             </div>
                         </label>
-                    </label>
-                    <label class="item item-input">
+                    </div>
+                    <div class="item item-input">
                         <span translate class="input-label">LP alert value</span>
                         <input type="number" ng-model="account.alerts_lp_value">
                         <button translate class="button" ng-click="account.alerts_lp_value = account.max_lp">
@@ -29,8 +29,8 @@
                         <button translate style="margin-left: 2px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
                             Save
                         </button>
-                    </label>
-                    <label class="item item-input">
+                    </div>
+                    <div class="item item-input">
                         <span translate class="input-label">Enable daily bonus alert</span>
                         <label class="toggle">
                             <input type="checkbox" ng-model="account.alerts_bonus" ng-click="toggleBonusAlerts(account)">
@@ -38,7 +38,7 @@
                                 <div class="handle"></div>
                             </div>
                         </label>
-                    </label>
+                    </div>
                 </div>
             </div>
         </div>
