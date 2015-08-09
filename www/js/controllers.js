@@ -87,133 +87,51 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.refresh();
     });
 
-    // Update Account
+    // Update accounts
     $scope.updateAccountData = {
         updatedLevel: 0,
         updatedExp: 0,
         updatedLp: 0,
         updatedLoveca: 0
     };
-    $scope.reset_additions = function () {
-        $scope.additions = {
-            exp: 0,
-            expMultiplier: 0
-        };
-    };
-    $scope.reset_subtractions = function () {
 
+    $scope.openUpdate = function (account) {
+        $scope.updateAccountData.updatedLevel = account.level;
+        $scope.updateAccountData.updatedExp = account.exp;
+        $scope.updateAccountData.updatedLp = account.lp;
+        $ionicPopup.show({
+            templateUrl: "templates/update.html",
+            title: gettext("Update rank/EXP/LP"),
+            scope: $scope,
+            buttons: [
+                {
+                    text: gettext("Cancel")
+                },
+                {
+                    text: '<b>' + gettext("Save") + '</b>',
+                    type: 'button-positive',
+                    onTap: function() {
+
+                    }
+                }
+            ]
+        })
+    };
+
+    $scope.reset_subtractions = function () {
         $scope.subtractions = {
-            lp: 0,
-            lpMultiplier: 0,
             loveca: 0,
             lovecaMultiplier: 0
         };
     };
-
-    $scope.reset_additions();
     $scope.reset_subtractions();
 
-    // Update Level
-    $scope.openUpdateLevel = function (account) {
-        $scope.updateAccountData.updatedLevel = account.level;
-        $ionicPopup.show({
-            templateUrl: "templates/update-level.html",
-            title: gettext("Enter your updated rank"),
-            scope: $scope,
-            buttons: [
-                {
-                    text: gettext("Cancel")
-                },
-                {
-                    text: gettext("+1"),
-                    onTap: function (e) {
-                        e.preventDefault();
-                        $scope.updateAccountData.updatedLevel = $scope.updateAccountData.updatedLevel + 1;
-                    }
-                },
-                {
-                    text: '<b>' + gettext("Save") + '</b>',
-                    type: 'button-positive',
-                    onTap: function () {
-                        return $scope.updateAccountData.updatedLevel;
-                    }
-                }
-            ]
-        }).then(function (result) {
-            $scope.updateAccount(account, "level", result);
-        })
-    };
-
-    // Update Exp
-    $scope.openUpdateExp = function (account) {
-        $scope.reset_additions();
-        $scope.updateAccountData.updatedExp = account.exp;
-        $ionicPopup.show({
-            templateUrl: "templates/update-exp.html",
-            title: "Enter your updated EXP",
-            scope: $scope,
-            buttons: [
-                {
-                    text: gettext("Cancel")
-                },
-                {
-                    text: '<b>' + gettext("Save") + '</b>',
-                    type: 'button-positive',
-                    onTap: function () {
-                        $scope.updateAccountData.updatedExp
-                            = $scope.updateAccountData.updatedExp
-                            + $scope.additions.exp * $scope.additions.expMultiplier
-                        return $scope.updateAccountData.updatedExp;
-                    }
-                }
-            ]
-        }).then(function (result) {
-            $scope.updateAccount(account, "exp", result);
-        })
-    };
-
-    // Update LP
-    $scope.openUpdateLp = function (account) {
-        $scope.reset_subtractions();
-        $scope.updateAccountData.updatedLp = account.lp;
-        $ionicPopup.show({
-            templateUrl: "templates/update-lp.html",
-            title: "Enter your updated LP",
-            scope: $scope,
-            buttons: [
-                {
-                    text: gettext("Cancel")
-                },
-                {
-                    text: gettext("Clear"),
-                    onTap: function (e) {
-                        e.preventDefault();
-                        $scope.updateAccountData.updatedLp = 0;
-                    }
-                },
-                {
-                    text: '<b>' + gettext("Save") + '</b>',
-                    type: 'button-positive',
-                    onTap: function () {
-                        $scope.updateAccountData.updatedLp
-                            = $scope.updateAccountData.updatedLp
-                            - $scope.subtractions.lp * $scope.subtractions.lpMultiplier;
-                        return $scope.updateAccountData.updatedLp;
-                    }
-                }
-            ]
-        }).then(function (result) {
-            $scope.updateAccount(account, "lp", result);
-        })
-    };
-
-    // Update Loveca
     $scope.openUpdateLoveca = function (account) {
         $scope.reset_subtractions();
         $scope.updateAccountData.updatedLoveca = account.loveca;
         $ionicPopup.show({
             templateUrl: 'templates/update-loveca.html',
-            title: "Enter your updated Love gems",
+            title: "Updated Love gems",
             scope: $scope,
             buttons: [
                 {
