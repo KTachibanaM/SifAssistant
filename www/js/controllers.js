@@ -10,7 +10,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 .controller('AppCtrl', function($scope, $ionicModal, Accounts, Regions) {
     $scope.regions = Regions.get();
 
-    // Add account
+    /**
+     * Add account
+     */
     $scope.reset_new_account = function () {
         $scope.newAccount = {
             alias: "",
@@ -57,7 +59,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 })
 
 .controller('AccountsCtrl', function ($scope, $interval, $ionicModal, $ionicPopup, Accounts, FREQUENT, INFREQUENT, gettext) {
-    // Show frequently refreshed data
+    /**
+     * Show frequently refreshed data
+     */
     $scope.refreshFrequent = function () {
         $scope.frequentRefreshData = Accounts.getFrequentRefreshData();
     };
@@ -66,7 +70,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     $interval($scope.refreshFrequent, FREQUENT);
 
-    // Show infrequently refreshed data
+    /**
+     * Show infrequently refreshed data
+     */
     $scope.refreshInfrequent = function () {
         Accounts.refreshInfrequentData();
         $scope.refresh();
@@ -76,7 +82,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     $interval($scope.refreshInfrequent, INFREQUENT);
 
-    // Show accounts
+    /**
+     * Show accounts
+     */
     $scope.refresh = function () {
         $scope.accounts = Accounts.get();
     };
@@ -87,7 +95,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.refresh();
     });
 
-    // Update accounts
+    /**
+     * Update level/exp/lp
+     */
     $scope.updateAccountData = {
         updatedLevel: 0,
         updatedExp: 0,
@@ -109,6 +119,18 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.updateModal.show();
     };
 
+    $scope.closeUpdate = function () {
+        $scope.updateModal.hide();
+    };
+
+    $scope.$on('$destroy', function() {
+        $scope.updateModal.remove();
+    });
+
+
+    /**
+     * Update loveca
+     */
     $scope.reset_subtractions = function () {
         $scope.subtractions = {
             loveca: 0,
@@ -151,7 +173,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         })
     };
 
-    // Update bonus
+    /**
+     * Update bonus
+     */
     $scope.toggleBonus = function (account) {
         $scope.updateAccount(account, "has_claimed_bonus", account.has_claimed_bonus);
     };
@@ -162,7 +186,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         }
     };
 
-    // Delete account
+    /**
+     * Delete account
+     */
     $scope.openDeleteAccount = function (account) {
         $ionicPopup.confirm({
             title: gettext('Delete account'),
@@ -192,7 +218,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 })
 
 .controller('AlertsCtrl', function ($scope, Accounts) {
-    // Show accounts
+    /**
+     * Show accounts
+     */
     $scope.refresh = function () {
         $scope.accounts = Accounts.get();
     };
@@ -203,7 +231,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     $scope.refresh();
 
-    // Update account
+    /**
+     * Update accounts
+     */
     $scope.toggleLpAlerts = function (account) {
         $scope.updateAccount(account, "alerts_lp", account.alerts_lp);
     };
