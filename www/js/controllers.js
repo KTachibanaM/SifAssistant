@@ -111,49 +111,49 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     $scope.SONG_TYPES = [
         {
             id: "easy",
-            name: "Easy",
+            name: gettext("Easy"),
             expAddition: 12,
             lpSubtraction: 5
         },
         {
             id: "medium",
-            name: "Medium",
+            name: gettext("Medium"),
             expAddition: 26,
             lpSubtraction: 10
         },
         {
             id: "hard",
-            name: "Hard",
+            name: gettext("Hard"),
             expAddition: 46,
             lpSubtraction: 15
         },
         {
             id: "expert",
-            name: "Expert",
+            name: gettext("Expert"),
             expAddition: 83,
             lpSubtraction: 25
         },
         {
             id: "easyInEvent",
-            name: "Easy in event",
+            name: gettext("Easy in event"),
             expAddition: 12,
             lpSubtraction: 2
         },
         {
             id: "mediumInEvent",
-            name: "Medium in event",
+            name: gettext("Medium in event"),
             expAddition: 26,
             lpSubtraction: 8
         },
         {
             id: "hardInEvent",
-            name: "Hard in event",
+            name: gettext("Hard in event"),
             expAddition: 46,
             lpSubtraction: 12
         },
         {
             id: "expertInEvent",
-            name: "Expert in event",
+            name: gettext("Expert in event"),
             expAddition: 83,
             lpSubtraction: 20
         }
