@@ -1,21 +1,29 @@
-<div class="row">
-    <div class="col">
-        <input type="number" ng-model="updateAccountData.updatedLoveca">
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <translate>Or subtract by</translate>
-        <select ng-model="subtractions.loveca">
-            <option value="0">0</option>
-            <option translate value="5">5 (1 scout)</option>
-            <option translate value="50">50 (11 scouts)</option>
-        </select>
-    </div>
-</div>
-<div class="row">
-    <div class="col">
-        <translate>with multiplier</translate>
-        <input type="number" ng-model="subtractions.lovecaMultiplier">
-    </div>
-</div>
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title" translate>Update Love gems</h1>
+        <button ng-click="closeUpdateLoveca()" class="button button-icon button-clear ion-close"></button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="row">
+            <div class="col">
+                <input type="number" ng-model="updateAccountData.updatedLoveca">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <translate>Or subtract by</translate>
+                <select ng-model="subtractions.loveca">
+                    <option value="0">0</option>
+                    <option translate value="5">5 (1 scout)</option>
+                    <option translate value="50">50 (11 scouts)</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <translate>with multiplier</translate>
+                <input type="number" ng-model="subtractions.lovecaMultiplier">
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>

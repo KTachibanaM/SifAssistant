@@ -58,7 +58,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $interval, $ionicModal, $ionicPopup, Accounts, FREQUENT, INFREQUENT, gettext) {
+.controller('AccountsCtrl', function ($scope, $interval, $ionicModal, Accounts, FREQUENT, INFREQUENT, gettext) {
     /**
      * Show frequently refreshed data
      */
@@ -127,7 +127,6 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.updateModal.remove();
     });
 
-
     /**
      * Update loveca
      */
@@ -137,41 +136,28 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             lovecaMultiplier: 0
         };
     };
+
     $scope.reset_subtractions();
+
+    $ionicModal.fromTemplateUrl('templates/update-loveca.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function (modal) {
+        $scope.updateLovecaModal = modal;
+    });
 
     $scope.openUpdateLoveca = function (account) {
         $scope.reset_subtractions();
-        $scope.updateAccountData.updatedLoveca = account.loveca;
-        $ionicPopup.show({
-            templateUrl: 'templates/update-loveca.html',
-            title: "Updated Love gems",
-            scope: $scope,
-            buttons: [
-                {
-                    text: gettext("Cancel")
-                },
-                {
-                    text: gettext("Clear"),
-                    onTap: function (e) {
-                        e.preventDefault();
-                        $scope.updateAccountData.updatedLoveca = 0;
-                    }
-                },
-                {
-                    text: '<b>' + gettext("Save") + '</b>',
-                    type: 'button-positive',
-                    onTap: function () {
-                        $scope.updateAccountData.updatedLoveca
-                            = $scope.updateAccountData.updatedLoveca
-                            - $scope.subtractions.loveca * $scope.subtractions.lovecaMultiplier;
-                        return $scope.updateAccountData.updatedLoveca;
-                    }
-                }
-            ]
-        }).then(function (result) {
-            $scope.updateAccount(account, "loveca", result);
-        })
+        $scope.updateLovecaModal.show();
     };
+
+    $scope.closeUpdateLoveca = function () {
+        $scope.updateLovecaModal.hide();
+    };
+
+    $scope.$on('$destroy', function() {
+        $scope.updateLovecaModal.remove();
+    });
 
     /**
      * Update bonus
