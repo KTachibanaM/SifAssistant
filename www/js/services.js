@@ -404,4 +404,4 @@ angular.module('sif-assistant.services', [])
             return this.get()[index].timezone;
         }
     }
-}])
+}]);

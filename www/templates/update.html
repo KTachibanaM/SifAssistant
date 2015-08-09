@@ -4,6 +4,30 @@
         <button ng-click="closeUpdate()" class="button button-icon button-clear ion-close"></button>
     </ion-header-bar>
     <ion-content>
-
+        <div class="list">
+            <div class="item">
+                <p>You just played</p>
+                <div ng-repeat="type in SONG_TYPES" class="row">
+                    <div class="col">
+                        {{type.name}}
+                        <p translate>+{{type.expAddition}} EXP, -{{type.lpSubtraction}} LP</p>
+                    </div>
+                    <input type="number" ng-model="buffer[type.id]">
+                </div>
+            </div>
+            <div class="item item-input">
+                <span class="input-label" translate>Rank</span>
+                <input type="number" ng-model="updatingAccount.level">
+            </div>
+            <div class="item item-input">
+                <span class="input-label" translate>EXP</span>
+                <input type="number" ng-model="updatingAccount.exp">
+            </div>
+            <div class="item item-input">
+                <span class="input-label">LP</span>
+                <input type="number" ng-model="updatingAccount.lp">
+            </div>
+        </div>
+        <button class="button button-block button-positive" ng-click="save()" translate>Save</button>
     </ion-content>
 </ion-modal-view>

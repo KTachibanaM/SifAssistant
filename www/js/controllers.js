@@ -108,6 +108,71 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     /**
      * Update level/exp/lp
      */
+    $scope.SONG_TYPES = [
+        {
+            id: "easy",
+            name: "Easy",
+            expAddition: 12,
+            lpSubtraction: 5
+        },
+        {
+            id: "medium",
+            name: "Medium",
+            expAddition: 26,
+            lpSubtraction: 10
+        },
+        {
+            id: "hard",
+            name: "Hard",
+            expAddition: 46,
+            lpSubtraction: 15
+        },
+        {
+            id: "expert",
+            name: "Expert",
+            expAddition: 83,
+            lpSubtraction: 25
+        },
+        {
+            id: "easyInEvent",
+            name: "Easy in event",
+            expAddition: 12,
+            lpSubtraction: 2
+        },
+        {
+            id: "mediumInEvent",
+            name: "Medium in event",
+            expAddition: 26,
+            lpSubtraction: 8
+        },
+        {
+            id: "hardInEvent",
+            name: "Hard in event",
+            expAddition: 46,
+            lpSubtraction: 12
+        },
+        {
+            id: "expertInEvent",
+            name: "Expert in event",
+            expAddition: 83,
+            lpSubtraction: 20
+        }
+    ];
+
+    $scope.SONG_TYPES_OBJ = {};
+    $scope.SONG_TYPES.forEach(function (type) {
+        $scope.SONG_TYPES_OBJ[type.id] = type;
+    });
+
+    $scope.reset_buffer = function () {
+        $scope.buffer = {};
+        $scope.SONG_TYPES.forEach(function (type) {
+            $scope.buffer[type.id] = 0;
+        })
+    };
+
+    $scope.reset_buffer();
+
     $ionicModal.fromTemplateUrl('templates/update.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -116,6 +181,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 
     $scope.openUpdate = function (account) {
+        $scope.reset_buffer();
         $scope.updatingAccount = account;
         $scope.updateModal.show();
     };
