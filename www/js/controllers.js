@@ -56,7 +56,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $interval, $ionicPopup, Accounts, FREQUENT, INFREQUENT, gettext) {
+.controller('AccountsCtrl', function ($scope, $interval, $ionicModal, $ionicPopup, Accounts, FREQUENT, INFREQUENT, gettext) {
     // Show frequently refreshed data
     $scope.refreshFrequent = function () {
         $scope.frequentRefreshData = Accounts.getFrequentRefreshData();
@@ -95,27 +95,18 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         updatedLoveca: 0
     };
 
+    $ionicModal.fromTemplateUrl('templates/update.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function (modal) {
+        $scope.updateModal = modal;
+    });
+
     $scope.openUpdate = function (account) {
         $scope.updateAccountData.updatedLevel = account.level;
         $scope.updateAccountData.updatedExp = account.exp;
         $scope.updateAccountData.updatedLp = account.lp;
-        $ionicPopup.show({
-            templateUrl: "templates/update.html",
-            title: gettext("Update rank/EXP/LP"),
-            scope: $scope,
-            buttons: [
-                {
-                    text: gettext("Cancel")
-                },
-                {
-                    text: '<b>' + gettext("Save") + '</b>',
-                    type: 'button-positive',
-                    onTap: function() {
-
-                    }
-                }
-            ]
-        })
+        $scope.updateModal.show();
     };
 
     $scope.reset_subtractions = function () {
