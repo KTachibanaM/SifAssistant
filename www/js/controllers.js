@@ -58,7 +58,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $interval, $ionicModal, Accounts, FREQUENT, INFREQUENT, gettext) {
+.controller('AccountsCtrl', function ($scope, $interval, $ionicModal, $ionicPopup, Accounts, FREQUENT, INFREQUENT, gettext) {
     /**
      * Show frequently refreshed data
      */
@@ -103,9 +103,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             $scope.refresh();
         }
     };
-
     $scope.updatingAccount = {};
-
 
     /**
      * Update level/exp/lp
