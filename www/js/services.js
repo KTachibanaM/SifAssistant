@@ -131,7 +131,8 @@ angular.module('sif-assistant.services', [])
         33: 596
     };
     return {
-        getMaxLpByLevel: function (level) {
+        getMaxLpByLevel: function (account) {
+            var level = account.level;
             return 25 + Math.floor(Math.min(level, 300) / 2) + Math.floor(Math.max((level - 300), 0) / 3);
         },
         getMaxExpByLevel: function(account) {
@@ -144,6 +145,9 @@ angular.module('sif-assistant.services', [])
             {
                 return base_exp;
             }
+        },
+        updateAccountByExpDelta: function (account, exp_delta) {
+
         }
     }
 })
@@ -159,7 +163,7 @@ angular.module('sif-assistant.services', [])
         get: function () {
             return this.getRaw().map(function (account) {
                 account.max_exp = Calculators.getMaxExpByLevel(account);
-                account.max_lp = Calculators.getMaxLpByLevel(account.level);
+                account.max_lp = Calculators.getMaxLpByLevel(account);
                 return account;
             });
         },
@@ -310,7 +314,7 @@ angular.module('sif-assistant.services', [])
         incrementAllLp: function (now) {
             var current_accounts = this.getRaw().map(function (account) {
                 var current_lp = account.lp;
-                var max_lp = Calculators.getMaxLpByLevel(account.level);
+                var max_lp = Calculators.getMaxLpByLevel(account);
                 if (current_lp === max_lp) {
                     account.last_lp_update = now;
                     return account;
@@ -346,7 +350,7 @@ angular.module('sif-assistant.services', [])
         },
         calculateOneLpTimeRemaining: function (account, now) {
             var current_lp = account.lp;
-            var max_lp = Calculators.getMaxLpByLevel(account.level);
+            var max_lp = Calculators.getMaxLpByLevel(account);
             if (current_lp === max_lp) {
                 return -1;
             }

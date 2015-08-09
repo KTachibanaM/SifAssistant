@@ -7,12 +7,12 @@
         <div class="list">
             <div class="item">
                 <p translate>You just played</p>
-                <div ng-repeat="type in SONG_TYPES" class="row">
+                <div ng-repeat="song_type in SONG_TYPES" class="row">
                     <div class="col">
-                        {{type.name}}
-                        <p translate>+{{type.expAddition}} EXP, -{{type.lpSubtraction}} LP</p>
+                        {{song_type.name}}
+                        <p translate>+{{song_type.expAddition}} EXP, -{{song_type.lpSubtraction}} LP</p>
                     </div>
-                    <input type="number" ng-model="buffer[type.id]">
+                    <input type="number" ng-model="buffer[song_type.id]">
                 </div>
             </div>
             <div class="item item-input">

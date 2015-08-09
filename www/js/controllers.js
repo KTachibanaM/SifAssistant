@@ -59,7 +59,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 })
 
 .controller('AccountsCtrl', function
-        ($scope, $interval, $ionicModal, $ionicPopup, Accounts, FREQUENT, INFREQUENT, SongTypes, gettext)
+        ($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, FREQUENT, INFREQUENT, SongTypes, gettext)
     {
     /**
      * Show frequently refreshed data
@@ -141,6 +141,28 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     $scope.closeUpdate = function () {
         $scope.updateModal.hide();
+    };
+
+    $scope.save = function () {
+        var exp_delta = 0;
+        var lp_delta = 0;
+        for (var song_type in $scope.buffer) {
+            if ($scope.buffer.hasOwnProperty(song_type)) {
+                var exp_addition = $scope.SONG_TYPES_OBJ[song_type].expAddition;
+                exp_delta += $scope.buffer[song_type] * exp_addition;
+                var lp_subtraction = $scope.SONG_TYPES_OBJ[song_type].lpSubtraction;
+                lp_delta -= $scope.buffer[song_type] * lp_subtraction;
+            }
+        }
+
+        // TODO
+        var updated_account = Calculators.updateAccountByExpDelta($scope.updatingAccount, exp_delta);
+        console.log(updated_account);
+
+        var new_lp = $scope.updatingAccount.lp + lp_delta;
+        $scope.updateAccount($scope.updatingAccount, "lp", new_lp);
+
+        $scope.closeUpdate();
     };
 
     $scope.$on('$destroy', function() {
