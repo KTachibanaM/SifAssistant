@@ -96,15 +96,20 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 
     /**
-     * Update level/exp/lp
+     * Update accounts
      */
-    $scope.updateAccountData = {
-        updatedLevel: 0,
-        updatedExp: 0,
-        updatedLp: 0,
-        updatedLoveca: 0
+    $scope.updateAccount = function (account, key, newData) {
+        if (Accounts.updateAccount(account, key, newData)) {
+            $scope.refresh();
+        }
     };
 
+    $scope.updatingAccount = {};
+
+
+    /**
+     * Update level/exp/lp
+     */
     $ionicModal.fromTemplateUrl('templates/update.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -113,9 +118,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 
     $scope.openUpdate = function (account) {
-        $scope.updateAccountData.updatedLevel = account.level;
-        $scope.updateAccountData.updatedExp = account.exp;
-        $scope.updateAccountData.updatedLp = account.lp;
+        $scope.updatingAccount = account;
         $scope.updateModal.show();
     };
 
@@ -130,14 +133,16 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     /**
      * Update loveca
      */
-    $scope.reset_subtractions = function () {
-        $scope.subtractions = {
-            loveca: 0,
-            lovecaMultiplier: 0
+    $scope.reset_loveca_buffer = function () {
+        $scope.lovecaBuffer = {
+            subtraction: 0,
+            subtractionMultiplier: 0,
+            addition: 0,
+            additionMultiplier: 0
         };
     };
 
-    $scope.reset_subtractions();
+    $scope.reset_loveca_buffer();
 
     $ionicModal.fromTemplateUrl('templates/update-loveca.html', {
         scope: $scope,
@@ -147,12 +152,29 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 
     $scope.openUpdateLoveca = function (account) {
-        $scope.reset_subtractions();
+        $scope.reset_loveca_buffer();
+        $scope.updatingAccount = account;
         $scope.updateLovecaModal.show();
     };
 
     $scope.closeUpdateLoveca = function () {
         $scope.updateLovecaModal.hide();
+    };
+
+    $scope.saveLoveca = function () {
+        var current_loveca = $scope.updatingAccount.loveca;
+        var loveca_delta
+            = $scope.lovecaBuffer.addition
+            * $scope.lovecaBuffer.additionMultiplier
+            - $scope.lovecaBuffer.subtraction
+            * $scope.lovecaBuffer.subtractionMultiplier;
+        var new_loveca = current_loveca + loveca_delta;
+        $scope.updateAccount(
+            $scope.updatingAccount,
+            "loveca",
+            new_loveca
+        );
+        $scope.closeUpdateLoveca();
     };
 
     $scope.$on('$destroy', function() {
@@ -164,12 +186,6 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
      */
     $scope.toggleBonus = function (account) {
         $scope.updateAccount(account, "has_claimed_bonus", account.has_claimed_bonus);
-    };
-
-    $scope.updateAccount = function (account, key, newData) {
-        if (Accounts.updateAccount(account, key, newData)) {
-            $scope.refresh();
-        }
     };
 
     /**

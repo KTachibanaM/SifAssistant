@@ -4,26 +4,41 @@
         <button ng-click="closeUpdateLoveca()" class="button button-icon button-clear ion-close"></button>
     </ion-header-bar>
     <ion-content>
-        <div class="row">
-            <div class="col">
-                <input type="number" ng-model="updateAccountData.updatedLoveca">
+        <div class="list">
+            <div class="item item-input">
+                <span class="input-label" translate>Love gems</span>
+                <input type="number" ng-model="updatingAccount.loveca">
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <translate>Or subtract by</translate>
-                <select ng-model="subtractions.loveca">
+            <div class="item item-input item-select">
+                <span class="input-label" translate>Or subtract by</span>
+                <select ng-model="lovecaBuffer.subtraction">
                     <option value="0">0</option>
                     <option translate value="5">5 (1 scout)</option>
                     <option translate value="50">50 (11 scouts)</option>
                 </select>
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <translate>with multiplier</translate>
-                <input type="number" ng-model="subtractions.lovecaMultiplier">
+            <div class="item item-input">
+                <span class="input-label" translate>with multiplier</span>
+                <input type="number" ng-model="lovecaBuffer.subtractionMultiplier">
+            </div>
+            <div class="item item-input item-select">
+                <span class="input-label" translate>Or add by</span>
+                <select ng-model="lovecaBuffer.addition">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="5">5</option>
+                    <option value="9">9</option>
+                    <option value="15">15</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="86">86</option>
+                </select>
+            </div>
+            <div class="item item-input">
+                <span class="input-label" translate>with multiplier</span>
+                <input type="number" ng-model="lovecaBuffer.additionMultiplier">
             </div>
         </div>
+        <button class="button button-block button-positive" ng-click="saveLoveca()" translate>Save</button>
     </ion-content>
 </ion-modal-view>
