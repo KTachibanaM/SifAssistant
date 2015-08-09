@@ -404,4 +404,61 @@ angular.module('sif-assistant.services', [])
             return this.get()[index].timezone;
         }
     }
+}])
+
+.factory('SongTypes', ['gettext', function (gettext) {
+    return {
+        get: function () {
+            return [
+                {
+                    id: "easy",
+                    name: gettext("Easy"),
+                    expAddition: 12,
+                    lpSubtraction: 5
+                },
+                {
+                    id: "medium",
+                    name: gettext("Medium"),
+                    expAddition: 26,
+                    lpSubtraction: 10
+                },
+                {
+                    id: "hard",
+                    name: gettext("Hard"),
+                    expAddition: 46,
+                    lpSubtraction: 15
+                },
+                {
+                    id: "expert",
+                    name: gettext("Expert"),
+                    expAddition: 83,
+                    lpSubtraction: 25
+                },
+                {
+                    id: "easyInEvent",
+                    name: gettext("Easy in event"),
+                    expAddition: 12,
+                    lpSubtraction: 2
+                },
+                {
+                    id: "mediumInEvent",
+                    name: gettext("Medium in event"),
+                    expAddition: 26,
+                    lpSubtraction: 8
+                },
+                {
+                    id: "hardInEvent",
+                    name: gettext("Hard in event"),
+                    expAddition: 46,
+                    lpSubtraction: 12
+                },
+                {
+                    id: "expertInEvent",
+                    name: gettext("Expert in event"),
+                    expAddition: 83,
+                    lpSubtraction: 20
+                }
+            ];
+        }
+    }
 }]);

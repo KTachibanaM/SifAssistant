@@ -58,7 +58,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
-.controller('AccountsCtrl', function ($scope, $interval, $ionicModal, $ionicPopup, Accounts, FREQUENT, INFREQUENT, gettext) {
+.controller('AccountsCtrl', function
+        ($scope, $interval, $ionicModal, $ionicPopup, Accounts, FREQUENT, INFREQUENT, SongTypes, gettext)
+    {
     /**
      * Show frequently refreshed data
      */
@@ -108,56 +110,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     /**
      * Update level/exp/lp
      */
-    $scope.SONG_TYPES = [
-        {
-            id: "easy",
-            name: gettext("Easy"),
-            expAddition: 12,
-            lpSubtraction: 5
-        },
-        {
-            id: "medium",
-            name: gettext("Medium"),
-            expAddition: 26,
-            lpSubtraction: 10
-        },
-        {
-            id: "hard",
-            name: gettext("Hard"),
-            expAddition: 46,
-            lpSubtraction: 15
-        },
-        {
-            id: "expert",
-            name: gettext("Expert"),
-            expAddition: 83,
-            lpSubtraction: 25
-        },
-        {
-            id: "easyInEvent",
-            name: gettext("Easy in event"),
-            expAddition: 12,
-            lpSubtraction: 2
-        },
-        {
-            id: "mediumInEvent",
-            name: gettext("Medium in event"),
-            expAddition: 26,
-            lpSubtraction: 8
-        },
-        {
-            id: "hardInEvent",
-            name: gettext("Hard in event"),
-            expAddition: 46,
-            lpSubtraction: 12
-        },
-        {
-            id: "expertInEvent",
-            name: gettext("Expert in event"),
-            expAddition: 83,
-            lpSubtraction: 20
-        }
-    ];
+    $scope.SONG_TYPES = SongTypes.get();
 
     $scope.SONG_TYPES_OBJ = {};
     $scope.SONG_TYPES.forEach(function (type) {
