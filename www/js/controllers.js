@@ -349,4 +349,5 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     }
     $scope.platform = ionic.Platform.platform();
     $scope.platform_version = ionic.Platform.version();
+    $scope.locale = navigator.language || navigator.userLanguage;
 });
