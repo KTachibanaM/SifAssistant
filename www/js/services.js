@@ -147,7 +147,20 @@ angular.module('sif-assistant.services', [])
             }
         },
         updateAccountByExpDelta: function (account, exp_delta) {
-
+            while (exp_delta > 0) {
+                var exp_left_for_this_level = this.getMaxExpByLevel(account) - account.exp;
+                if (exp_left_for_this_level - exp_delta >= 0) {
+                    account.exp = account.exp + exp_delta;
+                    exp_delta = 0;
+                }
+                else
+                {
+                    exp_delta = exp_delta - exp_left_for_this_level;
+                    account.exp = 0;
+                    account.level = account.level + 1;
+                }
+            }
+            return account;
         }
     }
 })

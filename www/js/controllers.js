@@ -157,7 +157,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         // TODO
         var updated_account = Calculators.updateAccountByExpDelta($scope.updatingAccount, exp_delta);
-        console.log(updated_account);
+        $scope.updateAccount($scope.updatingAccount, "level", updated_account.level);
+        $scope.updateAccount($scope.updatingAccount, "exp", updated_account.exp);
 
         var new_lp = $scope.updatingAccount.lp + lp_delta;
         $scope.updateAccount($scope.updatingAccount, "lp", new_lp);
