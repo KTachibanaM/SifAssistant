@@ -29,15 +29,17 @@ angular.module('sif-assistant.services', [])
     return {
         schedule: function (id, text, time, every) {
             id = this.processId(id);
-            every = every !== undefined ? every : 0;
-            time = time !== undefined ? time : 0;
             var options = {
                 id: id,
                 title: "SIF Assistant",
-                text: text,
-                at: time,
-                every: every
+                text: text
             };
+            if (time) {
+                options.at = time;
+            }
+            if (every) {
+                options.every = every;
+            }
             if (isBrowser) {
                 console.log("Schedule native notification");
                 console.log(options)
