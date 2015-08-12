@@ -22,8 +22,8 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
     });
 })
 
-.run(function (gettextCatalog) {
-    var locale = (navigator.language || navigator.userLanguage).replace("-", "_");
+.run(function (gettextCatalog, Platform) {
+    var locale = Platform.getLocale();
     gettextCatalog.loadRemote("js/translations/" + locale + ".json");
     gettextCatalog.setCurrentLanguage(locale);
 })

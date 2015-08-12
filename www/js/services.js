@@ -9,6 +9,14 @@ String.prototype.hashCode = function() {
     return hash;
 };
 
+String.prototype.contains = function(it) {
+    return this.indexOf(it) != -1;
+};
+
+String.prototype.containsIgnoreCase = function(it) {
+    return this.toUpperCase().contains(it.toUpperCase());
+};
+
 angular.module('sif-assistant.services', [])
 
 .factory('$localStorage', ['$window', function($window) {
@@ -485,4 +493,36 @@ angular.module('sif-assistant.services', [])
             ];
         }
     }
-}]);
+}])
+
+.factory("Platform", function () {
+    const LOCALE_CONVERSION_MAP = [
+        {
+            if_contains: ["zh", "CN"],
+            maps_to: "zh_CN"
+        }
+    ];
+    return {
+        getLocale: function () {
+            var raw_locale_string = (navigator.language || navigator.userLanguage).toUpperCase();
+            if (!raw_locale_string) {
+                return undefined;
+            }
+            var locale_matches = function (if_contains, locale) {
+                return if_contains.reduce(function (prev, cur) {
+                    if (typeof prev === "string") {
+                        prev = locale.containsIgnoreCase(prev);
+                    }
+                    return prev && locale.containsIgnoreCase(cur);
+                })
+            };
+            var matched_locale = undefined;
+            LOCALE_CONVERSION_MAP.forEach(function (item) {
+                if (locale_matches(item.if_contains, raw_locale_string)) {
+                    matched_locale = item.maps_to;
+                }
+            });
+            return matched_locale;
+        }
+    }
+});
