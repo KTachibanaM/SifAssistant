@@ -92,9 +92,9 @@ angular.module('sif-assistant.services', [])
             }
         },
         processId: function (id) {
-            if (isBrowser) return id;
-            if (ionic.Platform.isIOS()) return id;
-            else return id.hashCode();
+            //if (isBrowser) return id;
+            //if (ionic.Platform.isIOS()) return id;
+            return id.hashCode();
         }
     }
 })
