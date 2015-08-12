@@ -455,7 +455,7 @@ angular.module('sif-assistant.services', [])
                     id: "easyInEvent",
                     name: gettext("Easy in event"),
                     expAddition: 12,
-                    lpSubtraction: 2
+                    lpSubtraction: 4
                 },
                 {
                     id: "mediumInEvent",
