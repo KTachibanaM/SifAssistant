@@ -28,7 +28,7 @@ angular.module('sif-assistant.services', [])
 .factory('NativeNotification', function (isBrowser) {
     return {
         schedule: function (id, text, time, every) {
-            id = processId(id);
+            id = this.processId(id);
             every = every !== undefined ? every : 0;
             time = time !== undefined ? time : 0;
             var options = {
@@ -48,7 +48,7 @@ angular.module('sif-assistant.services', [])
             }
         },
         cancel: function (id) {
-            id = processId(id);
+            id = this.processId(id);
             if (isBrowser) {
                 console.log("Cancel native notification");
                 console.log(id)
@@ -69,7 +69,7 @@ angular.module('sif-assistant.services', [])
             }
         },
         isPresent: function (id, callback) {
-            id = processId(id);
+            id = this.processId(id);
             if (isBrowser) {
                 console.log("isPresent is unimplemented, always return true");
                 callback(true);
