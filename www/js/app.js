@@ -28,6 +28,22 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
     gettextCatalog.setCurrentLanguage(locale);
 })
 
+.config(function ($ionicConfigProvider, isBrowser) {
+    var nativeScrollingApplicable = function () {
+        if (isBrowser) {
+            return true;
+        }
+        if (ionic.Platform.isIOS()) {
+            return false;
+        }
+        if (ionic.Platform.isAndroid()) {
+            return ionic.Platform.version() >= 4.4;
+        }
+        return false;
+    };
+    $ionicConfigProvider.scrolling.jsScrolling(!nativeScrollingApplicable());
+})
+
 .constant("isBrowser", window.cordova === undefined)
 
 .constant("FREQUENT", 1000)
