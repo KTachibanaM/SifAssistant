@@ -58,9 +58,52 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     });
 })
 
+.filter('accountsFilter', function ($filter) {
+    return function (value, option) {
+        var name = option.name;
+        if (name) {
+            return $filter(option.name)(value);
+        }
+        else
+        {
+            return value;
+        }
+    }
+})
+
+.filter('hasNotClaimedDailyBonus', function () {
+    return function (accounts) {
+        var out = [];
+
+        accounts.forEach(function (account) {
+            if (!account.has_claimed_bonus) {
+                out.push(account);
+            }
+        });
+
+        return out;
+    }
+})
+
+.filter('fullLp', function (Calculators) {
+    return function (accounts) {
+        var out = [];
+
+        accounts.forEach(function (account) {
+            if (account.lp === Calculators.getMaxLpByLevel(account)) {
+                out.push(account);
+            }
+        });
+
+        return out;
+    }
+})
+
 .controller('AccountsCtrl', function
         ($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, FREQUENT, INFREQUENT, SongTypes, gettext)
     {
+    $scope.currentFilter = undefined;
+
     /**
      * Show frequently refreshed data
      */

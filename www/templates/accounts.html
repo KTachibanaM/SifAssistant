@@ -1,6 +1,6 @@
 <ion-view view-title="{{'Accounts'|translate}}">
   <ion-content>
-    <div class="card" ng-repeat="account in accounts">
+    <div class="card" ng-repeat="account in accounts | accountsFilter:{name: currentFilter}">
       <div class="item item-divider">
         {{account.alias}}
       </div>
