@@ -61,7 +61,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 .filter('accountsFilter', function ($filter) {
     return function (value, option) {
         var name = option.name;
-        if (name) {
+        if (name !== "All") {
             return $filter(option.name)(value);
         }
         else
@@ -102,7 +102,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 .controller('AccountsCtrl', function
         ($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, FREQUENT, INFREQUENT, SongTypes, gettext)
     {
-    $scope.currentFilter = undefined;
+    $scope.currentFilter = "All";
 
     /**
      * Show frequently refreshed data

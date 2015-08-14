@@ -1,5 +1,12 @@
 <ion-view view-title="{{'Accounts'|translate}}">
   <ion-content>
+    <div class="card">
+      <select ng-model="currentFilter">
+        <option value="All">All</option>
+        <option value="hasNotClaimedDailyBonus">Has not claimed daily bonus</option>
+        <option value="fullLp">Full LP</option>
+      </select>
+    </div>
     <div class="card" ng-repeat="account in accounts | accountsFilter:{name: currentFilter}">
       <div class="item item-divider">
         {{account.alias}}
