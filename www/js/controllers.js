@@ -153,21 +153,21 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     /**
      * Update level/exp/lp
      */
-    $scope.SONG_TYPES = SongTypes.get();
-
-    $scope.SONG_TYPES_OBJ = {};
-    $scope.SONG_TYPES.forEach(function (type) {
-        $scope.SONG_TYPES_OBJ[type.id] = type;
-    });
+    $scope.song_types = SongTypes.get();
 
     $scope.reset_buffer = function () {
-        $scope.buffer = {};
-        $scope.SONG_TYPES.forEach(function (type) {
-            $scope.buffer[type.id] = 0;
-        })
+        $scope.buffer = [];
     };
 
     $scope.reset_buffer();
+
+    $scope.addToBuffer = function (song_type) {
+        $scope.buffer.push(song_type);
+    };
+
+    $scope.removeFromBuffer = function (index) {
+        $scope.buffer.splice(index, 1);
+    };
 
     $ionicModal.fromTemplateUrl('templates/update.html', {
         scope: $scope,
@@ -187,24 +187,10 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 
     $scope.save = function () {
-        var exp_delta = 0;
-        var lp_delta = 0;
-        for (var song_type in $scope.buffer) {
-            if ($scope.buffer.hasOwnProperty(song_type)) {
-                var exp_addition = $scope.SONG_TYPES_OBJ[song_type].expAddition;
-                exp_delta += $scope.buffer[song_type] * exp_addition;
-                var lp_subtraction = $scope.SONG_TYPES_OBJ[song_type].lpSubtraction;
-                lp_delta -= $scope.buffer[song_type] * lp_subtraction;
-            }
-        }
-
-        // TODO
-        var updated_account = Calculators.updateAccountByExpDelta($scope.updatingAccount, exp_delta);
+        var updated_account = Calculators.updateAccountByExpDelta($scope.updatingAccount, $scope.buffer);
         $scope.updateAccount($scope.updatingAccount, "level", updated_account.level);
         $scope.updateAccount($scope.updatingAccount, "exp", updated_account.exp);
-
-        var new_lp = $scope.updatingAccount.lp + lp_delta;
-        $scope.updateAccount($scope.updatingAccount, "lp", new_lp);
+        $scope.updateAccount($scope.updatingAccount, "lp", updated_account.lp);
 
         $scope.closeUpdate();
     };

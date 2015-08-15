@@ -7,12 +7,18 @@
         <div class="list">
             <div class="item">
                 <p translate>You just played</p>
-                <div ng-repeat="song_type in SONG_TYPES" class="row">
-                    <div class="col">
+                <div ng-repeat="song_type in song_types" class="row">
+                    <button ng-click="addToBuffer(song_type)" class="button button-clear button-positive">
                         {{song_type.name}}
-                        <p translate>+{{song_type.expAddition}} EXP, -{{song_type.lpSubtraction}} LP</p>
-                    </div>
-                    <input type="number" ng-model="buffer[song_type.id]">
+                    </button>
+                </div>
+            </div>
+            <div class="item">
+                <p translate>Songs you played</p>
+                <div ng-repeat="song in buffer track by $index" class="row">
+                    <button ng-click="removeFromBuffer($index)" class="button button-clear button-assertive">
+                        {{song.name}}
+                    </button>
                 </div>
             </div>
             <div class="item item-input">
