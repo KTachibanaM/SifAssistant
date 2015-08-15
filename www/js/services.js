@@ -109,7 +109,7 @@ angular.module('sif-assistant.services', [])
     }
 })
 
-.factory('Calculators', function () {
+.factory('Calculators', function (Regions) {
     const BELOW_LEVEL_33_TO_EXP_MAPPING = {
         1: 11,
         2: 13,
@@ -153,7 +153,7 @@ angular.module('sif-assistant.services', [])
         getMaxExpByLevel: function(account) {
             var level = account.level;
             var base_exp = level <= 33 ? BELOW_LEVEL_33_TO_EXP_MAPPING[level] : Math.round(34.45 * level - 551);
-            if (account.region === "jp") {
+            if (Regions.getById(account.region).half_exp_before_100) {
                 return level < 100 ? Math.round(base_exp / 2) : base_exp;
             }
             else
@@ -161,18 +161,30 @@ angular.module('sif-assistant.services', [])
                 return base_exp;
             }
         },
-        updateAccountByExpDelta: function (account, exp_delta) {
-            while (exp_delta > 0) {
-                var exp_left_for_this_level = this.getMaxExpByLevel(account) - account.exp;
-                if (exp_left_for_this_level - exp_delta >= 0) {
-                    account.exp = account.exp + exp_delta;
-                    exp_delta = 0;
-                }
-                else
-                {
-                    exp_delta = exp_delta - exp_left_for_this_level;
-                    account.exp = 0;
-                    account.level = account.level + 1;
+        updateAccountSongsPlayed: function (account, songs) {
+            console.log(songs);
+            while (songs.length !== 0) {
+                var song = songs.shift();
+                var exp = song.expAddition;
+                var lp = song.lpSubtraction;
+                var not_leveling_up = true;
+                while (exp > 0) {
+                    var exp_left_for_this_level = this.getMaxExpByLevel(account) - account.exp;
+                    var exp_remainder = exp - exp_left_for_this_level;
+                    if (exp_remainder < 0) {
+                        account.exp = account.exp + exp;
+                        if (not_leveling_up) {
+                            account.lp = account.lp - lp;
+                        }
+                    }
+                    else
+                    {
+                        account.level = account.level + 1;
+                        account.exp = 0;
+                        account.lp = this.getMaxLpByLevel(account);
+                        not_leveling_up = false;
+                    }
+                    exp = exp_remainder;
                 }
             }
             return account;
@@ -214,8 +226,7 @@ angular.module('sif-assistant.services', [])
             return $localStorage.getArray(ACCOUNTS_KEY);
         },
         getAccountIndex: function (account) {
-            var current_accounts = this.getRaw();
-            var current_aliases = current_accounts.map(function (item) {
+            var current_aliases = this.getRaw().map(function (item) {
                 return item.alias
             });
             return current_aliases.indexOf(account.alias);
@@ -364,7 +375,7 @@ angular.module('sif-assistant.services', [])
         },
         checkAllBonus: function (now) {
             var current_accounts = this.getRaw().map(function (account) {
-                var timezone = Regions.getTimeZoneById(account.region);
+                var timezone = Regions.getById(account.region).timezone;
                 var last_bonus_update = account.last_bonus_update;
                 var last_bonus_update_tz = moment(last_bonus_update).tz(timezone);
                 var now_tz = moment(now).tz(timezone);
@@ -398,27 +409,32 @@ angular.module('sif-assistant.services', [])
                 {
                     id: "jp",
                     name: gettext("Japan"),
-                    timezone: "Asia/Tokyo"
+                    timezone: "Asia/Tokyo",
+                    half_exp_before_100: true
                 },
                 {
                     id: "cn",
                     name: gettext("China"),
-                    timezone: "Asia/Shanghai"
+                    timezone: "Asia/Shanghai",
+                    half_exp_before_100: false
                 },
                 {
                     id: "us",
                     name: gettext("United States"),
-                    timezone: "Etc/UTC"
+                    timezone: "Etc/UTC",
+                    half_exp_before_100: false
                 },
                 {
                     id: "kr",
                     name: gettext("Korea"),
-                    timezone: "Asia/Seoul"
+                    timezone: "Asia/Seoul",
+                    half_exp_before_100: false
                 },
                 {
                     id: "tw",
                     name: gettext("Taiwan"),
-                    timezone: "Asia/Taipei"
+                    timezone: "Asia/Taipei",
+                    half_exp_before_100: true
                 }
             ];
         },
@@ -428,12 +444,14 @@ angular.module('sif-assistant.services', [])
                 return region;
             })
         },
-        getTimeZoneById: function (id) {
+        getIndexById: function (id) {
             var ids = this.get().map(function (region) {
                 return region.id;
             });
-            var index = ids.indexOf(id);
-            return this.get()[index].timezone;
+            return ids.indexOf(id);
+        },
+        getById: function (id) {
+            return this.get()[this.getIndexById(id)];
         }
     }
 }])

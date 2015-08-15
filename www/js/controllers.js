@@ -187,7 +187,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     };
 
     $scope.save = function () {
-        var updated_account = Calculators.updateAccountByExpDelta($scope.updatingAccount, $scope.buffer);
+        var updated_account = Calculators.updateAccountSongsPlayed($scope.updatingAccount, $scope.buffer);
         $scope.updateAccount($scope.updatingAccount, "level", updated_account.level);
         $scope.updateAccount($scope.updatingAccount, "exp", updated_account.exp);
         $scope.updateAccount($scope.updatingAccount, "lp", updated_account.lp);
