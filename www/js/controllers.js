@@ -62,7 +62,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     return function (value, option) {
         var name = option.name;
         if (name !== "All") {
-            return $filter(option.name)(value);
+            return $filter(name)(value);
         }
         else
         {
