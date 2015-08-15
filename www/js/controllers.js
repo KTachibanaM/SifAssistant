@@ -100,7 +100,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 })
 
 .controller('AccountsCtrl', function
-        ($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, FREQUENT, INFREQUENT, SongTypes, gettext)
+        ($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, FREQUENT, INFREQUENT, SongTypes, gettextCatalog)
     {
     $scope.currentFilter = "All";
 
@@ -262,8 +262,21 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
      */
     $scope.openDeleteAccount = function (account) {
         $ionicPopup.confirm({
-            title: gettext('Delete account'),
-            templateUrl: 'templates/delete-account.html'
+            title: gettextCatalog.getString('Delete account'),
+            templateUrl: 'templates/delete-account.html',
+            scope: $scope,
+            buttons: [
+                {
+                    text: gettextCatalog.getString('Cancel')
+                },
+                {
+                    text: '<b>' + gettextCatalog.getString("Delete") + '</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        return true;
+                    }
+                }
+            ]
         }).then(function (yes) {
             if (yes) {
                 $scope.deleteAccount(account);

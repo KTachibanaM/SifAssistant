@@ -402,37 +402,37 @@ angular.module('sif-assistant.services', [])
     }
 }])
 
-.factory('Regions', ['gettext', function (gettext) {
+.factory('Regions', ['gettextCatalog', function (gettextCatalog) {
     return {
         getRaw: function () {
             return [
                 {
                     id: "jp",
-                    name: gettext("Japan"),
+                    name: gettextCatalog.getString("Japan"),
                     timezone: "Asia/Tokyo",
                     half_exp_before_100: true
                 },
                 {
                     id: "cn",
-                    name: gettext("China"),
+                    name: gettextCatalog.getString("China"),
                     timezone: "Asia/Shanghai",
                     half_exp_before_100: false
                 },
                 {
                     id: "us",
-                    name: gettext("United States"),
+                    name: gettextCatalog.getString("United States"),
                     timezone: "Etc/UTC",
                     half_exp_before_100: false
                 },
                 {
                     id: "kr",
-                    name: gettext("Korea"),
+                    name: gettextCatalog.getString("Korea"),
                     timezone: "Asia/Seoul",
                     half_exp_before_100: false
                 },
                 {
                     id: "tw",
-                    name: gettext("Taiwan"),
+                    name: gettextCatalog.getString("Taiwan"),
                     timezone: "Asia/Taipei",
                     half_exp_before_100: true
                 }
@@ -456,55 +456,55 @@ angular.module('sif-assistant.services', [])
     }
 }])
 
-.factory('SongTypes', ['gettext', function (gettext) {
+.factory('SongTypes', ['gettextCatalog', function (gettextCatalog) {
     return {
         get: function () {
             return [
                 {
                     id: "easy",
-                    name: gettext("Easy"),
+                    name: gettextCatalog.getString("Easy"),
                     expAddition: 12,
                     lpSubtraction: 5
                 },
                 {
                     id: "medium",
-                    name: gettext("Medium"),
+                    name: gettextCatalog.getString("Medium"),
                     expAddition: 26,
                     lpSubtraction: 10
                 },
                 {
                     id: "hard",
-                    name: gettext("Hard"),
+                    name: gettextCatalog.getString("Hard"),
                     expAddition: 46,
                     lpSubtraction: 15
                 },
                 {
                     id: "expert",
-                    name: gettext("Expert"),
+                    name: gettextCatalog.getString("Expert"),
                     expAddition: 83,
                     lpSubtraction: 25
                 },
                 {
                     id: "easyInEvent",
-                    name: gettext("Easy in event"),
+                    name: gettextCatalog.getString("Easy in event"),
                     expAddition: 12,
                     lpSubtraction: 4
                 },
                 {
                     id: "mediumInEvent",
-                    name: gettext("Medium in event"),
+                    name: gettextCatalog.getString("Medium in event"),
                     expAddition: 26,
                     lpSubtraction: 8
                 },
                 {
                     id: "hardInEvent",
-                    name: gettext("Hard in event"),
+                    name: gettextCatalog.getString("Hard in event"),
                     expAddition: 46,
                     lpSubtraction: 12
                 },
                 {
                     id: "expertInEvent",
-                    name: gettext("Expert in event"),
+                    name: gettextCatalog.getString("Expert in event"),
                     expAddition: 83,
                     lpSubtraction: 20
                 }
