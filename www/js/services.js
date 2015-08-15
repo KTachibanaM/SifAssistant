@@ -321,7 +321,7 @@ angular.module('sif-assistant.services', [])
                 const bonus_notification_id = this.getNativeNotificationId(account, "bonus");
                 if (account.alerts_bonus) {
                     var now = Date.now();
-                    var timezone = Regions.getTimeZoneById(account.region);
+                    var timezone = Regions.getById(account.region).timezone;
                     var now_tz = moment(now).tz(timezone);
                     var start_of_next_day_tz = now_tz.add(1, "days").tz(timezone);
                     start_of_next_day_tz.millisecond(0);
