@@ -483,30 +483,6 @@ angular.module('sif-assistant.services', [])
                     name: gettextCatalog.getString("Expert"),
                     expAddition: 83,
                     lpSubtraction: 25
-                },
-                {
-                    id: "easyInEvent",
-                    name: gettextCatalog.getString("Easy in event"),
-                    expAddition: 12,
-                    lpSubtraction: 4
-                },
-                {
-                    id: "mediumInEvent",
-                    name: gettextCatalog.getString("Medium in event"),
-                    expAddition: 26,
-                    lpSubtraction: 8
-                },
-                {
-                    id: "hardInEvent",
-                    name: gettextCatalog.getString("Hard in event"),
-                    expAddition: 46,
-                    lpSubtraction: 12
-                },
-                {
-                    id: "expertInEvent",
-                    name: gettextCatalog.getString("Expert in event"),
-                    expAddition: 83,
-                    lpSubtraction: 20
                 }
             ];
         }
