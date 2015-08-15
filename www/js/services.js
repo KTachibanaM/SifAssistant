@@ -456,38 +456,81 @@ angular.module('sif-assistant.services', [])
     }
 }])
 
-.factory('SongTypes', ['gettextCatalog', function (gettextCatalog) {
+.factory('SongTypes', ['gettextCatalog', 'EventTypes', function (gettextCatalog, EventTypes) {
+    const BASE_SONG_TYPES = [
+        {
+            id: "easy",
+            name: gettextCatalog.getString("Easy"),
+            expAddition: 12,
+            lpSubtraction: 5
+        },
+        {
+            id: "medium",
+            name: gettextCatalog.getString("Medium"),
+            expAddition: 26,
+            lpSubtraction: 10
+        },
+        {
+            id: "hard",
+            name: gettextCatalog.getString("Hard"),
+            expAddition: 46,
+            lpSubtraction: 15
+        },
+        {
+            id: "expert",
+            name: gettextCatalog.getString("Expert"),
+            expAddition: 83,
+            lpSubtraction: 25
+        }
+    ];
     return {
         get: function () {
-            return [
-                {
-                    id: "easy",
-                    name: gettextCatalog.getString("Easy"),
-                    expAddition: 12,
-                    lpSubtraction: 5
-                },
-                {
-                    id: "medium",
-                    name: gettextCatalog.getString("Medium"),
-                    expAddition: 26,
-                    lpSubtraction: 10
-                },
-                {
-                    id: "hard",
-                    name: gettextCatalog.getString("Hard"),
-                    expAddition: 46,
-                    lpSubtraction: 15
-                },
-                {
-                    id: "expert",
-                    name: gettextCatalog.getString("Expert"),
-                    expAddition: 83,
-                    lpSubtraction: 25
-                }
-            ];
+            var song_types = BASE_SONG_TYPES;
+            BASE_SONG_TYPES.forEach(function (base_song_type) {
+                EventTypes.get().forEach(function (event_type) {
+                    event_type.songMultipliers.forEach(function (song_multiplier) {
+                        song_types.push({
+                            id: base_song_type.id + "inEvent" + event_type.id + "withMultiplier" + song_multiplier,
+                            name: base_song_type.name + " (" + event_type.name + ")" + " x" + song_multiplier,
+                            expAddition: base_song_type.expAddition * song_multiplier,
+                            lpSubtraction: base_song_type.lpSubtraction * event_type.lpMultiplier * song_multiplier
+                        })
+                    })
+                });
+            });
+            return song_types;
         }
     }
 }])
+
+.factory("EventTypes", function (gettextCatalog) {
+    return {
+        get: function () {
+            return [
+                /**
+                {
+                    id: "tokenCollection",
+                    name: gettextCatalog.getString("Token collection"),
+                    songMultipliers: [1],
+                    lpMultiplier: 0
+                },
+                {
+                    id: "scoreMatch",
+                    name: gettextCatalog.getString("Score Match"),
+                    songMultipliers: [1],
+                    lpMultiplier: 1
+                },
+                **/
+                {
+                    id: "medleyFestival",
+                    name: gettextCatalog.getString("Medley Festival"),
+                    songMultipliers: [1, 2, 3],
+                    lpMultiplier: 0.8
+                }
+            ]
+        }
+    }
+})
 
 .factory("Platform", function () {
     const LOCALE_CONVERSION_MAP = [
