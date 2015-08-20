@@ -31,6 +31,41 @@
 		  </div>
 		</label>
 	  </div>
+	  <div class="item item-body">
+				<div class="list">
+					<div class="item item-input">
+						<span translate class="input-label">Enable LP alert</span>
+						<label class="toggle">
+							<input type="checkbox" ng-model="account.alerts_lp" ng-click="toggleLpAlerts(account)">
+							<div class="track">
+								<div class="handle"></div>
+							</div>
+						</label>
+					</div>
+					<div class="item item-input">
+						<span translate class="input-label">LP alert value</span>
+						<input type="number" ng-model="account.alerts_lp_value">
+					</div>
+					<div class="item">
+						<button translate class="button" ng-click="account.alerts_lp_value = account.max_lp">
+							Max
+						</button>
+
+						<button translate style="margin-left: 2px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
+							Save
+						</button>
+					</div>
+					<div class="item item-input">
+						<span translate class="input-label">Enable daily bonus alert</span>
+						<label class="toggle">
+							<input type="checkbox" ng-model="account.alerts_bonus" ng-click="toggleBonusAlerts(account)">
+							<div class="track">
+								<div class="handle"></div>
+							</div>
+						</label>
+					</div>
+				</div>
+			</div>
 	  <div class="item tabs tabs-secondary tabs-icon-left">
 		<a class="tab-item" ng-click="openUpdate(account)">
 		  <i class="icon ion-music-note"></i>

@@ -258,6 +258,21 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 	};
 
 	/**
+	 * Update alerts
+	 */
+	$scope.toggleLpAlerts = function (account) {
+		$scope.updateAccount(account, "alerts_lp", account.alerts_lp);
+	};
+
+	$scope.saveLpAlertsValue = function (account) {
+		$scope.updateAccount(account, "alerts_lp_value", account.alerts_lp_value);
+	};
+
+	$scope.toggleBonusAlerts = function (account) {
+		$scope.updateAccount(account, "alerts_bonus", account.alerts_bonus);
+	};
+
+	/**
 	 * Delete account
 	 */
 	$scope.openDeleteAccount = function (account) {
