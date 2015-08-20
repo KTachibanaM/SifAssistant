@@ -316,40 +316,6 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 	$interval($scope.refresh, FREQUENT);
 })
 
-.controller('AlertsCtrl', function ($scope, Accounts) {
-	/**
-	 * Show accounts
-	 */
-	$scope.refresh = function () {
-		$scope.accounts = Accounts.get();
-	};
-
-	$scope.$on('refresh', function () {
-		$scope.refresh();
-	});
-
-	$scope.refresh();
-
-	/**
-	 * Update accounts
-	 */
-	$scope.toggleLpAlerts = function (account) {
-		$scope.updateAccount(account, "alerts_lp", account.alerts_lp);
-	};
-
-	$scope.saveLpAlertsValue = function (account) {
-		$scope.updateAccount(account, "alerts_lp_value", account.alerts_lp_value);
-	};
-
-	$scope.toggleBonusAlerts = function (account) {
-		$scope.updateAccount(account, "alerts_bonus", account.alerts_bonus);
-	};
-
-	$scope.updateAccount = function (account, key, newData) {
-		Accounts.updateAccount(account, key, newData);
-	};
-})
-
 .controller('DebugCtrl', function ($scope, $interval, NativeNotification, FREQUENT) {
 	$scope.refresh = function () {
 		NativeNotification.getAll(function (notifications) {
