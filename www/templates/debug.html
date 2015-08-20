@@ -1,18 +1,18 @@
 <ion-view view-title="{{'Debug'|translate}}">
-    <ion-content>
-        <button class="button button-positive" ng-click="immediately()">Schedule notification immediately</button>
-        <button class="button button-positive" ng-click="five_seconds()">Schedule notification five seconds later</button>
-        <button class="button button-positive" ng-click="one_minute()">Schedule notification one minute later</button>
-        <button class="button button-positive" ng-click="every_second()">Schedule notification every second</button>
-        <ul class="list">
-            <li ng-repeat="notification in all_notifications" class="item">
-                <button ng-click="cancel(notification.id)" class="button">X</button>
-                <p>Id: {{notification.id}}</p>
-                <p>Title: {{notification.title}}</p>
-                <p>Text: {{notification.text}}</p>
-                <p>Every: {{notification.every}}</p>
-                <p>At: {{notification.at}}</p>
-            </li>
-        </ul>
-    </ion-content>
+	<ion-content>
+		<button class="button button-positive" ng-click="immediately()">Schedule notification immediately</button>
+		<button class="button button-positive" ng-click="five_seconds()">Schedule notification five seconds later</button>
+		<button class="button button-positive" ng-click="one_minute()">Schedule notification one minute later</button>
+		<button class="button button-positive" ng-click="every_second()">Schedule notification every second</button>
+		<ul class="list">
+			<li ng-repeat="notification in all_notifications" class="item">
+				<button ng-click="cancel(notification.id)" class="button">X</button>
+				<p>Id: {{notification.id}}</p>
+				<p>Title: {{notification.title}}</p>
+				<p>Text: {{notification.text}}</p>
+				<p>Every: {{notification.every}}</p>
+				<p>At: {{notification.at}}</p>
+			</li>
+		</ul>
+	</ion-content>
 </ion-view>

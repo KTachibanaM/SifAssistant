@@ -1,14 +1,14 @@
 <ion-view view-title="{{'Regions'|translate}}">
-    <ion-content>
-        <div class="card" ng-repeat="region in regions">
-            <div class="item item-avatar">
-                <img ng-src="img/region_flags/{{region.id}}.png">
-                <h2>{{region.name}}</h2>
-                <p translate>Timezone: {{region.timezone}}</p>
-            </div>
-            <div class="item item-body">
-                <p translate>Local time: {{region.local_time}}</p>
-            </div>
-        </div>
-    </ion-content>
+	<ion-content>
+		<div class="card" ng-repeat="region in regions">
+			<div class="item item-avatar">
+				<img ng-src="img/region_flags/{{region.id}}.png">
+				<h2>{{region.name}}</h2>
+				<p translate>Timezone: {{region.timezone}}</p>
+			</div>
+			<div class="item item-body">
+				<p translate>Local time: {{region.local_time}}</p>
+			</div>
+		</div>
+	</ion-content>
 </ion-view>

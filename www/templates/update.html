@@ -1,39 +1,39 @@
 <ion-modal-view>
-    <ion-header-bar>
-        <h1 class="title" translate>Update Rank/EXP/LP</h1>
-        <button ng-click="closeUpdate()" class="button button-icon button-clear ion-close"></button>
-    </ion-header-bar>
-    <ion-content>
-        <div class="list">
-            <div class="item">
-                <p translate>You just played</p>
-                <div ng-repeat="song_type in song_types" class="row">
-                    <button ng-click="addToBuffer(song_type)" class="button button-clear button-positive">
-                        {{song_type.name}}
-                    </button>
-                </div>
-            </div>
-            <div class="item">
-                <p translate>Songs you played</p>
-                <div ng-repeat="song in buffer track by $index" class="row">
-                    <button ng-click="removeFromBuffer($index)" class="button button-clear button-assertive">
-                        {{song.name}}
-                    </button>
-                </div>
-            </div>
-            <div class="item item-input">
-                <span class="input-label" translate>Rank</span>
-                <input type="number" ng-model="updatingAccount.level">
-            </div>
-            <div class="item item-input">
-                <span class="input-label" translate>EXP</span>
-                <input type="number" ng-model="updatingAccount.exp">
-            </div>
-            <div class="item item-input">
-                <span class="input-label">LP</span>
-                <input type="number" ng-model="updatingAccount.lp">
-            </div>
-        </div>
-        <button class="button button-block button-positive" ng-click="save()" translate>Save</button>
-    </ion-content>
+	<ion-header-bar>
+		<h1 class="title" translate>Update Rank/EXP/LP</h1>
+		<button ng-click="closeUpdate()" class="button button-icon button-clear ion-close"></button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="list">
+			<div class="item">
+				<p translate>You just played</p>
+				<div ng-repeat="song_type in song_types" class="row">
+					<button ng-click="addToBuffer(song_type)" class="button button-clear button-positive">
+						{{song_type.name}}
+					</button>
+				</div>
+			</div>
+			<div class="item">
+				<p translate>Songs you played</p>
+				<div ng-repeat="song in buffer track by $index" class="row">
+					<button ng-click="removeFromBuffer($index)" class="button button-clear button-assertive">
+						{{song.name}}
+					</button>
+				</div>
+			</div>
+			<div class="item item-input">
+				<span class="input-label" translate>Rank</span>
+				<input type="number" ng-model="updatingAccount.level">
+			</div>
+			<div class="item item-input">
+				<span class="input-label" translate>EXP</span>
+				<input type="number" ng-model="updatingAccount.exp">
+			</div>
+			<div class="item item-input">
+				<span class="input-label">LP</span>
+				<input type="number" ng-model="updatingAccount.lp">
+			</div>
+		</div>
+		<button class="button button-block button-positive" ng-click="save()" translate>Save</button>
+	</ion-content>
 </ion-modal-view>

@@ -5,45 +5,45 @@
 angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordova', 'gettext'])
 
 .run(function($ionicPlatform) {
-    $ionicPlatform.ready(function() {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            cordova.plugins.Keyboard.disableScroll(true);
-        }
-        if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
-        }
-        if (ionic.Platform.isIOS()) {
-            window.plugin.notification.local.promptForPermission();
-        }
-    });
+	$ionicPlatform.ready(function() {
+		// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+		// for form inputs)
+		if (window.cordova && window.cordova.plugins.Keyboard) {
+			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+			cordova.plugins.Keyboard.disableScroll(true);
+		}
+		if (window.StatusBar) {
+			// org.apache.cordova.statusbar required
+			StatusBar.styleDefault();
+		}
+		if (ionic.Platform.isIOS()) {
+			window.plugin.notification.local.promptForPermission();
+		}
+	});
 })
 
 .run(function (gettextCatalog, Platform) {
-    var locale = Platform.getLocale();
-    if (locale) {
-        gettextCatalog.loadRemote("js/translations/" + locale + ".json");
-        gettextCatalog.setCurrentLanguage(locale);
-    }
+	var locale = Platform.getLocale();
+	if (locale) {
+		gettextCatalog.loadRemote("js/translations/" + locale + ".json");
+		gettextCatalog.setCurrentLanguage(locale);
+	}
 })
 
 .config(function ($ionicConfigProvider, isBrowser) {
-    var nativeScrollingApplicable = function () {
-        if (isBrowser) {
-            return true;
-        }
-        if (ionic.Platform.isIOS()) {
-            return false;
-        }
-        if (ionic.Platform.isAndroid()) {
-            return ionic.Platform.version() >= 4.4;
-        }
-        return false;
-    };
-    $ionicConfigProvider.scrolling.jsScrolling(!nativeScrollingApplicable());
+	var nativeScrollingApplicable = function () {
+		if (isBrowser) {
+			return true;
+		}
+		if (ionic.Platform.isIOS()) {
+			return false;
+		}
+		if (ionic.Platform.isAndroid()) {
+			return ionic.Platform.version() >= 4.4;
+		}
+		return false;
+	};
+	$ionicConfigProvider.scrolling.jsScrolling(!nativeScrollingApplicable());
 })
 
 .constant("isBrowser", window.cordova === undefined)
@@ -51,68 +51,68 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
 .constant("FREQUENT", 1000)
 
 .constant("INFREQUENT", 5 * 1000)
-    
+	
 .config(function($stateProvider, $urlRouterProvider) {
-    $stateProvider
+	$stateProvider
 
-    .state('app', {
-        url: '/app',
-        abstract: true,
-        templateUrl: 'templates/menu.html',
-        controller: 'AppCtrl'
-    })
+	.state('app', {
+		url: '/app',
+		abstract: true,
+		templateUrl: 'templates/menu.html',
+		controller: 'AppCtrl'
+	})
 
-    .state('app.accounts', {
-        url: '/accounts',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/accounts.html',
-                controller: 'AccountsCtrl'
-            }
-        }
-    })
+	.state('app.accounts', {
+		url: '/accounts',
+		views: {
+			'menuContent': {
+				templateUrl: 'templates/accounts.html',
+				controller: 'AccountsCtrl'
+			}
+		}
+	})
 
-    .state('app.regions', {
-        url: '/regions',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/regions.html',
-                controller: 'RegionsCtrl'
-            }
-        }
-    })
+	.state('app.regions', {
+		url: '/regions',
+		views: {
+			'menuContent': {
+				templateUrl: 'templates/regions.html',
+				controller: 'RegionsCtrl'
+			}
+		}
+	})
 
-    .state('app.alerts', {
-        cache: false,
-        url: '/alerts',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/alerts.html',
-                controller: 'AlertsCtrl'
-            }
-        }
-    })
+	.state('app.alerts', {
+		cache: false,
+		url: '/alerts',
+		views: {
+			'menuContent': {
+				templateUrl: 'templates/alerts.html',
+				controller: 'AlertsCtrl'
+			}
+		}
+	})
 
-    .state('app.debug', {
-        url: '/debug',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/debug.html',
-                controller: 'DebugCtrl'
-            }
-        }
-    })
+	.state('app.debug', {
+		url: '/debug',
+		views: {
+			'menuContent': {
+				templateUrl: 'templates/debug.html',
+				controller: 'DebugCtrl'
+			}
+		}
+	})
 
-    .state('app.about', {
-        url: '/about',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/about.html',
-                controller: 'AboutCtrl'
-            }
-        }
-    });
+	.state('app.about', {
+		url: '/about',
+		views: {
+			'menuContent': {
+				templateUrl: 'templates/about.html',
+				controller: 'AboutCtrl'
+			}
+		}
+	});
 
-    // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/accounts');
+	// if none of the above states are matched, use this as the fallback
+	$urlRouterProvider.otherwise('/app/accounts');
 });
