@@ -1,3 +1,5 @@
+'use strict';
+
 String.prototype.hashCode = function () {
     var hash = 0, i, chr, len;
     if (this.length == 0) return hash;
@@ -528,7 +530,6 @@ angular.module('sif-assistant.services', [])
                     };
                     song_types.push(new_category);
                 });
-                console.log(song_types);
                 return song_types;
             }
         }

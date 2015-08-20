@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
 // With the new view caching in Ionic, Controllers are only called
