@@ -446,8 +446,8 @@ angular.module('sif-assistant.services', [])
         }
     }])
 
-    .factory('SongTypes', ['gettextCatalog', 'EventTypes', function (gettextCatalog, EventTypes) {
-        const BASE_SONG_TYPES = [
+    .factory('SongTypes', ['gettextCatalog', function (gettextCatalog) {
+        const SONG_TYPES = [
             {
                 id: "easy",
                 name: gettextCatalog.getString("Easy"),
@@ -473,54 +473,66 @@ angular.module('sif-assistant.services', [])
                 lpSubtraction: 25
             }
         ];
+        const CATEGORIES = [
+            {
+                id: "regular",
+                name: gettextCatalog.getString("Regular"),
+                songMultipliers: [1],
+                lpMultiplier: 1,
+                expMultiplier: 1
+            },
+            {
+                id: "tokenCollection",
+                name: gettextCatalog.getString("Token collection"),
+                songMultipliers: [1],
+                lpMultiplier: 0,
+                expMultiplier: 1
+            },
+            {
+                id: "scoreMatch",
+                name: gettextCatalog.getString("Score Match"),
+                songMultipliers: [1],
+                lpMultiplier: 1,
+                expMultiplier: 1
+            },
+            {
+                id: "medleyFestival",
+                name: gettextCatalog.getString("Medley Festival"),
+                songMultipliers: [1, 2, 3],
+                lpMultiplier: 0.8,
+                expMultiplier: 1
+            }
+        ];
         return {
             get: function () {
-                var song_types = BASE_SONG_TYPES;
-                BASE_SONG_TYPES.forEach(function (base_song_type) {
-                    EventTypes.get().forEach(function (event_type) {
-                        event_type.songMultipliers.forEach(function (song_multiplier) {
-                            song_types.push({
-                                id: base_song_type.id + "inEvent" + event_type.id + "withMultiplier" + song_multiplier,
-                                name: base_song_type.name + " (" + event_type.name + ")" + " x" + song_multiplier,
-                                expAddition: base_song_type.expAddition * song_multiplier,
-                                lpSubtraction: base_song_type.lpSubtraction * event_type.lpMultiplier * song_multiplier
-                            })
+                var song_types = [];
+                CATEGORIES.forEach(function (category) {
+                    var new_songs = [];
+                    SONG_TYPES.forEach(function (song_type) {
+                        category.songMultipliers.forEach(function (song_multiplier) {
+                            new_songs.push({
+                                id: {
+                                    song_type: song_type.id,
+                                    song_multiplier: song_multiplier
+                                },
+                                name: song_type.name + " ("+ category.name + ") x " + song_multiplier,
+                                expAddition: song_type.expAddition * category.expMultiplier * song_multiplier,
+                                lpSubtraction: song_type.lpSubtraction * category.lpMultiplier * song_multiplier
+                            });
                         })
                     });
+                    var new_category = {
+                        id: category.id,
+                        name: category.name,
+                        songs: new_songs
+                    };
+                    song_types.push(new_category);
                 });
+                console.log(song_types);
                 return song_types;
             }
         }
     }])
-
-    .factory("EventTypes", function (gettextCatalog) {
-        return {
-            get: function () {
-                return [
-                /**
-                 {
-                     id: "tokenCollection",
-                     name: gettextCatalog.getString("Token collection"),
-                     songMultipliers: [1],
-                     lpMultiplier: 0
-                 },
-                 {
-                     id: "scoreMatch",
-                     name: gettextCatalog.getString("Score Match"),
-                     songMultipliers: [1],
-                     lpMultiplier: 1
-                 },
-                 **/
-                    {
-                        id: "medleyFestival",
-                        name: gettextCatalog.getString("Medley Festival"),
-                        songMultipliers: [1, 2, 3],
-                        lpMultiplier: 0.8
-                    }
-                ]
-            }
-        }
-    })
 
     .factory("Platform", function () {
         const LOCALE_CONVERSION_MAP = [

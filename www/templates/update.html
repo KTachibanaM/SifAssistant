@@ -6,11 +6,13 @@
 	<ion-content>
 		<div class="list">
 			<div class="item">
-				<p translate>You just played</p>
-				<div ng-repeat="song_type in song_types" class="row">
-					<button ng-click="addToBuffer(song_type)" class="button button-clear button-positive">
-						{{song_type.name}}
-					</button>
+				<div ng-repeat="category in song_types">
+					<p translate>{{category.name}}</p>
+					<div ng-repeat="song_type in category.songs" class="row">
+						<button ng-click="addToBuffer(song_type)" class="button button-clear button-positive">
+							{{song_type.name}}
+						</button>
+					</div>
 				</div>
 			</div>
 			<div class="item">
