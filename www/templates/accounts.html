@@ -1,93 +1,93 @@
 <ion-view view-title="{{'Accounts'|translate}}">
-  <ion-content>
-	<div class="card">
-	  <div class="item item-body">
-		<translate>Filter by</translate>
-		<select ng-model="currentFilter">
-		  <option translate value="All">All</option>
-		  <option translate value="hasNotClaimedDailyBonus">Has not claimed daily bonus</option>
-		  <option translate value="fullLp">Full LP</option>
-		</select>
-	  </div>
-	</div>
-	<div class="card" ng-repeat="account in accounts | accountsFilter:{name: currentFilter}">
-	  <div class="item item-divider">
-		{{account.alias}}
-	  </div>
-	  <div class="item item-avatar">
-		<img ng-src="img/region_flags/{{account.region}}.png">
-		<h2 translate>Rank: {{account.level}}</h2>
-		<p translate>EXP: {{account.exp}}/{{account.max_exp}}</p>
-	  </div>
-	  <div class="item item-body">
-		<div class="list">
-            <label class="item item-input">
-                <span class="input-label" translate>LP</span>
-                {{account.lp}}/{{account.max_lp}}
-            </label>
-            <label class="item item-input">
-                <span class="input-label" translate>Next LP</span>
-                {{frequentRefreshData[$index].one_lp_time_remaining}}
-            </label>
-            <label class="item item-input">
-                <span class="input-label" translate>Love gems</span>
-                {{account.loveca}}
-            </label>
-            <div class="item item-input">
-                <span translate class="input-label">Has claimed daily bonus</span>
-                <label class="toggle">
-                    <input type="checkbox" ng-model="account.has_claimed_bonus" ng-click="toggleBonus(account)">
-                    <div class="track">
-                        <div class="handle"></div>
+    <ion-content>
+        <div class="card">
+            <div class="item item-body">
+                <translate>Filter by</translate>
+                <select ng-model="currentFilter">
+                    <option translate value="All">All</option>
+                    <option translate value="hasNotClaimedDailyBonus">Has not claimed daily bonus</option>
+                    <option translate value="fullLp">Full LP</option>
+                </select>
+            </div>
+        </div>
+        <div class="card" ng-repeat="account in accounts | accountsFilter:{name: currentFilter}">
+            <div class="item item-divider">
+                {{account.alias}}
+            </div>
+            <div class="item item-avatar">
+                <img ng-src="img/region_flags/{{account.region}}.png">
+                <h2 translate>Rank: {{account.level}}</h2>
+                <p translate>EXP: {{account.exp}}/{{account.max_exp}}</p>
+            </div>
+            <div class="item item-body">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label" translate>LP</span>
+                        {{account.lp}}/{{account.max_lp}}
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label" translate>Next LP</span>
+                        {{frequentRefreshData[$index].one_lp_time_remaining}}
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label" translate>Love gems</span>
+                        {{account.loveca}}
+                    </label>
+                    <div class="item item-input">
+                        <span translate class="input-label">Has claimed daily bonus</span>
+                        <label class="toggle">
+                            <input type="checkbox" ng-model="account.has_claimed_bonus" ng-click="toggleBonus(account)">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
                     </div>
-                </label>
+                    <div class="item item-input">
+                        <span translate class="input-label">Enable LP alert</span>
+                        <label class="toggle">
+                            <input type="checkbox" ng-model="account.alerts_lp" ng-click="toggleLpAlerts(account)">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="item item-input">
+                        <span translate class="input-label">LP alert value</span>
+                        <input type="number" ng-model="account.alerts_lp_value">
+                    </div>
+                    <div class="item">
+                        <button translate class="button" ng-click="account.alerts_lp_value = account.max_lp">
+                        Max
+                        </button>
+                        <button translate style="margin-left: 2px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
+                        Save
+                        </button>
+                    </div>
+                    <div class="item item-input">
+                        <span translate class="input-label">Enable daily bonus alert</span>
+                        <label class="toggle">
+                            <input type="checkbox" ng-model="account.alerts_bonus" ng-click="toggleBonusAlerts(account)">
+                            <div class="track">
+                                <div class="handle"></div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
             </div>
-			<div class="item item-input">
-				<span translate class="input-label">Enable LP alert</span>
-				<label class="toggle">
-					<input type="checkbox" ng-model="account.alerts_lp" ng-click="toggleLpAlerts(account)">
-					<div class="track">
-						<div class="handle"></div>
-					</div>
-				</label>
-			</div>
-			<div class="item item-input">
-				<span translate class="input-label">LP alert value</span>
-				<input type="number" ng-model="account.alerts_lp_value">
-			</div>
-            <div class="item">
-                <button translate class="button" ng-click="account.alerts_lp_value = account.max_lp">
-                    Max
-                </button>
-                <button translate style="margin-left: 2px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
-                    Save
-                </button>
+            <div class="item tabs tabs-secondary tabs-icon-left">
+                <a class="tab-item" ng-click="openUpdate(account)">
+                    <i class="icon ion-music-note"></i>
+                    <translate>Rank/EXP/LP</translate>
+                </a>
+                <a class="tab-item" ng-click="openUpdateLoveca(account)">
+                    <i class="icon ion-heart"></i>
+                    <translate>Love gems</translate>
+                </a>
+                <a class="tab-item" ng-click="openDeleteAccount(account)">
+                    <i class="icon ion-trash-a"></i>
+                    <translate>Delete</translate>
+                </a>
             </div>
-			<div class="item item-input">
-				<span translate class="input-label">Enable daily bonus alert</span>
-				<label class="toggle">
-					<input type="checkbox" ng-model="account.alerts_bonus" ng-click="toggleBonusAlerts(account)">
-					<div class="track">
-						<div class="handle"></div>
-					</div>
-				</label>
-			</div>
-		</div>
-      </div>
-	  <div class="item tabs tabs-secondary tabs-icon-left">
-		<a class="tab-item" ng-click="openUpdate(account)">
-		  <i class="icon ion-music-note"></i>
-		  <translate>Rank/EXP/LP</translate>
-		</a>
-		<a class="tab-item" ng-click="openUpdateLoveca(account)">
-		  <i class="icon ion-heart"></i>
-		  <translate>Love gems</translate>
-		</a>
-		<a class="tab-item" ng-click="openDeleteAccount(account)">
-		  <i class="icon ion-trash-a"></i>
-		  <translate>Delete</translate>
-		</a>
-	  </div>
-	</div>
-  </ion-content>
+        </div>
+    </ion-content>
 </ion-view>
