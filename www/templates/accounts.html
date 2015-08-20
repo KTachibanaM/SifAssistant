@@ -20,52 +20,60 @@
 		<p translate>EXP: {{account.exp}}/{{account.max_exp}}</p>
 	  </div>
 	  <div class="item item-body">
-		<p translate>LP: {{account.lp}}/{{account.max_lp}} (Next LP: {{frequentRefreshData[$index].one_lp_time_remaining}})</p>
-		<p translate>Love gems: {{account.loveca}}</p>
-		<p translate>Has claimed daily bonus:</p>
-		<label class="toggle" ng-click="toggleBonus(account)">
-		  <input type="checkbox" ng-model="account.has_claimed_bonus">
-		  <div class="track">
-			<div class="handle">
+		<div class="list">
+            <label class="item item-input">
+                <span class="input-label" translate>LP</span>
+                {{account.lp}}/{{account.max_lp}}
+            </label>
+            <label class="item item-input">
+                <span class="input-label" translate>Next LP</span>
+                {{frequentRefreshData[$index].one_lp_time_remaining}}
+            </label>
+            <label class="item item-input">
+                <span class="input-label" translate>Love gems</span>
+                {{account.loveca}}
+            </label>
+            <div class="item item-input">
+                <span translate class="input-label">Has claimed daily bonus</span>
+                <label class="toggle">
+                    <input type="checkbox" ng-model="account.has_claimed_bonus" ng-click="toggleBonus(account)">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </div>
+			<div class="item item-input">
+				<span translate class="input-label">Enable LP alert</span>
+				<label class="toggle">
+					<input type="checkbox" ng-model="account.alerts_lp" ng-click="toggleLpAlerts(account)">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
 			</div>
-		  </div>
-		</label>
-	  </div>
-	  <div class="item item-body">
-			<div class="list">
-				<div class="item item-input">
-					<span translate class="input-label">Enable LP alert</span>
-					<label class="toggle">
-						<input type="checkbox" ng-model="account.alerts_lp" ng-click="toggleLpAlerts(account)">
-						<div class="track">
-							<div class="handle"></div>
-						</div>
-					</label>
-				</div>
-				<div class="item item-input">
-					<span translate class="input-label">LP alert value</span>
-					<input type="number" ng-model="account.alerts_lp_value">
-				</div>
-				<div class="item">
-					<button translate class="button" ng-click="account.alerts_lp_value = account.max_lp">
-						Max
-					</button>
-
-					<button translate style="margin-left: 2px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
-						Save
-					</button>
-				</div>
-				<div class="item item-input">
-					<span translate class="input-label">Enable daily bonus alert</span>
-					<label class="toggle">
-						<input type="checkbox" ng-model="account.alerts_bonus" ng-click="toggleBonusAlerts(account)">
-						<div class="track">
-							<div class="handle"></div>
-						</div>
-					</label>
-				</div>
+			<div class="item item-input">
+				<span translate class="input-label">LP alert value</span>
+				<input type="number" ng-model="account.alerts_lp_value">
+			</div>
+            <div class="item">
+                <button translate class="button" ng-click="account.alerts_lp_value = account.max_lp">
+                    Max
+                </button>
+                <button translate style="margin-left: 2px" class="button button-positive" ng-click="saveLpAlertsValue(account)">
+                    Save
+                </button>
+            </div>
+			<div class="item item-input">
+				<span translate class="input-label">Enable daily bonus alert</span>
+				<label class="toggle">
+					<input type="checkbox" ng-model="account.alerts_bonus" ng-click="toggleBonusAlerts(account)">
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
 			</div>
 		</div>
+      </div>
 	  <div class="item tabs tabs-secondary tabs-icon-left">
 		<a class="tab-item" ng-click="openUpdate(account)">
 		  <i class="icon ion-music-note"></i>
