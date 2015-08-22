@@ -202,15 +202,17 @@ angular.module('sif-assistant.services', [])
                     return account;
                 });
             },
-            getOneLpTimeRemaining: function () {
+            getFrequentRefreshData: function () {
                 var self = this;
                 var now = Date.now();
                 return this.getRaw().map(function (account) {
                     var one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
-                    account.one_lp_time_remaining = {
-                        ms: one_lp_time_remaining,
-                        literal: one_lp_time_remaining === -1 ? "Full" : moment.duration(one_lp_time_remaining).format("mm:ss")
-                    };
+                    if (one_lp_time_remaining === -1) {
+                        account.one_lp_time_remaining = "Full";
+                    }
+                    else {
+                        account.one_lp_time_remaining = moment.duration(one_lp_time_remaining).format("mm:ss");
+                    }
                     return account;
                 });
             },

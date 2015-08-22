@@ -2,6 +2,13 @@
 
 angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
+// With the new view caching in Ionic, Controllers are only called
+// when they are recreated or on app start, instead of every page change.
+// To listen for when this page is active (for example, to refresh data),
+// listen for the $ionicView.enter event:
+//$scope.$on('$ionicView.enter', function(e) {
+//})
+
     .controller('AppCtrl', function ($scope, $ionicModal, Accounts, Regions) {
         $scope.regions = Regions.get();
 
@@ -28,8 +35,14 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             $scope.addAccountModal = modal;
         });
 
+        $scope.refresh = function () {
+            $scope.$broadcast('refresh', {});
+        };
+
         $scope.addAccount = function (account) {
-            Accounts.addAccount(account);
+            if (Accounts.addAccount(account)) {
+                $scope.refresh();
+            }
             $scope.closeAddAccount();
         };
 
@@ -87,19 +100,53 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         }
     })
 
-    .controller('AccountsCtrl', function($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
+    .controller('AccountsCtrl', function
+        ($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, FREQUENT, INFREQUENT, SongTypes, gettextCatalog) {
         $scope.currentFilter = "All";
+
+        /**
+         * Show frequently refreshed data
+         */
+        $scope.refreshFrequent = function () {
+            $scope.frequentRefreshData = Accounts.getFrequentRefreshData();
+        };
+
+        $scope.refreshFrequent();
+
+        $interval($scope.refreshFrequent, FREQUENT);
+
+        /**
+         * Show infrequently refreshed data
+         */
+        $scope.refreshInfrequent = function () {
+            Accounts.refreshInfrequentData();
+            $scope.refresh();
+        };
+
+        $scope.refreshInfrequent();
+
+        $interval($scope.refreshInfrequent, INFREQUENT);
 
         /**
          * Show accounts
          */
-        $scope.accounts = Accounts.get();
+        $scope.refresh = function () {
+            $scope.accounts = Accounts.get();
+        };
+
+        $scope.refresh();
+
+        $scope.$on('refresh', function () {
+            $scope.refresh();
+        });
 
         /**
          * Update accounts
          */
         $scope.updateAccount = function (account, key, newData) {
-            Accounts.updateAccount(account, key, newData);
+            if (Accounts.updateAccount(account, key, newData)) {
+                $scope.refresh();
+            }
         };
         $scope.updatingAccount = {};
 
@@ -253,7 +300,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
 
         $scope.deleteAccount = function (account) {
-            Accounts.deleteAccount(account);
+            if (Accounts.deleteAccount(account)) {
+                $scope.refresh();
+            }
         };
     })
 
