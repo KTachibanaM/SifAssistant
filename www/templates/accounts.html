@@ -36,7 +36,7 @@
                     <div class="item item-input">
                         <span translate class="input-label">Has claimed daily bonus</span>
                         <label class="toggle">
-                            <input type="checkbox" ng-model="account.has_claimed_bonus" ng-click="toggleBonus(account)">
+                            <input type="checkbox" ng-model="account.has_claimed_bonus" ng-change="toggleBonus(account)">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
@@ -49,7 +49,7 @@
                     <div class="item item-input">
                         <span translate class="input-label">Enable LP alert</span>
                         <label class="toggle">
-                            <input type="checkbox" ng-model="account.alerts_lp" ng-click="toggleLpAlerts(account)">
+                            <input type="checkbox" ng-model="account.alerts_lp" ng-change="toggleLpAlerts(account)">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
@@ -70,7 +70,7 @@
                     <div class="item item-input">
                         <span translate class="input-label">Enable daily bonus alert</span>
                         <label class="toggle">
-                            <input type="checkbox" ng-model="account.alerts_bonus" ng-click="toggleBonusAlerts(account)">
+                            <input type="checkbox" ng-model="account.alerts_bonus" ng-change="toggleBonusAlerts(account)">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
