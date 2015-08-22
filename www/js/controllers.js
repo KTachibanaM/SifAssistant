@@ -2,13 +2,6 @@
 
 angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
-// With the new view caching in Ionic, Controllers are only called
-// when they are recreated or on app start, instead of every page change.
-// To listen for when this page is active (for example, to refresh data),
-// listen for the $ionicView.enter event:
-//$scope.$on('$ionicView.enter', function(e) {
-//})
-
     .controller('AppCtrl', function ($scope, $ionicModal, Accounts, Regions) {
         $scope.regions = Regions.get();
 
@@ -100,8 +93,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         }
     })
 
-    .controller('AccountsCtrl', function
-        ($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, FREQUENT, INFREQUENT, SongTypes, gettextCatalog) {
+    .controller('AccountsCtrl', function($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, FREQUENT, INFREQUENT, SongTypes, gettextCatalog) {
         $scope.currentFilter = "All";
 
         /**
