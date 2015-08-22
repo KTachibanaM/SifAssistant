@@ -87,7 +87,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         }
     })
 
-    .controller('AccountsCtrl', function($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, FREQUENT, INFREQUENT, SongTypes, gettextCatalog) {
+    .controller('AccountsCtrl', function($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
         $scope.currentFilter = "All";
 
         /**
