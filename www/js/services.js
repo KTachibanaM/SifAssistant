@@ -209,7 +209,7 @@ angular.module('sif-assistant.services', [])
                     var one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
                     account.one_lp_time_remaining = {
                         ms: one_lp_time_remaining,
-                        literal: one_lp_time_remaining === -1 ? "Full" : moment.duration(one_lp_time_remaining).format("hh:mm:ss")
+                        literal: one_lp_time_remaining === -1 ? "Full" : moment.duration(one_lp_time_remaining).format("mm:ss")
                     };
                     return account;
                 });
