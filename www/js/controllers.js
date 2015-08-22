@@ -108,7 +108,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
          * Show frequently refreshed data
          */
         $scope.refreshFrequent = function () {
-            $scope.frequentRefreshData = Accounts.getFrequentRefreshData();
+            $scope.accounts_one_lp_time_remaining = Accounts.getOneLpTimeRemaining();
         };
 
         $scope.refreshFrequent();
