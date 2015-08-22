@@ -28,14 +28,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             $scope.addAccountModal = modal;
         });
 
-        $scope.refresh = function () {
-            $scope.$broadcast('refresh', {});
-        };
-
         $scope.addAccount = function (account) {
-            if (Accounts.addAccount(account)) {
-                $scope.refresh();
-            }
+            Accounts.addAccount(account);
             $scope.closeAddAccount();
         };
 
@@ -97,48 +91,15 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.currentFilter = "All";
 
         /**
-         * Show frequently refreshed data
-         */
-        $scope.refreshFrequent = function () {
-            $scope.accounts_one_lp_time_remaining = Accounts.getOneLpTimeRemaining();
-        };
-
-        $scope.refreshFrequent();
-
-        $interval($scope.refreshFrequent, FREQUENT);
-
-        /**
-         * Show infrequently refreshed data
-         */
-        $scope.refreshInfrequent = function () {
-            Accounts.refreshInfrequentData();
-            $scope.refresh();
-        };
-
-        $scope.refreshInfrequent();
-
-        $interval($scope.refreshInfrequent, INFREQUENT);
-
-        /**
          * Show accounts
          */
-        $scope.refresh = function () {
-            $scope.accounts = Accounts.get();
-        };
-
-        $scope.refresh();
-
-        $scope.$on('refresh', function () {
-            $scope.refresh();
-        });
+        $scope.accounts = Accounts.get();
 
         /**
          * Update accounts
          */
         $scope.updateAccount = function (account, key, newData) {
-            if (Accounts.updateAccount(account, key, newData)) {
-                $scope.refresh();
-            }
+            Accounts.updateAccount(account, key, newData);
         };
         $scope.updatingAccount = {};
 
@@ -292,9 +253,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
 
         $scope.deleteAccount = function (account) {
-            if (Accounts.deleteAccount(account)) {
-                $scope.refresh();
-            }
+            Accounts.deleteAccount(account);
         };
     })
 
