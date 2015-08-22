@@ -21,7 +21,7 @@ String.prototype.containsIgnoreCase = function (it) {
 
 angular.module('sif-assistant.services', [])
 
-    .factory('$localStorage', ['$window', function ($window) {
+    .factory('$localStorage', function ($window) {
         return {
             set: function (key, value) {
                 $window.localStorage[key] = JSON.stringify(value);
@@ -33,7 +33,7 @@ angular.module('sif-assistant.services', [])
                 return JSON.parse($window.localStorage[key] || '[]');
             }
         }
-    }])
+    })
 
     .factory('NativeNotification', function (isBrowser) {
         return {
@@ -187,7 +187,7 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory('Accounts', ['$localStorage', 'Calculators', 'Regions', 'NativeNotification', function ($localStorage, Calculators, Regions, NativeNotification) {
+    .factory('Accounts', function ($localStorage, Calculators, Regions, NativeNotification) {
         const ACCOUNTS_KEY = "accounts";
         const LP_INCREMENTAL_MINUTES = 6;
         const LP_INCREMENTAL_MS = moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds();
@@ -392,9 +392,9 @@ angular.module('sif-assistant.services', [])
                 return account.alias + ":" + type;
             }
         }
-    }])
+    })
 
-    .factory('Regions', ['gettextCatalog', function (gettextCatalog) {
+    .factory('Regions', function (gettextCatalog) {
         return {
             getRaw: function () {
                 return [
@@ -446,9 +446,9 @@ angular.module('sif-assistant.services', [])
                 return this.get()[this.getIndexById(id)];
             }
         }
-    }])
+    })
 
-    .factory('SongTypes', ['gettextCatalog', function (gettextCatalog) {
+    .factory('SongTypes', function (gettextCatalog) {
         const SONG_TYPES = [
             {
                 id: "easy",
@@ -533,7 +533,7 @@ angular.module('sif-assistant.services', [])
                 return song_types;
             }
         }
-    }])
+    })
 
     .factory("Platform", function () {
         const LOCALE_CONVERSION_MAP = [
