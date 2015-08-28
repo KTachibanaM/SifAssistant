@@ -158,7 +158,6 @@ angular.module('sif-assistant.services', [])
                 }
             },
             updateAccountSongsPlayed: function (account, songs) {
-                console.log(songs);
                 while (songs.length !== 0) {
                     var song = songs.shift();
                     var exp = song.expAddition;
@@ -267,7 +266,7 @@ angular.module('sif-assistant.services', [])
                 });
             },
             updateAccount: function (account, key, newData) {
-                if (account !== undefined && key !== undefined && newData !== undefined) {
+                if (account !== undefined && key !== undefined && newData !== undefined && newData !== null) {
                     var current_accounts = this.getRaw();
                     var index = this.getAccountIndex(account);
                     current_accounts[index][key] = newData;
