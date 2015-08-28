@@ -224,11 +224,19 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
 
         $scope.saveLpAlertsValue = function (account) {
+            console.log(account.alerts_lp_value);
             $scope.updateAccount(account, "alerts_lp_value", account.alerts_lp_value);
         };
 
         $scope.toggleBonusAlerts = function (account) {
             $scope.updateAccount(account, "alerts_bonus", account.alerts_bonus);
+        };
+
+        /**
+         * Update account
+         */
+        $scope.updateAccount = function (account, key, new_value) {
+            Accounts.updateAccount(account, key, new_value);
         };
 
         /**
