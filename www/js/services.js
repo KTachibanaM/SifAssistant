@@ -158,7 +158,6 @@ angular.module('sif-assistant.services', [])
                 }
             },
             updateAccountSongsPlayed: function (account, songs) {
-                console.log(songs);
                 while (songs.length !== 0) {
                     var song = songs.shift();
                     var exp = song.expAddition;

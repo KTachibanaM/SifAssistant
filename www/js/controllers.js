@@ -147,9 +147,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.save = function () {
             var updated_account = Calculators.updateAccountSongsPlayed($scope.updatingAccount, $scope.buffer);
-            $scope.updateAccount($scope.updatingAccount, "level", updated_account.level);
-            $scope.updateAccount($scope.updatingAccount, "exp", updated_account.exp);
-            $scope.updateAccount($scope.updatingAccount, "lp", updated_account.lp);
+            $scope.updateAccountManualBinding($scope.updatingAccount, "level", updated_account.level);
+            $scope.updateAccountManualBinding($scope.updatingAccount, "exp", updated_account.exp);
+            $scope.updateAccountManualBinding($scope.updatingAccount, "lp", updated_account.lp);
 
             $scope.closeUpdate();
         };
@@ -197,11 +197,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 - $scope.lovecaBuffer.subtraction
                 * $scope.lovecaBuffer.subtractionMultiplier;
             var new_loveca = current_loveca + loveca_delta;
-            $scope.updateAccount(
-                $scope.updatingAccount,
-                "loveca",
-                new_loveca
-            );
+            $scope.updateAccountManualBinding($scope.updatingAccount, "loveca", new_loveca);
+
             $scope.closeUpdateLoveca();
         };
 
@@ -235,6 +232,12 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         /**
          * Update account
          */
+        $scope.updateAccountManualBinding = function (account, key, new_value) {
+            var index = Accounts.getAccountIndex(account);
+            $scope.accounts[index][key] = new_value;
+            $scope.updateAccount(account, key, new_value);
+        };
+
         $scope.updateAccount = function (account, key, new_value) {
             Accounts.updateAccount(account, key, new_value);
         };
@@ -274,25 +277,25 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     })
 
     .controller('RegionsCtrl', function ($scope, $interval, Regions, FREQUENT) {
-        $scope.refresh = function () {
+        $scope.reload = function () {
             $scope.regions = Regions.get();
         };
 
-        $scope.refresh();
+        $scope.reload();
 
-        $interval($scope.refresh, FREQUENT);
+        $interval($scope.reload, FREQUENT);
     })
 
     .controller('DebugCtrl', function ($scope, $interval, NativeNotification, FREQUENT) {
-        $scope.refresh = function () {
+        $scope.reload = function () {
             NativeNotification.getAll(function (notifications) {
                 $scope.all_notifications = notifications;
             });
         };
 
-        $interval($scope.refresh, FREQUENT);
+        $interval($scope.reload, FREQUENT);
 
-        $scope.refresh();
+        $scope.reload();
 
         $scope.immediately = function () {
             NativeNotification.schedule(
