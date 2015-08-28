@@ -28,13 +28,13 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             $scope.addAccountModal = modal;
         });
 
-        $scope.refresh = function () {
-            $scope.$broadcast('refresh', {});
+        $scope.reload = function () {
+            $scope.$broadcast('reload', {});
         };
 
         $scope.addAccount = function (account) {
             if (Accounts.addAccount(account)) {
-                $scope.refresh();
+                $scope.reload();
             }
             $scope.closeAddAccount();
         };
@@ -93,54 +93,21 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         }
     })
 
-    .controller('AccountsCtrl', function($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, FREQUENT, INFREQUENT, SongTypes, gettextCatalog) {
+    .controller('AccountsCtrl', function($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
         $scope.currentFilter = "All";
-
-        /**
-         * Show frequently refreshed data
-         */
-        $scope.refreshFrequent = function () {
-            $scope.frequentRefreshData = Accounts.getFrequentRefreshData();
-        };
-
-        $scope.refreshFrequent();
-
-        $interval($scope.refreshFrequent, FREQUENT);
-
-        /**
-         * Show infrequently refreshed data
-         */
-        $scope.refreshInfrequent = function () {
-            Accounts.refreshInfrequentData();
-            $scope.refresh();
-        };
-
-        $scope.refreshInfrequent();
-
-        $interval($scope.refreshInfrequent, INFREQUENT);
 
         /**
          * Show accounts
          */
-        $scope.refresh = function () {
+        $scope.reload = function () {
             $scope.accounts = Accounts.get();
         };
 
-        $scope.refresh();
+        $scope.reload();
 
-        $scope.$on('refresh', function () {
-            $scope.refresh();
+        $scope.$on('reload', function () {
+            $scope.reload();
         });
-
-        /**
-         * Update accounts
-         */
-        $scope.updateAccount = function (account, key, newData) {
-            if (Accounts.updateAccount(account, key, newData)) {
-                $scope.refresh();
-            }
-        };
-        $scope.updatingAccount = {};
 
         /**
          * Update level/exp/lp
@@ -293,7 +260,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.deleteAccount = function (account) {
             if (Accounts.deleteAccount(account)) {
-                $scope.refresh();
+                $scope.reload();
             }
         };
     })
