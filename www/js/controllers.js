@@ -242,7 +242,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
 
         $scope.updateAccountPersistent = function (account, key, new_value) {
-            Accounts.updateAccountPersistent(account, key, new_value);
+            Accounts.updateAccount(account, key, new_value);
         };
 
         /**

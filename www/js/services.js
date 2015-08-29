@@ -231,7 +231,7 @@ angular.module('sif-assistant.services', [])
                 }
                 return false;
             },
-            updateAccountPersistent: function (account, key, newData) {
+            updateAccount: function (account, key, newData) {
                 if (account !== undefined && key !== undefined && newData !== undefined && newData !== null) {
                     var current_accounts = this.getRaw();
                     var index = this.getAccountIndex(account);
@@ -368,42 +368,36 @@ angular.module('sif-assistant.services', [])
             /**
              * TBD
              */
-            incrementAllLp: function (now) {
-                var current_accounts = this.getRaw().map(function (account) {
-                    var current_lp = account.lp;
-                    var max_lp = Calculators.getMaxLpByLevel(account);
-                    if (current_lp === max_lp) {
-                        account.last_lp_update = now;
-                        return account;
-                    }
-                    var last_lp_update = account.last_lp_update;
-                    var ms_passed = now - last_lp_update;
-                    var minutes_passed = Math.floor(moment.duration(ms_passed).asMinutes());
-                    var lp_incremented = Math.floor(minutes_passed / LP_INCREMENTAL_MINUTES);
-                    if (lp_incremented > 0) {
-                        if (current_lp + lp_incremented > max_lp) {
-                            lp_incremented = max_lp - current_lp;
-                        }
-                        account.lp = current_lp + lp_incremented;
-                        account.last_lp_update = last_lp_update + lp_incremented * LP_INCREMENTAL_MS;
-                    }
+            updateLp: function (account, now) {
+                var current_lp = account.lp;
+                var max_lp = Calculators.getMaxLpByLevel(account);
+                if (current_lp === max_lp) {
+                    account.last_lp_update = now;
                     return account;
-                });
-                this.set(current_accounts);
+                }
+                var last_lp_update = account.last_lp_update;
+                var ms_passed = now - last_lp_update;
+                var minutes_passed = Math.floor(moment.duration(ms_passed).asMinutes());
+                var lp_incremented = Math.floor(minutes_passed / LP_INCREMENTAL_MINUTES);
+                if (lp_incremented > 0) {
+                    if (current_lp + lp_incremented > max_lp) {
+                        lp_incremented = max_lp - current_lp;
+                    }
+                    account.lp = current_lp + lp_incremented;
+                    account.last_lp_update = last_lp_update + lp_incremented * LP_INCREMENTAL_MS;
+                }
+                return account;
             },
-            checkAllBonus: function (now) {
-                var current_accounts = this.getRaw().map(function (account) {
-                    var timezone = Regions.getById(account.region).timezone;
-                    var last_bonus_update = account.last_bonus_update;
-                    var last_bonus_update_tz = moment(last_bonus_update).tz(timezone);
-                    var now_tz = moment(now).tz(timezone);
-                    if (!now_tz.isSame(last_bonus_update_tz, "day")) {
-                        account.last_bonus_update = now;
-                        account.has_claimed_bonus = false;
-                    }
-                    return account;
-                });
-                this.set(current_accounts);
+            updateBonus: function (account, now) {
+                var timezone = Regions.getById(account.region).timezone;
+                var last_bonus_update = account.last_bonus_update;
+                var last_bonus_update_tz = moment(last_bonus_update).tz(timezone);
+                var now_tz = moment(now).tz(timezone);
+                if (!now_tz.isSame(last_bonus_update_tz, "day")) {
+                    account.last_bonus_update = now;
+                    account.has_claimed_bonus = false;
+                }
+                return account;
             }
         }
     })
