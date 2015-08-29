@@ -186,7 +186,7 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory('Accounts', function ($localStorage, Calculators, Regions, NativeNotification) {
+    .factory('Accounts', function ($localStorage, Calculators, Regions, NativeNotification, gettextCatalog) {
         const ACCOUNTS_KEY = "accounts";
         const LP_INCREMENTAL_MINUTES = 6;
         const LP_INCREMENTAL_MS = moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds();
@@ -270,7 +270,7 @@ angular.module('sif-assistant.services', [])
                                 var now = Date.now();
                                 NativeNotification.schedule(
                                     lp_notification_id,
-                                    account.alias + ": LP has reached " + account.alerts_lp_value,
+                                    account.alias + gettextCatalog.getString(": LP has reached ") + account.alerts_lp_value,
                                     now + self.calculateTimeRemainingTillTargetLp(account, now)
                                 )
                             })
@@ -298,7 +298,7 @@ angular.module('sif-assistant.services', [])
                         start_of_next_day_tz.hour(0);
                         NativeNotification.schedule(
                             bonus_notification_id,
-                            account.alias + ": Daily bonus is available!",
+                            account.alias + gettextCatalog.getString(": Daily bonus is available!"),
                             start_of_next_day_tz.valueOf(),
                             "day"
                         );
