@@ -267,11 +267,10 @@ angular.module('sif-assistant.services', [])
                                 if (present) {
                                     NativeNotification.cancel(lp_notification_id);
                                 }
-                                var now = Date.now();
                                 NativeNotification.schedule(
                                     lp_notification_id,
                                     account.alias + gettextCatalog.getString(": LP has reached ") + account.alerts_lp_value,
-                                    now + self.calculateTimeRemainingTillTargetLp(account, now).ms
+                                    Date.now() + self.calculateTimeRemainingTillTargetLp(account, Date.now()).ms
                                 )
                             })
                         }
@@ -288,18 +287,10 @@ angular.module('sif-assistant.services', [])
                 if (key === "alerts_bonus") {
                     const bonus_notification_id = this.getNativeNotificationId(account, "bonus");
                     if (account.alerts_bonus) {
-                        var now = Date.now();
-                        var timezone = Regions.getById(account.region).timezone;
-                        var now_tz = moment(now).tz(timezone);
-                        var start_of_next_day_tz = now_tz.add(1, "days").tz(timezone);
-                        start_of_next_day_tz.millisecond(0);
-                        start_of_next_day_tz.second(0);
-                        start_of_next_day_tz.minute(0);
-                        start_of_next_day_tz.hour(0);
                         NativeNotification.schedule(
                             bonus_notification_id,
                             account.alias + gettextCatalog.getString(": Daily bonus is available!"),
-                            start_of_next_day_tz.valueOf(),
+                            this.calculateTimeRemainingTillNextDailyBonus(account, Date.now()).ms,
                             "day"
                         );
                     }
@@ -361,15 +352,22 @@ angular.module('sif-assistant.services', [])
                     literal: moment.duration(time_remaining_till_target_lp).format("dd:hh:mm:ss")
                 }
             },
+            calculateTimeRemainingTillNextDailyBonus: function (account, now) {
+                var timezone = Regions.getById(account.region).timezone;
+                var now_tz = moment(now).tz(timezone);
+                var start_of_next_day_tz = now_tz.add(1, "days").tz(timezone);
+                start_of_next_day_tz.millisecond(0);
+                start_of_next_day_tz.second(0);
+                start_of_next_day_tz.minute(0);
+                start_of_next_day_tz.hour(0);
+                return {
+                    ms: start_of_next_day_tz.valueOf()
+                }
+            },
 
             /**
              * TBD
              */
-            refreshInfrequentData: function () {
-                var now = Date.now();
-                this.incrementAllLp(now);
-                this.checkAllBonus(now);
-            },
             incrementAllLp: function (now) {
                 var current_accounts = this.getRaw().map(function (account) {
                     var current_lp = account.lp;
