@@ -191,6 +191,9 @@ angular.module('sif-assistant.services', [])
         const LP_INCREMENTAL_MINUTES = 6;
         const LP_INCREMENTAL_MS = moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds();
         return {
+            /**
+             * CRUD
+             */
             set: function (accounts) {
                 $localStorage.set(ACCOUNTS_KEY, accounts)
             },
@@ -201,22 +204,11 @@ angular.module('sif-assistant.services', [])
                     return account;
                 });
             },
-            getFrequentRefreshData: function () {
-                var self = this;
-                var now = Date.now();
-                return this.getRaw().map(function (account) {
-                    var one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
-                    if (one_lp_time_remaining === -1) {
-                        account.one_lp_time_remaining = "Full";
-                    }
-                    else {
-                        account.one_lp_time_remaining = moment.duration(one_lp_time_remaining).format("mm:ss");
-                    }
-                    return account;
-                });
-            },
             getRaw: function () {
                 return $localStorage.getArray(ACCOUNTS_KEY);
+            },
+            ifAccountExists: function (account) {
+                return this.getAccountIndex(account) !== -1;
             },
             getAccountIndex: function (account) {
                 var current_aliases = this.getRaw().map(function (item) {
@@ -239,32 +231,6 @@ angular.module('sif-assistant.services', [])
                 }
                 return false;
             },
-            deleteAccount: function (account) {
-                if (account !== undefined) {
-                    this.cancelAllNativeNotification(account);
-                    var current_accounts = this.getRaw();
-                    var index = this.getAccountIndex(account);
-                    current_accounts.splice(index, 1);
-                    this.set(current_accounts);
-                    return true;
-                }
-                return false;
-            },
-            cancelAllNativeNotification: function (account) {
-                var self = this;
-                const ALL_TYPES_OF_NATIVE_NOTIFICATIONS = ["lp", "bonus"];
-                var all_ids = ALL_TYPES_OF_NATIVE_NOTIFICATIONS.map(function (type) {
-                    return self.getNativeNotificationId(account, type);
-                });
-                all_ids.forEach(function (id) {
-                    NativeNotification.isPresent(id, function (present) {
-                        console.log(id, present);
-                        if (present) {
-                            NativeNotification.cancel(id);
-                        }
-                    });
-                });
-            },
             updateAccount: function (account, key, newData) {
                 if (account !== undefined && key !== undefined && newData !== undefined && newData !== null) {
                     var current_accounts = this.getRaw();
@@ -276,6 +242,21 @@ angular.module('sif-assistant.services', [])
                 }
                 return false;
             },
+            deleteAccount: function (account) {
+                if (account !== undefined) {
+                    this.cancelAllNativeNotification(account);
+                    var current_accounts = this.getRaw();
+                    var index = this.getAccountIndex(account);
+                    current_accounts.splice(index, 1);
+                    this.set(current_accounts);
+                    return true;
+                }
+                return false;
+            },
+
+            /**
+             * Native Notification
+             */
             syncNativeNotificationState: function (account, key) {
                 if (key === "alerts_lp" || key === "alerts_lp_value" || key === "lp") {
                     const lp_notification_id = this.getNativeNotificationId(account, "lp");
@@ -287,15 +268,10 @@ angular.module('sif-assistant.services', [])
                                     NativeNotification.cancel(lp_notification_id);
                                 }
                                 var now = Date.now();
-                                var ms_one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
-                                var current_lp = account.lp;
-                                var target_lp = account.alerts_lp_value;
-                                var ms_rest_lp_time_remaining = moment.duration(LP_INCREMENTAL_MINUTES * (target_lp - current_lp - 1), "minutes").asMilliseconds();
-                                var ms_total_lp_time = ms_one_lp_time_remaining + ms_rest_lp_time_remaining;
                                 NativeNotification.schedule(
                                     lp_notification_id,
                                     account.alias + ": LP has reached " + account.alerts_lp_value,
-                                    now + ms_total_lp_time
+                                    now + self.calculateTimeRemainingTillTargetLp(account, now)
                                 )
                             })
                         }
@@ -335,6 +311,62 @@ angular.module('sif-assistant.services', [])
                         })
                     }
                 }
+            },
+            cancelAllNativeNotification: function (account) {
+                var self = this;
+                const ALL_TYPES_OF_NATIVE_NOTIFICATIONS = ["lp", "bonus"];
+                var all_ids = ALL_TYPES_OF_NATIVE_NOTIFICATIONS.map(function (type) {
+                    return self.getNativeNotificationId(account, type);
+                });
+                all_ids.forEach(function (id) {
+                    NativeNotification.isPresent(id, function (present) {
+                        console.log(id, present);
+                        if (present) {
+                            NativeNotification.cancel(id);
+                        }
+                    });
+                });
+            },
+            getNativeNotificationId: function (account, type) {
+                return account.alias + ":" + type;
+            },
+
+            /**
+             * Calculators
+             */
+            calculateOneLpTimeRemaining: function (account, now) {
+                var current_lp = account.lp;
+                var max_lp = Calculators.getMaxLpByLevel(account);
+                if (current_lp === max_lp) {
+                    return -1;
+                }
+                var ms_passed = (now - account.last_lp_update) % LP_INCREMENTAL_MS;
+                return LP_INCREMENTAL_MS - ms_passed;
+            },
+            calculateTimeRemainingTillTargetLp: function (account, now) {
+                var ms_one_lp_time_remaining = this.calculateOneLpTimeRemaining(account, now);
+                var current_lp = account.lp;
+                var target_lp = account.alerts_lp_value;
+                var ms_rest_lp_time_remaining = moment.duration(LP_INCREMENTAL_MINUTES * (target_lp - current_lp - 1), "minutes").asMilliseconds();
+                return ms_one_lp_time_remaining + ms_rest_lp_time_remaining;
+            },
+
+            /**
+             * TBD
+             */
+            getFrequentRefreshData: function () {
+                var self = this;
+                var now = Date.now();
+                return this.getRaw().map(function (account) {
+                    var one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
+                    if (one_lp_time_remaining === -1) {
+                        account.one_lp_time_remaining = "Full";
+                    }
+                    else {
+                        account.one_lp_time_remaining = moment.duration(one_lp_time_remaining).format("mm:ss");
+                    }
+                    return account;
+                });
             },
             refreshInfrequentData: function () {
                 var now = Date.now();
@@ -377,18 +409,6 @@ angular.module('sif-assistant.services', [])
                     return account;
                 });
                 this.set(current_accounts);
-            },
-            calculateOneLpTimeRemaining: function (account, now) {
-                var current_lp = account.lp;
-                var max_lp = Calculators.getMaxLpByLevel(account);
-                if (current_lp === max_lp) {
-                    return -1;
-                }
-                var ms_passed = (now - account.last_lp_update) % LP_INCREMENTAL_MS;
-                return LP_INCREMENTAL_MS - ms_passed;
-            },
-            getNativeNotificationId: function (account, type) {
-                return account.alias + ":" + type;
             }
         }
     })
