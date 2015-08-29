@@ -147,9 +147,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.save = function () {
             var updated_account = Calculators.updateAccountSongsPlayed($scope.updatingAccount, $scope.buffer);
-            $scope.updateAccountManualBinding($scope.updatingAccount, "level", updated_account.level);
-            $scope.updateAccountManualBinding($scope.updatingAccount, "exp", updated_account.exp);
-            $scope.updateAccountManualBinding($scope.updatingAccount, "lp", updated_account.lp);
+            $scope.updateAccount($scope.updatingAccount, "level", updated_account.level);
+            $scope.updateAccount($scope.updatingAccount, "exp", updated_account.exp);
+            $scope.updateAccount($scope.updatingAccount, "lp", updated_account.lp);
 
             $scope.closeUpdate();
         };
@@ -197,7 +197,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 - $scope.lovecaBuffer.subtraction
                 * $scope.lovecaBuffer.subtractionMultiplier;
             var new_loveca = current_loveca + loveca_delta;
-            $scope.updateAccountManualBinding($scope.updatingAccount, "loveca", new_loveca);
+            $scope.updateAccount($scope.updatingAccount, "loveca", new_loveca);
 
             $scope.closeUpdateLoveca();
         };
@@ -210,36 +210,39 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
          * Update bonus
          */
         $scope.toggleBonus = function (account) {
-            $scope.updateAccount(account, "has_claimed_bonus", account.has_claimed_bonus);
+            $scope.updateAccountPersistent(account, "has_claimed_bonus", account.has_claimed_bonus);
         };
 
         /**
          * Update alerts
          */
         $scope.toggleLpAlerts = function (account) {
-            $scope.updateAccount(account, "alerts_lp", account.alerts_lp);
+            $scope.updateAccountPersistent(account, "alerts_lp", account.alerts_lp);
         };
 
         $scope.saveLpAlertsValue = function (account) {
-            console.log(account.alerts_lp_value);
-            $scope.updateAccount(account, "alerts_lp_value", account.alerts_lp_value);
+            $scope.updateAccountPersistent(account, "alerts_lp_value", account.alerts_lp_value);
         };
 
         $scope.toggleBonusAlerts = function (account) {
-            $scope.updateAccount(account, "alerts_bonus", account.alerts_bonus);
+            $scope.updateAccountPersistent(account, "alerts_bonus", account.alerts_bonus);
         };
 
         /**
          * Update account
          */
-        $scope.updateAccountManualBinding = function (account, key, new_value) {
-            var index = Accounts.getAccountIndex(account);
-            $scope.accounts[index][key] = new_value;
-            $scope.updateAccount(account, key, new_value);
+        $scope.updateAccount = function (account, key, new_value) {
+            $scope.updateAccountLocal(account, key, new_value);
+            $scope.updateAccountPersistent(account, key, new_value);
         };
 
-        $scope.updateAccount = function (account, key, new_value) {
-            Accounts.updateAccount(account, key, new_value);
+        $scope.updateAccountLocal = function (account, key, new_value) {
+            var index = Accounts.getAccountIndex(account);
+            $scope.accounts[index][key] = new_value;
+        };
+
+        $scope.updateAccountPersistent = function (account, key, new_value) {
+            Accounts.updateAccountPersistent(account, key, new_value);
         };
 
         /**

@@ -231,7 +231,7 @@ angular.module('sif-assistant.services', [])
                 }
                 return false;
             },
-            updateAccount: function (account, key, newData) {
+            updateAccountPersistent: function (account, key, newData) {
                 if (account !== undefined && key !== undefined && newData !== undefined && newData !== null) {
                     var current_accounts = this.getRaw();
                     var index = this.getAccountIndex(account);
