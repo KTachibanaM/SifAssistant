@@ -340,7 +340,7 @@ angular.module('sif-assistant.services', [])
                 if (current_lp === max_lp) {
                     return {
                         ms: -1,
-                        literal: "Full"
+                        literal: gettextCatalog.getString("Full")
                     }
                 }
                 var ms_passed = (now - account.last_lp_update) % LP_INCREMENTAL_MS;
