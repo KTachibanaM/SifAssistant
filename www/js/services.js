@@ -271,7 +271,7 @@ angular.module('sif-assistant.services', [])
                                 NativeNotification.schedule(
                                     lp_notification_id,
                                     account.alias + gettextCatalog.getString(": LP has reached ") + account.alerts_lp_value,
-                                    now + self.calculateTimeRemainingTillTargetLp(account, now)
+                                    now + self.calculateTimeRemainingTillTargetLp(account, now).ms
                                 )
                             })
                         }
@@ -338,36 +338,33 @@ angular.module('sif-assistant.services', [])
                 var current_lp = account.lp;
                 var max_lp = Calculators.getMaxLpByLevel(account);
                 if (current_lp === max_lp) {
-                    return -1;
+                    return {
+                        ms: -1,
+                        literal: "Full"
+                    }
                 }
                 var ms_passed = (now - account.last_lp_update) % LP_INCREMENTAL_MS;
-                return LP_INCREMENTAL_MS - ms_passed;
+                var one_lp_time_remaining = LP_INCREMENTAL_MS - ms_passed;
+                return {
+                    ms: one_lp_time_remaining,
+                    literal: moment.duration(one_lp_time_remaining).format("mm:ss")
+                };
             },
             calculateTimeRemainingTillTargetLp: function (account, now) {
-                var ms_one_lp_time_remaining = this.calculateOneLpTimeRemaining(account, now);
+                var ms_one_lp_time_remaining = this.calculateOneLpTimeRemaining(account, now).ms;
                 var current_lp = account.lp;
                 var target_lp = account.alerts_lp_value;
                 var ms_rest_lp_time_remaining = moment.duration(LP_INCREMENTAL_MINUTES * (target_lp - current_lp - 1), "minutes").asMilliseconds();
-                return ms_one_lp_time_remaining + ms_rest_lp_time_remaining;
+                var time_remaining_till_target_lp = ms_one_lp_time_remaining + ms_rest_lp_time_remaining;
+                return {
+                    ms: time_remaining_till_target_lp,
+                    literal: moment.duration(time_remaining_till_target_lp).format("dd:hh:mm:ss")
+                }
             },
 
             /**
              * TBD
              */
-            getFrequentRefreshData: function () {
-                var self = this;
-                var now = Date.now();
-                return this.getRaw().map(function (account) {
-                    var one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
-                    if (one_lp_time_remaining === -1) {
-                        account.one_lp_time_remaining = "Full";
-                    }
-                    else {
-                        account.one_lp_time_remaining = moment.duration(one_lp_time_remaining).format("mm:ss");
-                    }
-                    return account;
-                });
-            },
             refreshInfrequentData: function () {
                 var now = Date.now();
                 this.incrementAllLp(now);
