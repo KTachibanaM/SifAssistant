@@ -198,9 +198,16 @@ angular.module('sif-assistant.services', [])
                 $localStorage.set(ACCOUNTS_KEY, accounts)
             },
             get: function () {
+                var self = this;
+                this.getRaw().forEach(function (account) {
+                    self.updateLp(account);
+                    self.updateBonus(account);
+                });
                 return this.getRaw().map(function (account) {
                     account.max_exp = Calculators.getMaxExpByLevel(account);
                     account.max_lp = Calculators.getMaxLpByLevel(account);
+                    account.time_remaining_till_next_lp = self.calculateTimeRemainingTillNextLp(account);
+                    account.time_remaining_till_next_daily_bonus = self.calculateTimeRemainingTillNextDailyBonus(account);
                     return account;
                 });
             },
@@ -270,7 +277,7 @@ angular.module('sif-assistant.services', [])
                                 NativeNotification.schedule(
                                     lp_notification_id,
                                     account.alias + gettextCatalog.getString(": LP has reached ") + account.alerts_lp_value,
-                                    Date.now() + self.calculateTimeRemainingTillTargetLp(account, Date.now()).ms
+                                    Date.now() + self.calculateTimeRemainingTillTargetLp(account).ms
                                 )
                             })
                         }
@@ -290,7 +297,7 @@ angular.module('sif-assistant.services', [])
                         NativeNotification.schedule(
                             bonus_notification_id,
                             account.alias + gettextCatalog.getString(": Daily bonus is available!"),
-                            this.calculateTimeRemainingTillNextDailyBonus(account, Date.now()).ms,
+                            this.calculateTimeRemainingTillNextDailyBonus(account).ms,
                             "day"
                         );
                     }
@@ -325,7 +332,8 @@ angular.module('sif-assistant.services', [])
             /**
              * Calculators
              */
-            calculateOneLpTimeRemaining: function (account, now) {
+            calculateTimeRemainingTillNextLp: function (account) {
+                var now = Date.now();
                 var current_lp = account.lp;
                 var max_lp = Calculators.getMaxLpByLevel(account);
                 if (current_lp === max_lp) {
@@ -341,8 +349,8 @@ angular.module('sif-assistant.services', [])
                     literal: moment.duration(one_lp_time_remaining).format("mm:ss")
                 };
             },
-            calculateTimeRemainingTillTargetLp: function (account, now) {
-                var ms_one_lp_time_remaining = this.calculateOneLpTimeRemaining(account, now).ms;
+            calculateTimeRemainingTillTargetLp: function (account) {
+                var ms_one_lp_time_remaining = this.calculateTimeRemainingTillNextLp(account).ms;
                 var current_lp = account.lp;
                 var target_lp = account.alerts_lp_value;
                 var ms_rest_lp_time_remaining = moment.duration(LP_INCREMENTAL_MINUTES * (target_lp - current_lp - 1), "minutes").asMilliseconds();
@@ -352,7 +360,8 @@ angular.module('sif-assistant.services', [])
                     literal: moment.duration(time_remaining_till_target_lp).format("dd:hh:mm:ss")
                 }
             },
-            calculateTimeRemainingTillNextDailyBonus: function (account, now) {
+            calculateTimeRemainingTillNextDailyBonus: function (account) {
+                var now = Date.now();
                 var timezone = Regions.getById(account.region).timezone;
                 var now_tz = moment(now).tz(timezone);
                 var start_of_next_day_tz = now_tz.add(1, "days").tz(timezone);
@@ -366,9 +375,13 @@ angular.module('sif-assistant.services', [])
             },
 
             /**
-             * TBD
+             * Update timed attributes
              */
-            updateLp: function (account, now) {
+            updateLp: function (account) {
+                var current_accounts = this.getRaw();
+                var index = this.getAccountIndex(account);
+
+                var now = Date.now();
                 var current_lp = account.lp;
                 var max_lp = Calculators.getMaxLpByLevel(account);
                 if (current_lp === max_lp) {
@@ -386,9 +399,17 @@ angular.module('sif-assistant.services', [])
                     account.lp = current_lp + lp_incremented;
                     account.last_lp_update = last_lp_update + lp_incremented * LP_INCREMENTAL_MS;
                 }
-                return account;
+
+                current_accounts[index].lp = account.lp;
+                current_accounts[index].last_lp_update = account.last_lp_update;
+                this.set(current_accounts);
             },
-            updateBonus: function (account, now) {
+
+            updateBonus: function (account) {
+                var current_accounts = this.getRaw();
+                var index = this.getAccountIndex(account);
+
+                var now = Date.now();
                 var timezone = Regions.getById(account.region).timezone;
                 var last_bonus_update = account.last_bonus_update;
                 var last_bonus_update_tz = moment(last_bonus_update).tz(timezone);
@@ -397,7 +418,10 @@ angular.module('sif-assistant.services', [])
                     account.last_bonus_update = now;
                     account.has_claimed_bonus = false;
                 }
-                return account;
+
+                current_accounts[index].last_bonus_update = account.last_bonus_update;
+                current_accounts[index].has_claimed_bonus = account.has_claimed_bonus;
+                this.set(current_accounts);
             }
         }
     })
