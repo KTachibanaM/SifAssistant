@@ -2,7 +2,7 @@
 
 angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
-    .controller('AppCtrl', function ($scope, $ionicModal, Accounts, Regions) {
+    .controller('AppCtrl', function ($scope, $ionicModal, Accounts, Regions, gettextCatalog) {
         $scope.regions = Regions.get();
 
         /**
@@ -33,10 +33,14 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
 
         $scope.addAccount = function (account) {
-            if (Accounts.addAccount(account)) {
-                $scope.reload();
+            if (Accounts.ifAccountExists(account)) {
+                alert(gettextCatalog.getString("Cannot have duplicate alias"))
+            } else {
+                if (Accounts.addAccount(account)) {
+                    $scope.reload();
+                }
+                $scope.closeAddAccount();
             }
-            $scope.closeAddAccount();
         };
 
         $scope.openAddAccount = function () {
