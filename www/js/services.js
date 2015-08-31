@@ -332,6 +332,12 @@ angular.module('sif-assistant.services', [])
             /**
              * Calculators
              */
+            calculateAllTimeRemainingTillNextLp: function () {
+                var self = this;
+                return this.getRaw().map(function (account) {
+                    return self.calculateTimeRemainingTillNextLp(account);
+                });
+            },
             calculateTimeRemainingTillNextLp: function (account) {
                 var now = Date.now();
                 var current_lp = account.lp;

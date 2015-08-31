@@ -97,14 +97,24 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         }
     })
 
-    .controller('AccountsCtrl', function($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
+    .controller('AccountsCtrl', function($scope, $interval, ONE_SECOND, $ionicModal, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
         $scope.currentFilter = "All";
+
+        /**
+         * Timed attributes
+         */
+        $scope.updateTimingRemainingTillNextLp = function () {
+            $scope.time_remaining_till_next_lp = Accounts.calculateAllTimeRemainingTillNextLp();
+        };
+
+        $interval($scope.updateTimingRemainingTillNextLp, ONE_SECOND);
 
         /**
          * Show accounts
          */
         $scope.reload = function () {
             $scope.accounts = Accounts.get();
+            $scope.updateTimingRemainingTillNextLp();
         };
 
         $scope.reload();
