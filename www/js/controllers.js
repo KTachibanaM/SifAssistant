@@ -283,24 +283,24 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
     })
 
-    .controller('RegionsCtrl', function ($scope, $interval, Regions, FREQUENT) {
+    .controller('RegionsCtrl', function ($scope, $interval, Regions, ONE_SECOND) {
         $scope.reload = function () {
             $scope.regions = Regions.get();
         };
 
         $scope.reload();
 
-        $interval($scope.reload, FREQUENT);
+        $interval($scope.reload, ONE_SECOND);
     })
 
-    .controller('DebugCtrl', function ($scope, $interval, NativeNotification, FREQUENT) {
+    .controller('DebugCtrl', function ($scope, $interval, NativeNotification, ONE_SECOND) {
         $scope.reload = function () {
             NativeNotification.getAll(function (notifications) {
                 $scope.all_notifications = notifications;
             });
         };
 
-        $interval($scope.reload, FREQUENT);
+        $interval($scope.reload, ONE_SECOND);
 
         $scope.reload();
 
