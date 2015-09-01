@@ -186,37 +186,41 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory('Accounts', function ($localStorage, Calculators, Regions, NativeNotification) {
+    .factory('Accounts', function ($localStorage, Calculators, Regions, NativeNotification, gettextCatalog) {
         const ACCOUNTS_KEY = "accounts";
         const LP_INCREMENTAL_MINUTES = 6;
         const LP_INCREMENTAL_MS = moment.duration(LP_INCREMENTAL_MINUTES, "minutes").asMilliseconds();
         return {
+            /**
+             * CRUD
+             */
             set: function (accounts) {
                 $localStorage.set(ACCOUNTS_KEY, accounts)
             },
-            get: function () {
+            getAndUpdateTimedAttributes: function () {
+                var self = this;
+                this.getRaw().forEach(function (account) {
+                    self.updateLp(account);
+                    self.updateBonus(account);
+                });
                 return this.getRaw().map(function (account) {
-                    account.max_exp = Calculators.getMaxExpByLevel(account);
-                    account.max_lp = Calculators.getMaxLpByLevel(account);
+                    account.time_remaining_till_next_lp = self.calculateTimeRemainingTillNextLp(account);
+                    account.time_remaining_till_next_daily_bonus = self.calculateTimeRemainingTillNextDailyBonus(account);
                     return account;
                 });
             },
-            getFrequentRefreshData: function () {
-                var self = this;
-                var now = Date.now();
+            getComputedAttributes: function () {
                 return this.getRaw().map(function (account) {
-                    var one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
-                    if (one_lp_time_remaining === -1) {
-                        account.one_lp_time_remaining = "Full";
-                    }
-                    else {
-                        account.one_lp_time_remaining = moment.duration(one_lp_time_remaining).format("mm:ss");
-                    }
+                    account.max_lp = Calculators.getMaxLpByLevel(account);
+                    account.max_exp = Calculators.getMaxExpByLevel(account);
                     return account;
-                });
+                })
             },
             getRaw: function () {
                 return $localStorage.getArray(ACCOUNTS_KEY);
+            },
+            ifAccountExists: function (account) {
+                return this.getAccountIndex(account) !== -1;
             },
             getAccountIndex: function (account) {
                 var current_aliases = this.getRaw().map(function (item) {
@@ -239,6 +243,23 @@ angular.module('sif-assistant.services', [])
                 }
                 return false;
             },
+            updateAccount: function (account, key, newData) {
+                if (account !== undefined && key !== undefined && newData !== undefined && newData !== null) {
+                    var current_accounts = this.getRaw();
+                    var index = this.getAccountIndex(account);
+                    if (key === "lp") {
+                        var original_lp = current_accounts[index].lp;
+                        if (original_lp === Calculators.getMaxLpByLevel(account)) {
+                            current_accounts[index].last_lp_update = Date.now();
+                        }
+                    }
+                    current_accounts[index][key] = newData;
+                    this.syncNativeNotificationState(current_accounts[index], key);
+                    this.set(current_accounts);
+                    return true;
+                }
+                return false;
+            },
             deleteAccount: function (account) {
                 if (account !== undefined) {
                     this.cancelAllNativeNotification(account);
@@ -250,32 +271,10 @@ angular.module('sif-assistant.services', [])
                 }
                 return false;
             },
-            cancelAllNativeNotification: function (account) {
-                var self = this;
-                const ALL_TYPES_OF_NATIVE_NOTIFICATIONS = ["lp", "bonus"];
-                var all_ids = ALL_TYPES_OF_NATIVE_NOTIFICATIONS.map(function (type) {
-                    return self.getNativeNotificationId(account, type);
-                });
-                all_ids.forEach(function (id) {
-                    NativeNotification.isPresent(id, function (present) {
-                        console.log(id, present);
-                        if (present) {
-                            NativeNotification.cancel(id);
-                        }
-                    });
-                });
-            },
-            updateAccount: function (account, key, newData) {
-                if (account !== undefined && key !== undefined && newData !== undefined && newData !== null) {
-                    var current_accounts = this.getRaw();
-                    var index = this.getAccountIndex(account);
-                    current_accounts[index][key] = newData;
-                    this.syncNativeNotificationState(current_accounts[index], key);
-                    this.set(current_accounts);
-                    return true;
-                }
-                return false;
-            },
+
+            /**
+             * Native Notification
+             */
             syncNativeNotificationState: function (account, key) {
                 if (key === "alerts_lp" || key === "alerts_lp_value" || key === "lp") {
                     const lp_notification_id = this.getNativeNotificationId(account, "lp");
@@ -286,16 +285,10 @@ angular.module('sif-assistant.services', [])
                                 if (present) {
                                     NativeNotification.cancel(lp_notification_id);
                                 }
-                                var now = Date.now();
-                                var ms_one_lp_time_remaining = self.calculateOneLpTimeRemaining(account, now);
-                                var current_lp = account.lp;
-                                var target_lp = account.alerts_lp_value;
-                                var ms_rest_lp_time_remaining = moment.duration(LP_INCREMENTAL_MINUTES * (target_lp - current_lp - 1), "minutes").asMilliseconds();
-                                var ms_total_lp_time = ms_one_lp_time_remaining + ms_rest_lp_time_remaining;
                                 NativeNotification.schedule(
                                     lp_notification_id,
-                                    account.alias + ": LP has reached " + account.alerts_lp_value,
-                                    now + ms_total_lp_time
+                                    account.alias + gettextCatalog.getString(": LP has reached ") + account.alerts_lp_value,
+                                    Date.now() + self.calculateTimeRemainingTillTargetLp(account).ms
                                 )
                             })
                         }
@@ -312,18 +305,10 @@ angular.module('sif-assistant.services', [])
                 if (key === "alerts_bonus") {
                     const bonus_notification_id = this.getNativeNotificationId(account, "bonus");
                     if (account.alerts_bonus) {
-                        var now = Date.now();
-                        var timezone = Regions.getById(account.region).timezone;
-                        var now_tz = moment(now).tz(timezone);
-                        var start_of_next_day_tz = now_tz.add(1, "days").tz(timezone);
-                        start_of_next_day_tz.millisecond(0);
-                        start_of_next_day_tz.second(0);
-                        start_of_next_day_tz.minute(0);
-                        start_of_next_day_tz.hour(0);
                         NativeNotification.schedule(
                             bonus_notification_id,
-                            account.alias + ": Daily bonus is available!",
-                            start_of_next_day_tz.valueOf(),
+                            account.alias + gettextCatalog.getString(": Daily bonus is available!"),
+                            this.calculateTimeOfNextDailyBonus(account),
                             "day"
                         );
                     }
@@ -336,59 +321,129 @@ angular.module('sif-assistant.services', [])
                     }
                 }
             },
-            refreshInfrequentData: function () {
-                var now = Date.now();
-                this.incrementAllLp(now);
-                this.checkAllBonus(now);
-            },
-            incrementAllLp: function (now) {
-                var current_accounts = this.getRaw().map(function (account) {
-                    var current_lp = account.lp;
-                    var max_lp = Calculators.getMaxLpByLevel(account);
-                    if (current_lp === max_lp) {
-                        account.last_lp_update = now;
-                        return account;
-                    }
-                    var last_lp_update = account.last_lp_update;
-                    var ms_passed = now - last_lp_update;
-                    var minutes_passed = Math.floor(moment.duration(ms_passed).asMinutes());
-                    var lp_incremented = Math.floor(minutes_passed / LP_INCREMENTAL_MINUTES);
-                    if (lp_incremented > 0) {
-                        if (current_lp + lp_incremented > max_lp) {
-                            lp_incremented = max_lp - current_lp;
+            cancelAllNativeNotification: function (account) {
+                var self = this;
+                const ALL_TYPES_OF_NATIVE_NOTIFICATIONS = ["lp", "bonus"];
+                var all_ids = ALL_TYPES_OF_NATIVE_NOTIFICATIONS.map(function (type) {
+                    return self.getNativeNotificationId(account, type);
+                });
+                all_ids.forEach(function (id) {
+                    NativeNotification.isPresent(id, function (present) {
+                        console.log(id, present);
+                        if (present) {
+                            NativeNotification.cancel(id);
                         }
-                        account.lp = current_lp + lp_incremented;
-                        account.last_lp_update = last_lp_update + lp_incremented * LP_INCREMENTAL_MS;
-                    }
-                    return account;
+                    });
                 });
-                this.set(current_accounts);
-            },
-            checkAllBonus: function (now) {
-                var current_accounts = this.getRaw().map(function (account) {
-                    var timezone = Regions.getById(account.region).timezone;
-                    var last_bonus_update = account.last_bonus_update;
-                    var last_bonus_update_tz = moment(last_bonus_update).tz(timezone);
-                    var now_tz = moment(now).tz(timezone);
-                    if (!now_tz.isSame(last_bonus_update_tz, "day")) {
-                        account.last_bonus_update = now;
-                        account.has_claimed_bonus = false;
-                    }
-                    return account;
-                });
-                this.set(current_accounts);
-            },
-            calculateOneLpTimeRemaining: function (account, now) {
-                var current_lp = account.lp;
-                var max_lp = Calculators.getMaxLpByLevel(account);
-                if (current_lp === max_lp) {
-                    return -1;
-                }
-                var ms_passed = (now - account.last_lp_update) % LP_INCREMENTAL_MS;
-                return LP_INCREMENTAL_MS - ms_passed;
             },
             getNativeNotificationId: function (account, type) {
                 return account.alias + ":" + type;
+            },
+
+            /**
+             * Calculators
+             */
+            calculateAllTimeRemainingTillNextLp: function () {
+                var self = this;
+                return this.getRaw().map(function (account) {
+                    return self.calculateTimeRemainingTillNextLp(account);
+                });
+            },
+            calculateTimeRemainingTillNextLp: function (account) {
+                var now = Date.now();
+                var current_lp = account.lp;
+                var max_lp = Calculators.getMaxLpByLevel(account);
+                if (current_lp === max_lp) {
+                    return {
+                        ms: -1,
+                        literal: gettextCatalog.getString("Full")
+                    }
+                }
+                var ms_passed = (now - account.last_lp_update) % LP_INCREMENTAL_MS;
+                var one_lp_time_remaining = LP_INCREMENTAL_MS - ms_passed;
+                return {
+                    ms: one_lp_time_remaining,
+                    literal: moment.duration(one_lp_time_remaining).format("mm:ss")
+                };
+            },
+            calculateTimeRemainingTillTargetLp: function (account) {
+                var ms_one_lp_time_remaining = this.calculateTimeRemainingTillNextLp(account).ms;
+                var current_lp = account.lp;
+                var target_lp = account.alerts_lp_value;
+                var ms_rest_lp_time_remaining = moment.duration(LP_INCREMENTAL_MINUTES * (target_lp - current_lp - 1), "minutes").asMilliseconds();
+                var time_remaining_till_target_lp = ms_one_lp_time_remaining + ms_rest_lp_time_remaining;
+                return {
+                    ms: time_remaining_till_target_lp,
+                    literal: moment.duration(time_remaining_till_target_lp).format("dd:hh:mm:ss")
+                }
+            },
+            calculateTimeRemainingTillNextDailyBonus: function (account) {
+                var time_of_next_day_bonus = this.calculateTimeOfNextDailyBonus(account);
+                var time_remaining_till_next_day_bonus = time_of_next_day_bonus - Date.now();
+                return {
+                    ms: time_remaining_till_next_day_bonus
+                }
+            },
+            calculateTimeOfNextDailyBonus: function (account) {
+                var now = Date.now();
+                var timezone = Regions.getById(account.region).timezone;
+                var now_tz = moment(now).tz(timezone);
+                var start_of_next_day_tz = now_tz.add(1, "days").tz(timezone);
+                start_of_next_day_tz.millisecond(0);
+                start_of_next_day_tz.second(0);
+                start_of_next_day_tz.minute(0);
+                start_of_next_day_tz.hour(0);
+                return start_of_next_day_tz.valueOf();
+            },
+
+            /**
+             * Update timed attributes
+             */
+            updateLp: function (account) {
+                var current_accounts = this.getRaw();
+                var index = this.getAccountIndex(account);
+
+                var now = Date.now();
+                var current_lp = account.lp;
+                var max_lp = Calculators.getMaxLpByLevel(account);
+                if (current_lp === max_lp) {
+                    account.last_lp_update = now;
+                    return account;
+                }
+                var last_lp_update = account.last_lp_update;
+                var ms_passed = now - last_lp_update;
+                var minutes_passed = Math.floor(moment.duration(ms_passed).asMinutes());
+                var lp_incremented = Math.floor(minutes_passed / LP_INCREMENTAL_MINUTES);
+                if (lp_incremented > 0) {
+                    if (current_lp + lp_incremented > max_lp) {
+                        lp_incremented = max_lp - current_lp;
+                    }
+                    account.lp = current_lp + lp_incremented;
+                    account.last_lp_update = last_lp_update + lp_incremented * LP_INCREMENTAL_MS;
+                }
+
+                current_accounts[index].lp = account.lp;
+                current_accounts[index].last_lp_update = account.last_lp_update;
+                this.set(current_accounts);
+            },
+
+            updateBonus: function (account) {
+                var current_accounts = this.getRaw();
+                var index = this.getAccountIndex(account);
+
+                var now = Date.now();
+                var timezone = Regions.getById(account.region).timezone;
+                var last_bonus_update = account.last_bonus_update;
+                var last_bonus_update_tz = moment(last_bonus_update).tz(timezone);
+                var now_tz = moment(now).tz(timezone);
+                if (!now_tz.isSame(last_bonus_update_tz, "day")) {
+                    account.last_bonus_update = now;
+                    account.has_claimed_bonus = false;
+                }
+
+                current_accounts[index].last_bonus_update = account.last_bonus_update;
+                current_accounts[index].has_claimed_bonus = account.has_claimed_bonus;
+                this.set(current_accounts);
             }
         }
     })

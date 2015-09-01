@@ -50,9 +50,7 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
 
     .constant("isBrowser", window.cordova === undefined)
 
-    .constant("FREQUENT", 1000)
-
-    .constant("INFREQUENT", 5 * 1000)
+    .constant("ONE_SECOND", 1000)
 
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider

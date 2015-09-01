@@ -17,17 +17,17 @@
             <div class="item item-avatar">
                 <img ng-src="img/region_flags/{{account.region}}.png">
                 <h2 translate>Rank: {{account.level}}</h2>
-                <p translate>EXP: {{account.exp}}/{{account.max_exp}}</p>
+                <p translate>EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}</p>
             </div>
             <div class="item item-body">
                 <div class="list">
                     <label class="item item-input">
                         <span class="input-label" translate>LP</span>
-                        {{account.lp}}/{{account.max_lp}}
+                        {{account.lp}}/{{computed_attributes[$index].max_lp}}
                     </label>
                     <label class="item item-input">
                         <span class="input-label" translate>Next LP</span>
-                        {{frequentRefreshData[$index].one_lp_time_remaining}}
+                        {{time_remaining_till_next_lp[$index].literal}}
                     </label>
                     <label class="item item-input">
                         <span class="input-label" translate>Love gems</span>

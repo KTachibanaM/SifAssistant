@@ -2,7 +2,7 @@
 
 angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
-    .controller('AppCtrl', function ($scope, $ionicModal, Accounts, Regions) {
+    .controller('AppCtrl', function ($scope, $ionicModal, Accounts, Regions, gettextCatalog) {
         $scope.regions = Regions.get();
 
         /**
@@ -33,10 +33,14 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
 
         $scope.addAccount = function (account) {
-            if (Accounts.addAccount(account)) {
-                $scope.reload();
+            if (Accounts.ifAccountExists(account)) {
+                alert(gettextCatalog.getString("Cannot have duplicate alias"))
+            } else {
+                if (Accounts.addAccount(account)) {
+                    $scope.reload();
+                }
+                $scope.closeAddAccount();
             }
-            $scope.closeAddAccount();
         };
 
         $scope.openAddAccount = function () {
@@ -93,14 +97,38 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         }
     })
 
-    .controller('AccountsCtrl', function($scope, $interval, $ionicModal, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
+    .controller('AccountsCtrl', function($scope, $interval, ONE_SECOND, $timeout, $ionicModal, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
         $scope.currentFilter = "All";
+
+        /**
+         * Timers
+         */
+        $scope.updateTimingRemainingTillNextLp = function () {
+            $scope.time_remaining_till_next_lp = Accounts.calculateAllTimeRemainingTillNextLp();
+        };
+
+        $interval($scope.updateTimingRemainingTillNextLp, ONE_SECOND);
+
+        /**
+         * Computed attributes
+         */
+        $scope.updateComputedAttributes = function () {
+            $scope.computed_attributes = Accounts.getComputedAttributes();
+        };
 
         /**
          * Show accounts
          */
         $scope.reload = function () {
-            $scope.accounts = Accounts.get();
+            $scope.accounts = Accounts.getAndUpdateTimedAttributes();
+            $scope.updateComputedAttributes();
+            $scope.accounts.forEach(function (account) {
+                if (account.time_remaining_till_next_lp.ms !== -1) {
+                    $timeout($scope.reload, account.time_remaining_till_next_lp.ms);
+                }
+                $timeout($scope.reload, account.time_remaining_till_next_daily_bonus.ms);
+            });
+            $scope.updateTimingRemainingTillNextLp();
         };
 
         $scope.reload();
@@ -147,9 +175,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.save = function () {
             var updated_account = Calculators.updateAccountSongsPlayed($scope.updatingAccount, $scope.buffer);
-            $scope.updateAccountManualBinding($scope.updatingAccount, "level", updated_account.level);
-            $scope.updateAccountManualBinding($scope.updatingAccount, "exp", updated_account.exp);
-            $scope.updateAccountManualBinding($scope.updatingAccount, "lp", updated_account.lp);
+            $scope.updateAccount($scope.updatingAccount, "level", updated_account.level);
+            $scope.updateAccount($scope.updatingAccount, "exp", updated_account.exp);
+            $scope.updateAccount($scope.updatingAccount, "lp", updated_account.lp);
 
             $scope.closeUpdate();
         };
@@ -197,7 +225,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 - $scope.lovecaBuffer.subtraction
                 * $scope.lovecaBuffer.subtractionMultiplier;
             var new_loveca = current_loveca + loveca_delta;
-            $scope.updateAccountManualBinding($scope.updatingAccount, "loveca", new_loveca);
+            $scope.updateAccount($scope.updatingAccount, "loveca", new_loveca);
 
             $scope.closeUpdateLoveca();
         };
@@ -210,36 +238,40 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
          * Update bonus
          */
         $scope.toggleBonus = function (account) {
-            $scope.updateAccount(account, "has_claimed_bonus", account.has_claimed_bonus);
+            $scope.updateAccountPersistent(account, "has_claimed_bonus", account.has_claimed_bonus);
         };
 
         /**
          * Update alerts
          */
         $scope.toggleLpAlerts = function (account) {
-            $scope.updateAccount(account, "alerts_lp", account.alerts_lp);
+            $scope.updateAccountPersistent(account, "alerts_lp", account.alerts_lp);
         };
 
         $scope.saveLpAlertsValue = function (account) {
-            console.log(account.alerts_lp_value);
-            $scope.updateAccount(account, "alerts_lp_value", account.alerts_lp_value);
+            $scope.updateAccountPersistent(account, "alerts_lp_value", account.alerts_lp_value);
         };
 
         $scope.toggleBonusAlerts = function (account) {
-            $scope.updateAccount(account, "alerts_bonus", account.alerts_bonus);
+            $scope.updateAccountPersistent(account, "alerts_bonus", account.alerts_bonus);
         };
 
         /**
          * Update account
          */
-        $scope.updateAccountManualBinding = function (account, key, new_value) {
-            var index = Accounts.getAccountIndex(account);
-            $scope.accounts[index][key] = new_value;
-            $scope.updateAccount(account, key, new_value);
+        $scope.updateAccount = function (account, key, new_value) {
+            $scope.updateAccountLocal(account, key, new_value);
+            $scope.updateAccountPersistent(account, key, new_value);
         };
 
-        $scope.updateAccount = function (account, key, new_value) {
+        $scope.updateAccountLocal = function (account, key, new_value) {
+            var index = Accounts.getAccountIndex(account);
+            $scope.accounts[index][key] = new_value;
+        };
+
+        $scope.updateAccountPersistent = function (account, key, new_value) {
             Accounts.updateAccount(account, key, new_value);
+            $scope.updateComputedAttributes();
         };
 
         /**
@@ -276,24 +308,24 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
     })
 
-    .controller('RegionsCtrl', function ($scope, $interval, Regions, FREQUENT) {
+    .controller('RegionsCtrl', function ($scope, $interval, Regions, ONE_SECOND) {
         $scope.reload = function () {
             $scope.regions = Regions.get();
         };
 
         $scope.reload();
 
-        $interval($scope.reload, FREQUENT);
+        $interval($scope.reload, ONE_SECOND);
     })
 
-    .controller('DebugCtrl', function ($scope, $interval, NativeNotification, FREQUENT) {
+    .controller('DebugCtrl', function ($scope, $interval, NativeNotification, ONE_SECOND) {
         $scope.reload = function () {
             NativeNotification.getAll(function (notifications) {
                 $scope.all_notifications = notifications;
             });
         };
 
-        $interval($scope.reload, FREQUENT);
+        $interval($scope.reload, ONE_SECOND);
 
         $scope.reload();
 
