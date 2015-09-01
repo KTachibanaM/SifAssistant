@@ -197,7 +197,7 @@ angular.module('sif-assistant.services', [])
             set: function (accounts) {
                 $localStorage.set(ACCOUNTS_KEY, accounts)
             },
-            get: function () {
+            getAndUpdateTimedAttributes: function () {
                 var self = this;
                 this.getRaw().forEach(function (account) {
                     self.updateLp(account);
@@ -242,6 +242,11 @@ angular.module('sif-assistant.services', [])
                 if (account !== undefined && key !== undefined && newData !== undefined && newData !== null) {
                     var current_accounts = this.getRaw();
                     var index = this.getAccountIndex(account);
+                    if (key === "lp") {
+                        if (account.lp === account.max_lp) {
+                            current_accounts[index].last_lp_update = Date.now();
+                        }
+                    }
                     current_accounts[index][key] = newData;
                     this.syncNativeNotificationState(current_accounts[index], key);
                     this.set(current_accounts);
@@ -297,7 +302,7 @@ angular.module('sif-assistant.services', [])
                         NativeNotification.schedule(
                             bonus_notification_id,
                             account.alias + gettextCatalog.getString(": Daily bonus is available!"),
-                            this.calculateTimeRemainingTillNextDailyBonus(account).ms,
+                            this.calculateTimeOfNextDailyBonus(account),
                             "day"
                         );
                     }
@@ -367,6 +372,13 @@ angular.module('sif-assistant.services', [])
                 }
             },
             calculateTimeRemainingTillNextDailyBonus: function (account) {
+                var time_of_next_day_bonus = this.calculateTimeOfNextDailyBonus(account);
+                var time_remaining_till_next_day_bonus = time_of_next_day_bonus - Date.now();
+                return {
+                    ms: time_remaining_till_next_day_bonus
+                }
+            },
+            calculateTimeOfNextDailyBonus: function (account) {
                 var now = Date.now();
                 var timezone = Regions.getById(account.region).timezone;
                 var now_tz = moment(now).tz(timezone);
@@ -375,9 +387,7 @@ angular.module('sif-assistant.services', [])
                 start_of_next_day_tz.second(0);
                 start_of_next_day_tz.minute(0);
                 start_of_next_day_tz.hour(0);
-                return {
-                    ms: start_of_next_day_tz.valueOf()
-                }
+                return start_of_next_day_tz.valueOf();
             },
 
             /**

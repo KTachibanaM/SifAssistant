@@ -113,9 +113,11 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
          * Show accounts
          */
         $scope.reload = function () {
-            $scope.accounts = Accounts.get();
+            $scope.accounts = Accounts.getAndUpdateTimedAttributes();
             $scope.accounts.forEach(function (account) {
-                $timeout($scope.reload, account.time_remaining_till_next_lp.ms);
+                if (account.time_remaining_till_next_lp.ms !== -1) {
+                    $timeout($scope.reload, account.time_remaining_till_next_lp.ms);
+                }
                 $timeout($scope.reload, account.time_remaining_till_next_daily_bonus.ms);
             });
             $scope.updateTimingRemainingTillNextLp();
@@ -261,6 +263,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.updateAccountPersistent = function (account, key, new_value) {
             Accounts.updateAccount(account, key, new_value);
+            $scope.reload();
         };
 
         /**
