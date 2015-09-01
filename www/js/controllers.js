@@ -254,6 +254,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.updateAccount = function (account, key, new_value) {
             $scope.updateAccountLocal(account, key, new_value);
             $scope.updateAccountPersistent(account, key, new_value);
+            $scope.reload();
         };
 
         $scope.updateAccountLocal = function (account, key, new_value) {
@@ -263,7 +264,6 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.updateAccountPersistent = function (account, key, new_value) {
             Accounts.updateAccount(account, key, new_value);
-            $scope.reload();
         };
 
         /**

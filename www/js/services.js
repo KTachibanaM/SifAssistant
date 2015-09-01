@@ -242,8 +242,10 @@ angular.module('sif-assistant.services', [])
                 if (account !== undefined && key !== undefined && newData !== undefined && newData !== null) {
                     var current_accounts = this.getRaw();
                     var index = this.getAccountIndex(account);
+                    console.log(key);
                     if (key === "lp") {
-                        if (account.lp === account.max_lp) {
+                        var original_lp = current_accounts[index].lp;
+                        if (original_lp === Calculators.getMaxLpByLevel(account)) {
                             current_accounts[index].last_lp_update = Date.now();
                         }
                     }
