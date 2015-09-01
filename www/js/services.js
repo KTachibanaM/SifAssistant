@@ -204,12 +204,17 @@ angular.module('sif-assistant.services', [])
                     self.updateBonus(account);
                 });
                 return this.getRaw().map(function (account) {
-                    account.max_exp = Calculators.getMaxExpByLevel(account);
-                    account.max_lp = Calculators.getMaxLpByLevel(account);
                     account.time_remaining_till_next_lp = self.calculateTimeRemainingTillNextLp(account);
                     account.time_remaining_till_next_daily_bonus = self.calculateTimeRemainingTillNextDailyBonus(account);
                     return account;
                 });
+            },
+            getComputedAttributes: function () {
+                return this.getRaw().map(function (account) {
+                    account.max_lp = Calculators.getMaxLpByLevel(account);
+                    account.max_exp = Calculators.getMaxExpByLevel(account);
+                    return account;
+                })
             },
             getRaw: function () {
                 return $localStorage.getArray(ACCOUNTS_KEY);

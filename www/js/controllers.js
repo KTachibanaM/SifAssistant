@@ -101,7 +101,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.currentFilter = "All";
 
         /**
-         * Timed attributes
+         * Timers
          */
         $scope.updateTimingRemainingTillNextLp = function () {
             $scope.time_remaining_till_next_lp = Accounts.calculateAllTimeRemainingTillNextLp();
@@ -110,10 +110,18 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $interval($scope.updateTimingRemainingTillNextLp, ONE_SECOND);
 
         /**
+         * Computed attributes
+         */
+        $scope.updateComputedAttributes = function () {
+            $scope.computed_attributes = Accounts.getComputedAttributes();
+        };
+
+        /**
          * Show accounts
          */
         $scope.reload = function () {
             $scope.accounts = Accounts.getAndUpdateTimedAttributes();
+            $scope.updateComputedAttributes();
             $scope.accounts.forEach(function (account) {
                 if (account.time_remaining_till_next_lp.ms !== -1) {
                     $timeout($scope.reload, account.time_remaining_till_next_lp.ms);
@@ -254,7 +262,6 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.updateAccount = function (account, key, new_value) {
             $scope.updateAccountLocal(account, key, new_value);
             $scope.updateAccountPersistent(account, key, new_value);
-            $scope.reload();
         };
 
         $scope.updateAccountLocal = function (account, key, new_value) {
@@ -264,6 +271,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.updateAccountPersistent = function (account, key, new_value) {
             Accounts.updateAccount(account, key, new_value);
+            $scope.updateComputedAttributes();
         };
 
         /**
