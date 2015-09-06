@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     .controller('AppCtrl', function ($scope, $ionicModal, Accounts, Regions, gettextCatalog) {
