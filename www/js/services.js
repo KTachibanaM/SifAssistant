@@ -39,7 +39,7 @@ angular.module('sif-assistant.services', [])
                 id = this.processId(id);
                 var options = {
                     id: id,
-                    title: "SIF Assistant",
+                    title: "Sukufesu Assistant",
                     text: text
                 };
                 if (time) {
