@@ -39,7 +39,7 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
                 return false;
             }
             if (ionic.Platform.isAndroid()) {
-                return ionic.Platform.version() >= 4.4;
+                return ionic.Platform.version() >= 5.0;
             }
             return false;
         };
