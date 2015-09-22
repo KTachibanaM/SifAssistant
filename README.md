@@ -4,11 +4,12 @@
 
 ```
 npm install -g cordova ionic
+npm install
 bower install
 ionic serve
 ```
 
-## Mobile Dev (in Android/iOS, replace "android" with "ios")
+## Mobile Dev (Run "Local Dev" above, in Android/iOS, replace "android" with "ios")
 
 ```
 ionic platform add android
