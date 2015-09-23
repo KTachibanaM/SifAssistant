@@ -19,9 +19,7 @@ angular.module('sif-assistant', ['ionic'])
             if (ionic.Platform.isIOS()) {
                 window.plugin.notification.local.promptForPermission();
             }
-            React.render(
-                React.createElement('App'),
-                document.getElementById("react-app")
+            React.render(React.createElement(React.createElement(App, null)), document.getElementById("react-app")
             );
         });
     });
