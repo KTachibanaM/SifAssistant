@@ -6,7 +6,6 @@
     "gulp": "^3.5.6"
   },
   "devDependencies": {
-    "del": "^2.0.2",
     "gulp-babel": "^5.2.1"
   },
   "cordovaPlugins": [
