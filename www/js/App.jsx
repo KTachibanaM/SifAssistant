@@ -7,7 +7,7 @@ var App = React.createClass({
                     level: 5,
                     exp: 23,
                     lp: 4, // Changing per second
-                    next_lp: "Todo", // Changing per second
+                    next_lp: 6 * 60 * 1000, // Changing per second
                     love_gems: 233
                 },
                 {
@@ -15,11 +15,24 @@ var App = React.createClass({
                     level: 100,
                     exp: 2333,
                     lp: 70, // Changing per second
-                    next_lp: "Todo", // Changing per second
+                    next_lp: 6 * 60 * 1000, // Changing per second
                     love_gems: 0
                 }
             ]
         }
+    },
+    componentDidMount: function () {
+        var that = this;
+        var intervals = this.state.accounts.map(function (account, index) {
+            return setInterval(function () {
+                var newState = that.state;
+                newState.accounts[index].next_lp -= 1000;
+                that.setState(newState);
+            }, 1000);
+        });
+        var newState = this.state;
+        newState.intervals = intervals;
+        this.setState(newState);
     },
     render: function() {
         return (
