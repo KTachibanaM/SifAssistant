@@ -20,8 +20,8 @@ angular.module('sif-assistant', ['ionic'])
                 window.plugin.notification.local.promptForPermission();
             }
             React.render(
-                React.createElement('h1', null, 'Hello, world!')
-                , document.getElementById("react-app")
+                React.createElement('App'),
+                document.getElementById("react-app")
             );
         });
     });

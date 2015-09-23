@@ -1,4 +1,5 @@
 {
-  "name": "SifAssistant",
-  "app_id": ""
+    "name": "SifAssistant",
+    "app_id": "",
+    "gulpStartupTasks": ["default", "watch"]
 }
