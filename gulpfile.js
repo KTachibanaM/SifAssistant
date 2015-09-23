@@ -6,7 +6,7 @@ var concat = require('gulp-concat');
 var sh = require('shelljs');
 
 var src = {
-    jsx: ['./www/js/**/*.jsx']
+    js: ['./www/js/**/*.js', './www/js/**/*.jsx']
 };
 
 var dist = {
@@ -16,11 +16,11 @@ var dist = {
 gulp.task('default', ['react']);
 
 gulp.task('watch', function () {
-    gulp.watch(src.jsx, ['react']);
+    gulp.watch(src.js, ['react']);
 });
 
 gulp.task('react', function () {
-    return gulp.src(src.jsx)
+    return gulp.src(src.js)
         .pipe(react())
         .pipe(gulp.dest(dist.js));
 });
