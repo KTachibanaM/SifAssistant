@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var babel = require("gulp-babel");
+var react = require('gulp-react');
 var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
@@ -13,14 +13,14 @@ var dist = {
     js: './www/dist'
 };
 
-gulp.task('default', ['babel']);
+gulp.task('default', ['react']);
 
 gulp.task('watch', function () {
-    gulp.watch(src.jsx, ['babel']);
+    gulp.watch(src.jsx, ['react']);
 });
 
-gulp.task('babel', function () {
+gulp.task('react', function () {
     return gulp.src(src.jsx)
-        .pipe(babel())
+        .pipe(react())
         .pipe(gulp.dest(dist.js));
 });

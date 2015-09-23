@@ -1,5 +1,7 @@
-class App extends React.Component {
-    static render() {
-        return <h1>Hello React!!!</h1>
+var App = React.createClass({
+    render: function() {
+        return (
+            <h1>Hello React there!</h1>
+        )
     }
-}
+});
