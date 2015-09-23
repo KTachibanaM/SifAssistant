@@ -34,6 +34,11 @@ var App = React.createClass({
         newState.intervals = intervals;
         this.setState(newState);
     },
+    componentWillUnmount: function() {
+        this.state.intervals.forEach(function (interval) {
+            clearInterval(interval);
+        })
+    },
     render: function() {
         return (
             <AccountList accounts={this.state.accounts}></AccountList>
