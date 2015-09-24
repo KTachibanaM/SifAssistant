@@ -1,5 +1,4 @@
 var gulp = require('gulp'),
-    del = require('del'),
     babel = require('gulp-babel');
 
 var src = {
