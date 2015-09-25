@@ -73,7 +73,7 @@ var AccountsPage = React.createClass({
     },
     render: function() {
         return (
-            <AccountList accounts={this.state.accounts}></AccountList>
+            <AccountsList accounts={this.state.accounts}></AccountsList>
         )
     }
 });
