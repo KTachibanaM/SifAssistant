@@ -1,5 +1,5 @@
 var App = React.createClass({
-    render: function() {
+    render: function () {
         return (
             <AccountsPage></AccountsPage>
         )

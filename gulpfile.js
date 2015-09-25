@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+    util = require('gulp-util'),
     babel = require('gulp-babel');
 
 var src = {
@@ -18,5 +19,9 @@ gulp.task('watch', function () {
 gulp.task('jsx-js', function () {
     return gulp.src(src.js)
         .pipe(babel())
+        .on('error', function (e) {
+            util.log(e);
+            this.emit('end');
+        })
         .pipe(gulp.dest(dist.js));
 });
