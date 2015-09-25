@@ -54,12 +54,12 @@ var AccountsPage = React.createClass({
         }
     },
     componentDidMount: function () {
-        var that = this;
-        var intervals = this.state.accounts.map(function (account, index) {
+        var intervals = this.state.accounts.map((account, index) => {
+            var self = this;
             return setInterval(function () {
-                var newState = that.state;
+                var newState = self.state;
                 newState.accounts[index].next_lp -= 1000;
-                that.setState(newState);
+                self.setState(newState);
             }, 1000);
         });
         var newState = this.state;
@@ -67,7 +67,7 @@ var AccountsPage = React.createClass({
         this.setState(newState);
     },
     componentWillUnmount: function() {
-        this.state.intervals.forEach(function (interval) {
+        this.state.intervals.forEach((interval) => {
             clearInterval(interval);
         })
     },
