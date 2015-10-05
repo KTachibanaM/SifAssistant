@@ -1,22 +1,25 @@
 var gulp = require('gulp'),
-    babel = require('gulp-babel');
+    browserify = require('browserify'),
+    babelify = require('babelify'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer');
 
-var src = {
-    js: ['./www/js/**/*.js', './www/js/**/*.jsx']
-};
+var JS_SRC = ['./www/js/**/*.js', './www/js/**/*.jsx'];
+var JS_ENTRY_POINT = './www/js/ionic-bootstrap.jsx';
+var JS_BUNDLE = './www/bundle.js';
 
-var dist = {
-    js: './www/dist'
-};
-
-gulp.task('default', ['jsx-js']);
+gulp.task('default', ['build']);
 
 gulp.task('watch', function () {
-    gulp.watch(src.js, ['jsx-js']);
+    gulp.watch(JS_SRC, ['build']);
 });
 
-gulp.task('jsx-js', function () {
-    return gulp.src(src.js)
-        .pipe(babel())
-        .pipe(gulp.dest(dist.js));
+gulp.task('build', function () {
+    return browserify({
+        entries: [JS_ENTRY_POINT],
+        transform: babelify
+    })
+        .bundle()
+        .pipe(source(JS_BUNDLE))
+        .pipe(gulp.dest('.'));
 });

@@ -1,5 +1,5 @@
-var AccountCard = React.createClass({
-    render: function() {
+export default class AccountCard extends React.Component {
+    static render() {
         return (
             <div>
                 <div>
@@ -13,4 +13,4 @@ var AccountCard = React.createClass({
             </div>
         )
     }
-});
+};
