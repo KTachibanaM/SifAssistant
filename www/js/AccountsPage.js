@@ -1,7 +1,8 @@
-import AccountsList from './AccountsList.jsx'
+import React from 'react';
+import AccountsList from './AccountsList'
 
-export default class AccountsPage extends React.Component {
-    static getInitialState() {
+export default React.createClass({
+    getInitialState() {
         return {
             accounts: [
                 {
@@ -54,8 +55,8 @@ export default class AccountsPage extends React.Component {
                 }
             ]
         }
-    }
-    static componentDidMount() {
+    },
+    componentDidMount() {
         var that = this;
         var intervals = this.state.accounts.map((account, index) => {
             return setInterval(function () {
@@ -67,15 +68,15 @@ export default class AccountsPage extends React.Component {
         var newState = this.state;
         newState.intervals = intervals;
         this.setState(newState);
-    }
-    static componentWillUnmount() {
+    },
+    componentWillUnmount() {
         this.state.intervals.forEach((interval) => {
             clearInterval(interval);
         })
-    }
-    static render() {
+    },
+    render() {
         return (
             <AccountsList accounts={this.state.accounts}></AccountsList>
         )
     }
-};
+});

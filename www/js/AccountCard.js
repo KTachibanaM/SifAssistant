@@ -1,5 +1,7 @@
-export default class AccountCard extends React.Component {
-    static render() {
+import React from 'react';
+
+export default React.createClass({
+    render() {
         return (
             <div>
                 <div>
@@ -13,4 +15,4 @@ export default class AccountCard extends React.Component {
             </div>
         )
     }
-};
+});

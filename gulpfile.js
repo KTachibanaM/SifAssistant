@@ -1,25 +1,38 @@
-var gulp = require('gulp'),
-    browserify = require('browserify'),
-    babelify = require('babelify'),
-    source = require('vinyl-source-stream'),
-    buffer = require('vinyl-buffer');
+var gulp = require('gulp');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var babelify = require('babelify');
+var del = require('del');
+var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
 
-var JS_SRC = ['./www/js/**/*.js', './www/js/**/*.jsx'];
-var JS_ENTRY_POINT = './www/js/ionic-bootstrap.jsx';
-var JS_BUNDLE = './www/bundle.js';
+const paths = {
+    srcEntry: './www/js/ionic-bootstrap.js',
+    srcJs: './www/js/**/*.js',
+    distBundle: './www/dist/bundle.min.js'
+};
 
 gulp.task('default', ['build']);
 
 gulp.task('watch', function () {
-    gulp.watch(JS_SRC, ['build']);
+    gulp.watch(paths.srcJs, ['build']);
 });
 
-gulp.task('build', function () {
-    return browserify({
-        entries: [JS_ENTRY_POINT],
-        transform: babelify
-    })
+gulp.task('build', ['browserify']);
+
+gulp.task('clean', function (cb) {
+    del(paths.distBundle, cb);
+});
+
+gulp.task('browserify', function () {
+    browserify(paths.srcEntry)
+        .transform(babelify)
         .bundle()
-        .pipe(source(JS_BUNDLE))
+        .pipe(source(paths.distBundle))
+        .pipe(buffer())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('.'));
 });

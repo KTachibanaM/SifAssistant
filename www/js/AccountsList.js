@@ -1,7 +1,8 @@
-import AccountCard from './AccountCard.jsx'
+import React from 'react';
+import AccountCard from './AccountCard'
 
-export default class AccountsList extends React.Component {
-    static render() {
+export default React.createClass({
+    render() {
         var accountNodes = this.props.accounts.map((account) => {
             return (
                 <AccountCard key={account.alias} account={account}></AccountCard>
@@ -13,4 +14,4 @@ export default class AccountsList extends React.Component {
             </div>
         )
     }
-};
+});
