@@ -8,7 +8,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 
 const paths = {
-    srcEntry: './www/js/ionic-bootstrap.js',
+    srcEntry: './www/js/bootstrap.js',
     srcJs: './www/js/**/*.js',
     distBundle: './www/dist/bundle.min.js'
 };

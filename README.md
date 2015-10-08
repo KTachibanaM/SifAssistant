@@ -3,10 +3,10 @@
 ## Local Dev (in a browser)
 
 ```
-npm install -g cordova ionic gulp
+npm install -g cordova gulp
 npm install
-bower install
-ionic serve
+cordova platform add browser
+cordova run browser
 ```
 
 ## Mobile Dev (Run "Local Dev" above, in Android/iOS, replace "android" with "ios")
