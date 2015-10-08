@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="org.ktachibana.sifassistant" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Sukufesu Assistant</name>
-  <description>&#xD;
-        LoveLive SIF Assistant&#xD;
+<widget id="org.ktachibana.sifassistant" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Idol Manager</name>
+  <description>
+    Idol Manager
     </description>
-  <author email="whj19931115@gmail.com" href="https://github.com/KTachibanaM/SifAssistant">&#xD;
-      KT&#xD;
+  <author email="whj19931115@gmail.com" href="https://github.com/KTachibanaM/SifAssistant">
+      KT
     </author>
   <content src="index.html"/>
   <access origin="*"/>
