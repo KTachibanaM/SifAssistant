@@ -169,11 +169,14 @@ angular.module('sif-assistant.services', [])
                             if (not_leveling_up) {
                                 account.lp = account.lp - lp;
                             }
-                        }
-                        else {
+                        } else {
                             account.level = account.level + 1;
                             account.exp = 0;
-                            account.lp = this.getMaxLpByLevel(account);
+                            if (account.region === 'jp') {
+                                account.lp = (account.lp - lp) + this.getMaxLpByLevel(account);
+                            } else {
+                                account.lp = this.getMaxLpByLevel(account);
+                            }
                             not_leveling_up = false;
                         }
                         exp = exp_remainder;
