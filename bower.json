@@ -2,7 +2,7 @@
   "name": "SifAssistant",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.1",
+    "ionic": "driftyco/ionic-bower#1.2.4",
     "ngCordova": "~0.1.17-alpha",
     "moment-duration-format": "~1.3.0",
     "angular-gettext": "~2.1.0"
