@@ -1,6 +1,6 @@
 # SIF Assistant
 
-## Local Dev (in a browser)
+## Local
 
 ```
 npm install -g cordova ionic
@@ -8,11 +8,19 @@ bower install
 ionic serve
 ```
 
-## Mobile Dev (in Android/iOS, replace "android" with "ios")
+## Android
 
 ```
 ionic platform add android
-cordova plugin add https://github.com/whiteoctober/cordova-plugin-app-version.git
-cordova plugin add https://github.com/katzer/cordova-plugin-local-notifications.git
+npm run native
 ionic run android
+```
+
+
+## iOS
+
+```
+ionic platform add ios
+npm run native
+ionic run ios
 ```
