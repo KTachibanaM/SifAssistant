@@ -1,13 +1,15 @@
 <ion-view view-title="{{'Accounts'|translate}}">
     <ion-content>
         <div class="card">
-            <div class="item item-body">
-                <translate>Filter by</translate>
-                <select ng-model="currentFilter">
-                    <option translate value="All">All</option>
-                    <option translate value="hasNotClaimedDailyBonus">Has not claimed daily bonus</option>
-                    <option translate value="fullLp">Full LP</option>
-                </select>
+            <div class="item item-body list">
+                <ion-input class="item item-input item-select">
+                    <ion-label translate>Filter by</ion-label>
+                    <select ng-model="currentFilter">
+                        <option translate value="All">All</option>
+                        <option translate value="hasNotClaimedDailyBonus">Has not claimed daily bonus</option>
+                        <option translate value="fullLp">Full LP</option>
+                    </select>
+                </ion-input>
             </div>
         </div>
         <div class="card" ng-repeat="account in accounts | accountsFilter:{name: currentFilter}">
@@ -21,53 +23,53 @@
             </div>
             <div class="item item-body">
                 <div class="list">
-                    <label class="item item-input">
-                        <span class="input-label" translate>LP</span>
+                    <ion-input class="item item-input">
+                        <ion-label translate>LP</ion-label>
                         {{account.lp}}/{{computed_attributes[$index].max_lp}}
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label" translate>Next LP</span>
+                    </ion-input>
+                    <ion-input class="item item-input">
+                        <ion-label translate>Next LP</ion-label>
                         {{time_remaining_till_next_lp[$index].literal}}
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label" translate>Love gems</span>
+                    </ion-input>
+                    <ion-input class="item item-input">
+                        <ion-label translate>Love gems</ion-label>
                         {{account.loveca}}
-                    </label>
-                    <div class="item item-input">
-                        <span translate class="input-label">Has claimed daily bonus</span>
+                    </ion-input>
+                    <ion-input class="item item-input">
+                        <ion-label translate>Has claimed daily bonus</ion-label>
                         <label class="toggle">
                             <input type="checkbox" ng-model="account.has_claimed_bonus" ng-change="toggleBonus(account)">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
                         </label>
-                    </div>
+                    </ion-input>
                 </div>
             </div>
             <div class="item item-body">
                 <div class="list">
-                    <div class="item item-input">
-                        <span translate class="input-label">Enable LP alert</span>
+                    <ion-input class="item item-input">
+                        <ion-label translate>Enable LP alert</ion-label>
                         <label class="toggle">
                             <input type="checkbox" ng-model="account.alerts_lp" ng-change="toggleLpAlerts(account)">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
                         </label>
-                    </div>
-                    <div class="item item-input">
-                        <span translate class="input-label">LP alert value</span>
+                    </ion-input>
+                    <ion-input class="item item-input">
+                        <ion-label translate>LP alert value</ion-label>
                         <input type="number" ng-change="saveLpAlertsValue(account)" ng-model="account.alerts_lp_value">
-                    </div>
-                    <div class="item item-input">
-                        <span translate class="input-label">Enable daily bonus alert</span>
+                    </ion-input>
+                    <ion-input class="item item-input">
+                        <ion-label translate>Enable daily bonus alert</ion-label>
                         <label class="toggle">
                             <input type="checkbox" ng-model="account.alerts_bonus" ng-change="toggleBonusAlerts(account)">
                             <div class="track">
                                 <div class="handle"></div>
                             </div>
                         </label>
-                    </div>
+                    </ion-input>
                 </div>
             </div>
             <div class="item tabs tabs-secondary tabs-icon-left">
