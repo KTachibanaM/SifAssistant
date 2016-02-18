@@ -1,6 +1,6 @@
 angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
-    .controller('AppCtrl', function ($scope, $ionicModal, Accounts, Regions, gettextCatalog) {
+    .controller('AppCtrl', function ($scope, $ionicModal, Accounts, Regions, gettextCatalog, Settings) {
         $scope.regions = Regions.get();
 
         /**
@@ -53,6 +53,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.$on('$destroy', function () {
             $scope.addAccountModal.remove();
         });
+
+        $scope.settings = Settings.get();
     })
 
     .filter('accountsFilter', function ($filter) {
@@ -373,4 +375,12 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.platform = ionic.Platform.platform();
         $scope.platform_version = ionic.Platform.version();
         $scope.locale = navigator.language || navigator.userLanguage;
+    })
+
+    .controller('SettingsCtrl', function ($scope, Settings) {
+        $scope.settings = Settings.get();
+
+        $scope.toggle = function () {
+            Settings.set($scope.settings);
+        }
     });

@@ -24,11 +24,11 @@ angular.module('sif-assistant.services', [])
             set: function (key, value) {
                 $window.localStorage[key] = JSON.stringify(value);
             },
-            getObject: function (key) {
-                return JSON.parse($window.localStorage[key] || '{}');
+            getObject: function (key, theDefault) {
+                return JSON.parse($window.localStorage[key] || JSON.stringify(theDefault) || '{}');
             },
-            getArray: function (key) {
-                return JSON.parse($window.localStorage[key] || '[]');
+            getArray: function (key, theDefault) {
+                return JSON.parse($window.localStorage[key] || JSON.stringify(theDefault) || '[]');
             }
         }
     })
@@ -618,6 +618,22 @@ angular.module('sif-assistant.services', [])
                     }
                 });
                 return matched_locale;
+            }
+        }
+    })
+
+    .factory("Settings", function ($localStorage) {
+        const SETTINGS_KEY = "settings";
+        const DEFAULT_SETTINGS = {
+            "show_debug": false,
+            "show_songs": false
+        };
+        return {
+            get: function () {
+                return $localStorage.getObject(SETTINGS_KEY, DEFAULT_SETTINGS);
+            },
+            set: function (new_settings) {
+                $localStorage.set(SETTINGS_KEY, new_settings);
             }
         }
     });
