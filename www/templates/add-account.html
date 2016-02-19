@@ -1,35 +1,36 @@
 <ion-modal-view>
-	<ion-header-bar>
-		<h1 class="title" translate>Add Account</h1>
-		<button ng-click="closeAddAccount()" class="button button-icon button-clear ion-close"></button>
-	</ion-header-bar>
-	<ion-content>
-		<div class="list">
-			<ion-input class="item item-input">
-				<ion-label translate>Alias</ion-label>
-				<input type="text" ng-model="newAccount.alias">
-			</ion-input>
-			<ion-input class="item item-input item-select">
-				<ion-label translate>Region</ion-label>
-				<select ng-model="newAccount.region" ng-options="region.id as region.name for region in regions"></select>
-			</ion-input>
-			<ion-input class="item item-input">
-				<ion-label translate>Rank</ion-label>
-				<input type="number" ng-model="newAccount.level">
-			</ion-input>
-			<ion-input class="item item-input">
-				<ion-label translate>EXP</ion-label>
-				<input type="number" ng-model="newAccount.exp">
-			</ion-input>
-			<ion-input class="item item-input">
-				<ion-label>LP</ion-label>
-				<input type="number" ng-model="newAccount.lp">
-			</ion-input>
-			<ion-input class="item item-input">
-				<ion-label translate>Love gems</ion-label>
-				<input type="number" ng-model="newAccount.loveca">
-			</ion-input>
-		</div>
-		<button class="button button-block button-positive" ng-click="addAccount(newAccount)" translate>Add</button>
-	</ion-content>
+    <ion-header-bar>
+        <button class="button icon button-positive" ng-click="addAccount(newAccount)" translate>Add</button>
+        <h1 class="title" translate>Add Account</h1>
+        <button ng-click="closeAddAccount()" class="button button-icon button-clear ion-close"></button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <ion-input class="item item-input">
+                <ion-label translate>Alias</ion-label>
+                <input type="text" ng-model="newAccount.alias">
+            </ion-input>
+            <ion-input class="item item-input item-select">
+                <ion-label translate>Region</ion-label>
+                <select ng-model="newAccount.region"
+                        ng-options="region.id as region.name for region in regions"></select>
+            </ion-input>
+            <ion-input class="item item-input">
+                <ion-label translate>Rank</ion-label>
+                <input type="number" ng-model="newAccount.level">
+            </ion-input>
+            <ion-input class="item item-input">
+                <ion-label translate>EXP</ion-label>
+                <input type="number" ng-model="newAccount.exp">
+            </ion-input>
+            <ion-input class="item item-input">
+                <ion-label>LP</ion-label>
+                <input type="number" ng-model="newAccount.lp">
+            </ion-input>
+            <ion-input class="item item-input">
+                <ion-label translate>Love gems</ion-label>
+                <input type="number" ng-model="newAccount.loveca">
+            </ion-input>
+        </div>
+    </ion-content>
 </ion-modal-view>
