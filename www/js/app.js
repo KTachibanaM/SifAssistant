@@ -30,22 +30,6 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
         }
     })
 
-    .config(function ($ionicConfigProvider, isBrowser) {
-        var nativeScrollingApplicable = function () {
-            if (isBrowser) {
-                return true;
-            }
-            if (ionic.Platform.isIOS()) {
-                return false;
-            }
-            if (ionic.Platform.isAndroid()) {
-                return ionic.Platform.version() >= 5.0;
-            }
-            return false;
-        };
-        $ionicConfigProvider.scrolling.jsScrolling(!nativeScrollingApplicable());
-    })
-
     .constant("isBrowser", window.cordova === undefined)
 
     .constant("ONE_SECOND", 1000)
