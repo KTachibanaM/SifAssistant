@@ -112,6 +112,16 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
                         controller: 'UpdateLovecaCtrl'
                     }
                 }
+            })
+
+            .state('app.update', {
+                url: '/update/:alias',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/update.html',
+                        controller: 'UpdateCtrl'
+                    }
+                }
             });
 
         // if none of the above states are matched, use this as the fallback

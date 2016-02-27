@@ -63,7 +63,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         }
     })
 
-    .controller('AccountsCtrl', function($scope, $rootScope, $interval, ONE_SECOND, $timeout, $ionicModal, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
+    .controller('AccountsCtrl', function ($scope, $rootScope, $interval, ONE_SECOND, $timeout, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
         $scope.currentFilter = "All";
 
         /**
@@ -101,55 +101,6 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $rootScope.$on('reload', function () {
             $scope.reload();
-        });
-
-        /**
-         * Update level/exp/lp
-         */
-        $scope.song_types = SongTypes.get();
-
-        $scope.reset_buffer = function () {
-            $scope.buffer = [];
-        };
-
-        $scope.reset_buffer();
-
-        $scope.addToBuffer = function (song_type) {
-            $scope.buffer.push(song_type);
-        };
-
-        $scope.removeFromBuffer = function (index) {
-            $scope.buffer.splice(index, 1);
-        };
-
-        $ionicModal.fromTemplateUrl('templates/update.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.updateModal = modal;
-        });
-
-        $scope.openUpdate = function (account) {
-            $scope.reset_buffer();
-            $scope.updatingAccount = account;
-            $scope.updateModal.show();
-        };
-
-        $scope.closeUpdate = function () {
-            $scope.updateModal.hide();
-        };
-
-        $scope.save = function () {
-            var updated_account = Calculators.updateAccountSongsPlayed($scope.updatingAccount, $scope.buffer);
-            $scope.updateAccount($scope.updatingAccount, "level", updated_account.level);
-            $scope.updateAccount($scope.updatingAccount, "exp", updated_account.exp);
-            $scope.updateAccount($scope.updatingAccount, "lp", updated_account.lp);
-
-            $scope.closeUpdate();
-        };
-
-        $scope.$on('$destroy', function () {
-            $scope.updateModal.remove();
         });
 
         /**
@@ -223,6 +174,31 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             if (Accounts.deleteAccount(account)) {
                 $scope.reload();
             }
+        };
+    })
+
+    .controller('UpdateCtrl', function ($scope, $rootScope, $ionicHistory, $stateParams, Accounts, SongTypes, Calculators) {
+        $scope.updatingAccount = Accounts.getAccountByAlias($stateParams.alias);
+
+        $scope.song_types = SongTypes.get();
+
+        $scope.buffer = [];
+
+        $scope.addToBuffer = function (song_type) {
+            $scope.buffer.push(song_type);
+        };
+
+        $scope.removeFromBuffer = function (index) {
+            $scope.buffer.splice(index, 1);
+        };
+
+        $scope.save = function () {
+            var updated_account = Calculators.updateAccountSongsPlayed($scope.updatingAccount, $scope.buffer);
+            Accounts.updateAccount($scope.updatingAccount, "level", updated_account.level);
+            Accounts.updateAccount($scope.updatingAccount, "exp", updated_account.exp);
+            Accounts.updateAccount($scope.updatingAccount, "lp", updated_account.lp);
+            $rootScope.$broadcast('reload', {});
+            $ionicHistory.goBack();
         };
     })
 
