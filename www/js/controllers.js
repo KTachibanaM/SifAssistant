@@ -236,6 +236,22 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $interval($scope.reload, ONE_SECOND);
     })
 
+    .controller('EventsCtrl', function ($scope, Events, Regions) {
+        Events.getRawByRegion('jp').then(function (data) {
+            $scope.jp = data.data.results[0];
+            $scope.jp_name = Regions.getById('jp').name;
+        }, function (err) {
+
+        });
+
+        Events.getRawByRegion('us').then(function (data) {
+            $scope.us = data.data.results[0];
+            $scope.us_name = Regions.getById('us').name;
+        }, function (err) {
+
+        });
+    })
+
     .controller('DebugCtrl', function ($scope, $interval, NativeNotification, ONE_SECOND) {
         $scope.reload = function () {
             NativeNotification.getAll(function (notifications) {

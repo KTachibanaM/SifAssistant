@@ -2,7 +2,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordova', 'gettext'])
+angular.module('sif-assistant', ['ionic', 'ionicLazyLoad', 'sif-assistant.controllers', 'ngCordova', 'gettext'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -60,6 +60,16 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
                     'menuContent': {
                         templateUrl: 'templates/regions.html',
                         controller: 'RegionsCtrl'
+                    }
+                }
+            })
+
+            .state('app.events', {
+                url: '/events',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/events.html',
+                        controller: 'EventsCtrl'
                     }
                 }
             })
