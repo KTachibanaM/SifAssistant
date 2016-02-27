@@ -70,6 +70,11 @@ msgstr ""
 msgid "China"
 msgstr ""
 
+#: controllers.js:240
+#: controllers.js:245
+msgid "days"
+msgstr ""
+
 #: debug.html:1
 #: menu.html:36
 msgid "Debug"
@@ -96,6 +101,14 @@ msgstr ""
 msgid "Enable LP alert"
 msgstr ""
 
+#: controllers.js:236
+msgid "Event has ended"
+msgstr ""
+
+#: controllers.js:234
+msgid "Event hasn't started"
+msgstr ""
+
 #: events.html:1
 #: menu.html:24
 msgid "Events"
@@ -114,7 +127,7 @@ msgstr ""
 msgid "Expert"
 msgstr ""
 
-#: events.html:22
+#: events.html:30
 msgid "for the event API"
 msgstr ""
 
@@ -130,12 +143,21 @@ msgstr ""
 msgid "Has claimed daily bonus"
 msgstr ""
 
+#: controllers.js:241
+#: controllers.js:246
+msgid "hours"
+msgstr ""
+
 #: services.js:462
 msgid "Japan"
 msgstr ""
 
 #: services.js:480
 msgid "Korea"
+msgstr ""
+
+#: controllers.js:244
+msgid "Left:"
 msgstr ""
 
 #: regions.html:10
@@ -169,6 +191,11 @@ msgstr ""
 msgid "Medley Festival"
 msgstr ""
 
+#: controllers.js:242
+#: controllers.js:247
+msgid "minutes"
+msgstr ""
+
 #: accounts.html:23
 msgid "Next LP"
 msgstr ""
@@ -179,6 +206,10 @@ msgstr ""
 
 #: update-loveca.html:12
 msgid "Or subtract by"
+msgstr ""
+
+#: controllers.js:239
+msgid "Past:"
 msgstr ""
 
 #: about.html:10
@@ -228,6 +259,11 @@ msgstr ""
 msgid "Score Match"
 msgstr ""
 
+#: controllers.js:243
+#: controllers.js:248
+msgid "seconds"
+msgstr ""
+
 #: menu.html:30
 #: settings.html:1
 msgid "Settings"
@@ -245,7 +281,7 @@ msgstr ""
 msgid "Taiwan"
 msgstr ""
 
-#: events.html:21
+#: events.html:29
 msgid "Thanks to"
 msgstr ""
 

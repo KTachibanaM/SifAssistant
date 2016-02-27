@@ -2,18 +2,26 @@
     <ion-content lazy-scroll>
         <div class="card">
             <div class="item item-divider">
-                {{jp_name}}
+                {{jp.region_name}}
             </div>
             <div class="item item-image">
                 <img image-lazy-src="{{jp.image}}" image-lazy-loader="lines">
             </div>
+            <div class="item item-body">
+                <div>{{jp.past}}</div>
+                <div>{{jp.left}}</div>
+            </div>
         </div>
         <div class="card">
             <div class="item item-divider">
-                {{us_name}}
+                {{us.region_name}}
             </div>
             <div class="item item-image">
                 <img image-lazy-src="{{us.image}}" image-lazy-loader="lines">
+            </div>
+            <div class="item item-body">
+                <div>{{us.past}}</div>
+                <div>{{us.left}}</div>
             </div>
         </div>
         <div class="card">

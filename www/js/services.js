@@ -641,7 +641,7 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory("Events", function ($http, $q) {
+    .factory("Events", function ($http, $q, Regions) {
         return {
             getRawByRegion: function (region_id) {
                 if (region_id === 'jp') {
@@ -651,6 +651,42 @@ angular.module('sif-assistant.services', [])
                 } else {
                     return $q.when({});
                 }
+            },
+            getByRegion: function (region_id) {
+                var defer = $q.defer();
+
+                this.getRawByRegion(region_id).then(function (data) {
+                    var raw = data.data.results[0];
+
+                    // Retrieve event info
+                    var image;
+                    var start;
+                    var end;
+                    if (region_id == 'jp') {
+                        image = raw["image"];
+                        start = raw["beginning"];
+                        end = raw["end"];
+                    } else {
+                        image = raw["english_image"];
+                        start = raw["english_beginning"];
+                        end = raw["english_end"];
+                    }
+
+                    // Parse to UNIX time
+                    start = moment(start).valueOf();
+                    end = moment(end).valueOf();
+
+                    defer.resolve({
+                        region_name: Regions.getById(region_id).name,
+                        image: image,
+                        start: start,
+                        end: end
+                    });
+                }, function (error) {
+                    defer.reject(error);
+                });
+
+                return defer.promise;
             }
         }
     });

@@ -199,18 +199,86 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $interval($scope.reload, ONE_SECOND);
     })
 
-    .controller('EventsCtrl', function ($scope, Events, Regions) {
-        $scope.jp_name = Regions.getById('jp').name;
-        $scope.us_name = Regions.getById('us').name;
+    .controller('EventsCtrl', function ($scope, $interval, gettextCatalog, Events, ONE_SECOND) {
+        function timePastAndLeft(start, end) {
+            var now = Date.now();
+            var past = now - start;
+            var left = end - now;
+            if (past < 0) {
+                return "before";
+            } else if (left < 0) {
+                return "after";
+            } else {
+                past = moment.duration(past);
+                left = moment.duration(left);
+                return {
+                    past: {
+                        days: past.days(),
+                        hours: past.hours(),
+                        minutes: past.minutes(),
+                        seconds: past.seconds()
+                    },
+                    left: {
+                        days: left.days(),
+                        hours: left.hours(),
+                        minutes: left.minutes(),
+                        seconds: left.seconds()
+                    }
+                }
+            }
+        }
 
-        Events.getRawByRegion('jp').then(function (data) {
-            $scope.jp = data.data.results[0];
+        function getTimePastAndLeft(start, end) {
+            var res = timePastAndLeft(start, end);
+            if (res === "before") {
+                return gettextCatalog.getString("Event hasn't started");
+            } else if (res === 'After') {
+                return gettextCatalog.getString("Event has ended");
+            } else {
+                var past =
+                    gettextCatalog.getString("Past: ")
+                    + res.past.days + " " + gettextCatalog.getString("days") + " "
+                    + res.past.hours + " " + gettextCatalog.getString("hours") + " "
+                    + res.past.minutes + " " + gettextCatalog.getString("minutes") + " "
+                    + res.past.seconds + " " + gettextCatalog.getString("seconds");
+                var left = gettextCatalog.getString("Left: ")
+                    + res.left.days + " " + gettextCatalog.getString("days") + " "
+                    + res.left.hours + " " + gettextCatalog.getString("hours") + " "
+                    + res.left.minutes + " " + gettextCatalog.getString("minutes") + " "
+                    + res.left.seconds + " " + gettextCatalog.getString("seconds");
+                return {
+                    past: past,
+                    left: left
+                }
+            }
+        }
+
+        Events.getByRegion('jp').then(function (data) {
+            $scope.jp = data;
+            $interval(function () {
+                var res = getTimePastAndLeft($scope.jp.start, $scope.jp.end);
+                if (typeof res === 'string') {
+                    $scope.jp.past = res;
+                } else {
+                    $scope.jp.past = res.past;
+                    $scope.jp.left = res.left;
+                }
+            }, ONE_SECOND)
         }, function (err) {
 
         });
 
-        Events.getRawByRegion('us').then(function (data) {
-            $scope.us = data.data.results[0];
+        Events.getByRegion('us').then(function (data) {
+            $scope.us = data;
+            $interval(function () {
+                var res = getTimePastAndLeft($scope.us.start, $scope.us.end);
+                if (typeof res === 'string') {
+                    $scope.us.past = res;
+                } else {
+                    $scope.us.past = res.past;
+                    $scope.us.left = res.left;
+                }
+            }, ONE_SECOND)
         }, function (err) {
 
         });

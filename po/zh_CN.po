@@ -76,6 +76,10 @@ msgstr "名称不能重复"
 msgid "China"
 msgstr "国服"
 
+#: controllers.js:240 controllers.js:245
+msgid "days"
+msgstr "天"
+
 #: debug.html:1 menu.html:36
 msgid "Debug"
 msgstr "调试"
@@ -100,6 +104,14 @@ msgstr "启用每日奖励提醒"
 msgid "Enable LP alert"
 msgstr "启用LP提醒"
 
+#: controllers.js:236
+msgid "Event has ended"
+msgstr "活动已结束"
+
+#: controllers.js:234
+msgid "Event hasn't started"
+msgstr "活动未开始"
+
 #: events.html:1 menu.html:24
 msgid "Events"
 msgstr "活动"
@@ -116,7 +128,7 @@ msgstr "经验： {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgid "Expert"
 msgstr "专家"
 
-#: events.html:22
+#: events.html:30
 msgid "for the event API"
 msgstr "提供活动API"
 
@@ -132,6 +144,10 @@ msgstr "困难"
 msgid "Has claimed daily bonus"
 msgstr "已领取每日奖励"
 
+#: controllers.js:241 controllers.js:246
+msgid "hours"
+msgstr "小时"
+
 #: services.js:462
 msgid "Japan"
 msgstr "日服"
@@ -139,6 +155,10 @@ msgstr "日服"
 #: services.js:480
 msgid "Korea"
 msgstr "韩服"
+
+#: controllers.js:244
+msgid "Left:"
+msgstr "剩余："
 
 #: regions.html:10
 msgid "Local time: {{region.local_time}}"
@@ -168,6 +188,10 @@ msgstr "中等"
 msgid "Medley Festival"
 msgstr "Medley Festival"
 
+#: controllers.js:242 controllers.js:247
+msgid "minutes"
+msgstr "分钟"
+
 #: accounts.html:23
 msgid "Next LP"
 msgstr "下一LP"
@@ -179,6 +203,10 @@ msgstr "或者加上"
 #: update-loveca.html:12
 msgid "Or subtract by"
 msgstr "或者减去"
+
+#: controllers.js:239
+msgid "Past:"
+msgstr "过去："
 
 #: about.html:10
 msgid "Platform version: {{platform_version}}"
@@ -224,6 +252,10 @@ msgstr "保存"
 msgid "Score Match"
 msgstr "撕逼活动"
 
+#: controllers.js:243 controllers.js:248
+msgid "seconds"
+msgstr "秒"
+
 #: menu.html:30 settings.html:1
 msgid "Settings"
 msgstr "设置"
@@ -240,7 +272,7 @@ msgstr "触摸+号以开始"
 msgid "Taiwan"
 msgstr "台服"
 
-#: events.html:21
+#: events.html:29
 msgid "Thanks to"
 msgstr "感谢"
 
