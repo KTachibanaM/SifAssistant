@@ -102,6 +102,16 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
                         controller: 'AddAccountCtrl'
                     }
                 }
+            })
+
+            .state('app.update-loveca', {
+                url: '/update-loveca/:alias',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/update-loveca.html',
+                        controller: 'UpdateLovecaCtrl'
+                    }
+                }
             });
 
         // if none of the above states are matched, use this as the fallback

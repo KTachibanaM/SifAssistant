@@ -33,8 +33,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             var name = option.name;
             if (name !== "All") {
                 return $filter(name)(value);
-            }
-            else {
+            } else {
                 return value;
             }
         }
@@ -154,54 +153,6 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         });
 
         /**
-         * Update loveca
-         */
-        $scope.reset_loveca_buffer = function () {
-            $scope.lovecaBuffer = {
-                subtraction: 0,
-                subtractionMultiplier: 0,
-                addition: 0,
-                additionMultiplier: 0
-            };
-        };
-
-        $scope.reset_loveca_buffer();
-
-        $ionicModal.fromTemplateUrl('templates/update-loveca.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.updateLovecaModal = modal;
-        });
-
-        $scope.openUpdateLoveca = function (account) {
-            $scope.reset_loveca_buffer();
-            $scope.updatingAccount = account;
-            $scope.updateLovecaModal.show();
-        };
-
-        $scope.closeUpdateLoveca = function () {
-            $scope.updateLovecaModal.hide();
-        };
-
-        $scope.saveLoveca = function () {
-            var current_loveca = $scope.updatingAccount.loveca;
-            var loveca_delta
-                = $scope.lovecaBuffer.addition
-                * $scope.lovecaBuffer.additionMultiplier
-                - $scope.lovecaBuffer.subtraction
-                * $scope.lovecaBuffer.subtractionMultiplier;
-            var new_loveca = current_loveca + loveca_delta;
-            $scope.updateAccount($scope.updatingAccount, "loveca", new_loveca);
-
-            $scope.closeUpdateLoveca();
-        };
-
-        $scope.$on('$destroy', function () {
-            $scope.updateLovecaModal.remove();
-        });
-
-        /**
          * Update bonus
          */
         $scope.toggleBonus = function (account) {
@@ -272,6 +223,30 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             if (Accounts.deleteAccount(account)) {
                 $scope.reload();
             }
+        };
+    })
+
+    .controller('UpdateLovecaCtrl', function ($scope, $rootScope, $ionicHistory, $stateParams, Accounts) {
+        $scope.updatingAccount = Accounts.getAccountByAlias($stateParams.alias);
+
+        $scope.lovecaBuffer = {
+            subtraction: 0,
+            subtractionMultiplier: 1,
+            addition: 0,
+            additionMultiplier: 1
+        };
+
+        $scope.saveLoveca = function () {
+            var current_loveca = $scope.updatingAccount.loveca;
+            var loveca_delta
+                = $scope.lovecaBuffer.addition
+                * $scope.lovecaBuffer.additionMultiplier
+                - $scope.lovecaBuffer.subtraction
+                * $scope.lovecaBuffer.subtractionMultiplier;
+            var new_loveca = current_loveca + loveca_delta;
+            Accounts.updateAccount($scope.updatingAccount, 'loveca', new_loveca);
+            $rootScope.$broadcast('reload', {});
+            $ionicHistory.goBack();
         };
     })
 

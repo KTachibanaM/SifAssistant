@@ -223,6 +223,10 @@ angular.module('sif-assistant.services', [])
             ifAccountExists: function (account) {
                 return this.getAccountIndex(account) !== -1;
             },
+            getAccountByAlias: function (alias) {
+                var index = this.getAccountIndex({alias: alias});
+                return this.getRaw()[index];
+            },
             getAccountIndex: function (account) {
                 var current_aliases = this.getRaw().map(function (item) {
                     return item.alias
