@@ -1,33 +1,19 @@
 angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
-    .controller('AppCtrl', function ($scope, $ionicModal, Accounts, Regions, gettextCatalog, Settings) {
+    .controller('AppCtrl', function ($scope, Settings) {
+        $scope.settings = Settings.get();
+    })
+
+    .controller('AddAccountCtrl', function ($scope, $rootScope, $ionicHistory, Accounts, Regions, gettextCatalog) {
         $scope.regions = Regions.get();
 
-        /**
-         * Add account
-         */
-        $scope.reset_new_account = function () {
-            $scope.newAccount = {
-                alias: "",
-                region: "jp",
-                level: 1,
-                exp: 0,
-                lp: 0,
-                loveca: 0
-            };
-        };
-
-        $scope.reset_new_account();
-
-        $ionicModal.fromTemplateUrl('templates/add-account.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-        }).then(function (modal) {
-            $scope.addAccountModal = modal;
-        });
-
-        $scope.reload = function () {
-            $scope.$broadcast('reload', {});
+        $scope.newAccount = {
+            alias: "",
+            region: "jp",
+            level: 1,
+            exp: 0,
+            lp: 0,
+            loveca: 0
         };
 
         $scope.addAccount = function (account) {
@@ -35,26 +21,11 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 alert(gettextCatalog.getString("Cannot have duplicate alias"))
             } else {
                 if (Accounts.addAccount(account)) {
-                    $scope.reload();
+                    $rootScope.$broadcast('reload', {});
+                    $ionicHistory.goBack();
                 }
-                $scope.closeAddAccount();
             }
         };
-
-        $scope.openAddAccount = function () {
-            $scope.reset_new_account();
-            $scope.addAccountModal.show();
-        };
-
-        $scope.closeAddAccount = function () {
-            $scope.addAccountModal.hide();
-        };
-
-        $scope.$on('$destroy', function () {
-            $scope.addAccountModal.remove();
-        });
-
-        $scope.settings = Settings.get();
     })
 
     .filter('accountsFilter', function ($filter) {
@@ -72,13 +43,11 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     .filter('hasNotClaimedDailyBonus', function () {
         return function (accounts) {
             var out = [];
-
             accounts.forEach(function (account) {
                 if (!account.has_claimed_bonus) {
                     out.push(account);
                 }
             });
-
             return out;
         }
     })
@@ -86,18 +55,16 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     .filter('fullLp', function (Calculators) {
         return function (accounts) {
             var out = [];
-
             accounts.forEach(function (account) {
                 if (account.lp === Calculators.getMaxLpByLevel(account)) {
                     out.push(account);
                 }
             });
-
             return out;
         }
     })
 
-    .controller('AccountsCtrl', function($scope, $interval, ONE_SECOND, $timeout, $ionicModal, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
+    .controller('AccountsCtrl', function($scope, $rootScope, $interval, ONE_SECOND, $timeout, $ionicModal, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
         $scope.currentFilter = "All";
 
         /**
@@ -133,7 +100,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.reload();
 
-        $scope.$on('reload', function () {
+        $rootScope.$on('reload', function () {
             $scope.reload();
         });
 

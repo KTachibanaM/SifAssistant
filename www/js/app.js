@@ -92,6 +92,16 @@ angular.module('sif-assistant', ['ionic', 'sif-assistant.controllers', 'ngCordov
                         controller: 'SettingsCtrl'
                     }
                 }
+            })
+
+            .state('app.add-account', {
+                url: '/add-account',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/add-account.html',
+                        controller: 'AddAccountCtrl'
+                    }
+                }
             });
 
         // if none of the above states are matched, use this as the fallback
