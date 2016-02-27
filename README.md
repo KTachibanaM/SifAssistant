@@ -12,7 +12,6 @@ ionic serve
 
 ```
 ionic platform add android
-npm run native
 ionic run android
 ```
 
@@ -21,7 +20,6 @@ ionic run android
 
 ```
 ionic platform add ios
-npm run native
 ionic run ios
 ```
 
