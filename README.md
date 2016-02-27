@@ -8,18 +8,20 @@ bower install
 ionic serve
 ```
 
+## Prepare for mobile
+```
+ionic state reset
+```
+
 ## Android
 
 ```
-ionic platform add android
 ionic run android
 ```
-
 
 ## iOS
 
 ```
-ionic platform add ios
 ionic run ios
 ```
 

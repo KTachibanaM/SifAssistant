@@ -110,7 +110,7 @@ msgstr "经验"
 
 #: accounts.html:14
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
-msgstr "经验: {{account.exp}}/{{account.max_exp}}"
+msgstr "经验： {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 
 #: services.js:532
 msgid "Expert"
