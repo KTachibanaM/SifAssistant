@@ -42,10 +42,6 @@ msgstr ""
 msgid "Alias"
 msgstr ""
 
-#: accounts.html:12
-msgid "All"
-msgstr ""
-
 #: about.html:4
 msgid "App version: {{app_version}}"
 msgstr ""
@@ -62,7 +58,7 @@ msgstr ""
 msgid "Browser locale: {{locale}}"
 msgstr ""
 
-#: controllers.js:156
+#: controllers.js:119
 msgid "Cancel"
 msgstr ""
 
@@ -79,12 +75,12 @@ msgstr ""
 msgid "Debug"
 msgstr ""
 
-#: accounts.html:90
-#: controllers.js:159
+#: accounts.html:78
+#: controllers.js:122
 msgid "Delete"
 msgstr ""
 
-#: controllers.js:151
+#: controllers.js:114
 msgid "Delete account"
 msgstr ""
 
@@ -92,11 +88,11 @@ msgstr ""
 msgid "Easy"
 msgstr ""
 
-#: accounts.html:69
+#: accounts.html:57
 msgid "Enable daily bonus alert"
 msgstr ""
 
-#: accounts.html:56
+#: accounts.html:44
 msgid "Enable LP alert"
 msgstr ""
 
@@ -110,7 +106,7 @@ msgstr ""
 msgid "EXP"
 msgstr ""
 
-#: accounts.html:26
+#: accounts.html:14
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgstr ""
 
@@ -118,28 +114,20 @@ msgstr ""
 msgid "Expert"
 msgstr ""
 
-#: accounts.html:10
-msgid "Filter by"
+#: events.html:22
+msgid "for the event API"
 msgstr ""
 
 #: services.js:364
 msgid "Full"
 msgstr ""
 
-#: accounts.html:14
-msgid "Full LP"
-msgstr ""
-
 #: services.js:526
 msgid "Hard"
 msgstr ""
 
-#: accounts.html:43
+#: accounts.html:31
 msgid "Has claimed daily bonus"
-msgstr ""
-
-#: accounts.html:13
-msgid "Has not claimed daily bonus"
 msgstr ""
 
 #: services.js:462
@@ -154,18 +142,18 @@ msgstr ""
 msgid "Local time: {{region.local_time}}"
 msgstr ""
 
-#: accounts.html:39
-#: accounts.html:86
+#: accounts.html:27
+#: accounts.html:74
 #: add-account.html:29
 #: update-loveca.html:8
 msgid "Love gems"
 msgstr ""
 
-#: accounts.html:31
+#: accounts.html:19
 msgid "LP"
 msgstr ""
 
-#: accounts.html:65
+#: accounts.html:53
 msgid "LP alert value"
 msgstr ""
 
@@ -181,7 +169,7 @@ msgstr ""
 msgid "Medley Festival"
 msgstr ""
 
-#: accounts.html:35
+#: accounts.html:23
 msgid "Next LP"
 msgstr ""
 
@@ -210,11 +198,11 @@ msgstr ""
 msgid "Rank"
 msgstr ""
 
-#: accounts.html:25
+#: accounts.html:13
 msgid "Rank: {{account.level}}"
 msgstr ""
 
-#: accounts.html:82
+#: accounts.html:70
 msgid "Rank/EXP/LP"
 msgstr ""
 
@@ -249,8 +237,16 @@ msgstr ""
 msgid "Show debug page (restart app to take effect)"
 msgstr ""
 
+#: accounts.html:83
+msgid "Start by pressing that + button"
+msgstr ""
+
 #: services.js:486
 msgid "Taiwan"
+msgstr ""
+
+#: events.html:21
+msgid "Thanks to"
 msgstr ""
 
 #: regions.html:7

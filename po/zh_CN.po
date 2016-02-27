@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"X-Generator: Poedit 1.8.7\n"
 "Last-Translator: \n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Team: \n"
 "Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: services.js:315
 msgid ": Daily bonus is available!"
@@ -48,10 +48,6 @@ msgstr "添加账号"
 msgid "Alias"
 msgstr "名称"
 
-#: accounts.html:12
-msgid "All"
-msgstr "全部"
-
 #: about.html:4
 msgid "App version: {{app_version}}"
 msgstr "应用版本: {{app_version}}"
@@ -68,7 +64,7 @@ msgstr "根据已打的歌曲自动更新"
 msgid "Browser locale: {{locale}}"
 msgstr "浏览器语言: {{locale}}"
 
-#: controllers.js:156
+#: controllers.js:119
 msgid "Cancel"
 msgstr "取消"
 
@@ -84,11 +80,11 @@ msgstr "国服"
 msgid "Debug"
 msgstr "调试"
 
-#: accounts.html:90 controllers.js:159
+#: accounts.html:78 controllers.js:122
 msgid "Delete"
 msgstr "删除"
 
-#: controllers.js:151
+#: controllers.js:114
 msgid "Delete account"
 msgstr "删除账号"
 
@@ -96,11 +92,11 @@ msgstr "删除账号"
 msgid "Easy"
 msgstr "简单"
 
-#: accounts.html:69
+#: accounts.html:57
 msgid "Enable daily bonus alert"
 msgstr "启用每日奖励提醒"
 
-#: accounts.html:56
+#: accounts.html:44
 msgid "Enable LP alert"
 msgstr "启用LP提醒"
 
@@ -112,7 +108,7 @@ msgstr "活动"
 msgid "EXP"
 msgstr "经验"
 
-#: accounts.html:26
+#: accounts.html:14
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgstr "经验: {{account.exp}}/{{account.max_exp}}"
 
@@ -120,29 +116,21 @@ msgstr "经验: {{account.exp}}/{{account.max_exp}}"
 msgid "Expert"
 msgstr "专家"
 
-#: accounts.html:10
-msgid "Filter by"
-msgstr "过滤条件"
+#: events.html:22
+msgid "for the event API"
+msgstr "提供活动API"
 
 #: services.js:364
 msgid "Full"
 msgstr "满"
 
-#: accounts.html:14
-msgid "Full LP"
-msgstr "满LP"
-
 #: services.js:526
 msgid "Hard"
 msgstr "困难"
 
-#: accounts.html:43
+#: accounts.html:31
 msgid "Has claimed daily bonus"
 msgstr "已领取每日奖励"
-
-#: accounts.html:13
-msgid "Has not claimed daily bonus"
-msgstr "未领取每日奖励"
 
 #: services.js:462
 msgid "Japan"
@@ -156,15 +144,15 @@ msgstr "韩服"
 msgid "Local time: {{region.local_time}}"
 msgstr "当地时间: {{region.local_time}}"
 
-#: accounts.html:39 accounts.html:86 add-account.html:29 update-loveca.html:8
+#: accounts.html:27 accounts.html:74 add-account.html:29 update-loveca.html:8
 msgid "Love gems"
 msgstr "Loveca"
 
-#: accounts.html:31
+#: accounts.html:19
 msgid "LP"
 msgstr "LP"
 
-#: accounts.html:65
+#: accounts.html:53
 msgid "LP alert value"
 msgstr "LP提醒值"
 
@@ -180,7 +168,7 @@ msgstr "中等"
 msgid "Medley Festival"
 msgstr "Medley Festival"
 
-#: accounts.html:35
+#: accounts.html:23
 msgid "Next LP"
 msgstr "下一LP"
 
@@ -208,11 +196,11 @@ msgstr "已打的歌曲列表"
 msgid "Rank"
 msgstr "等级"
 
-#: accounts.html:25
+#: accounts.html:13
 msgid "Rank: {{account.level}}"
 msgstr "等级: {{account.level}}"
 
-#: accounts.html:82
+#: accounts.html:70
 msgid "Rank/EXP/LP"
 msgstr "等级/经验/LP"
 
@@ -244,9 +232,17 @@ msgstr "设置"
 msgid "Show debug page (restart app to take effect)"
 msgstr "显示调试页面（重启App以生效）"
 
+#: accounts.html:83
+msgid "Start by pressing that + button"
+msgstr "触摸+号以开始"
+
 #: services.js:486
 msgid "Taiwan"
 msgstr "台服"
+
+#: events.html:21
+msgid "Thanks to"
+msgstr "感谢"
 
 #: regions.html:7
 msgid "Timezone: {{region.timezone}}"
@@ -271,3 +267,15 @@ msgstr "更新等级/经验/LP"
 #: update-loveca.html:20 update-loveca.html:37
 msgid "with multiplier"
 msgstr "乘以"
+
+#~ msgid "All"
+#~ msgstr "全部"
+
+#~ msgid "Filter by"
+#~ msgstr "过滤条件"
+
+#~ msgid "Full LP"
+#~ msgstr "满LP"
+
+#~ msgid "Has not claimed daily bonus"
+#~ msgstr "未领取每日奖励"

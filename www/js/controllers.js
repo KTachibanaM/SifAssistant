@@ -200,16 +200,17 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     })
 
     .controller('EventsCtrl', function ($scope, Events, Regions) {
+        $scope.jp_name = Regions.getById('jp').name;
+        $scope.us_name = Regions.getById('us').name;
+
         Events.getRawByRegion('jp').then(function (data) {
             $scope.jp = data.data.results[0];
-            $scope.jp_name = Regions.getById('jp').name;
         }, function (err) {
 
         });
 
         Events.getRawByRegion('us').then(function (data) {
             $scope.us = data.data.results[0];
-            $scope.us_name = Regions.getById('us').name;
         }, function (err) {
 
         });

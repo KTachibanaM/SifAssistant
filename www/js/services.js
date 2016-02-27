@@ -645,9 +645,9 @@ angular.module('sif-assistant.services', [])
         return {
             getRawByRegion: function (region_id) {
                 if (region_id === 'jp') {
-                    return $http.get("http://schoolido.lu/api/events/?ordering=-beginning&page_size=1");
+                    return $http.get('http://schoolido.lu/api/events/?ordering=-beginning&page_size=1');
                 } else if (region_id === 'us') {
-                    return $http.get("http://schoolido.lu/api/events/?ordering=-english_beginning&page_size=1");
+                    return $http.get('http://schoolido.lu/api/events/?ordering=-english_beginning&page_size=1');
                 } else {
                     return $q.when({});
                 }

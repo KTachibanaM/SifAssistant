@@ -4,7 +4,7 @@
         </button>
     </ion-nav-buttons>
     <ion-content>
-        <div class="card" ng-repeat="account in accounts | accountsFilter:{name: currentFilter}">
+        <div class="card" ng-repeat="account in accounts">
             <div class="item item-divider">
                 {{account.alias}}
             </div>
@@ -78,6 +78,9 @@
                     <translate>Delete</translate>
                 </a>
             </div>
+        </div>
+        <div class="bar" ng-show="accounts.length === 0">
+            <div class="title" translate>Start by pressing that + button</div>
         </div>
     </ion-content>
 </ion-view>
