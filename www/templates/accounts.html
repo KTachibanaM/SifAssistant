@@ -4,18 +4,6 @@
         </button>
     </ion-nav-buttons>
     <ion-content>
-        <div class="card">
-            <div class="item item-body list">
-                <ion-input class="item item-input item-select">
-                    <ion-label translate>Filter by</ion-label>
-                    <select ng-model="currentFilter">
-                        <option translate value="All">All</option>
-                        <option translate value="hasNotClaimedDailyBonus">Has not claimed daily bonus</option>
-                        <option translate value="fullLp">Full LP</option>
-                    </select>
-                </ion-input>
-            </div>
-        </div>
         <div class="card" ng-repeat="account in accounts | accountsFilter:{name: currentFilter}">
             <div class="item item-divider">
                 {{account.alias}}
