@@ -8,6 +8,7 @@
     "angular-gettext": "~2.1.0"
   },
   "dependencies": {
-    "ionic-image-lazy-load": "ion-image-lazy-load#*"
+    "ionic-image-lazy-load": "ion-image-lazy-load#*",
+    "sprintf": "~1.0.3"
   }
 }

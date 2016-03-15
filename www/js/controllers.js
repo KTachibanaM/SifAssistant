@@ -119,7 +119,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                         text: gettextCatalog.getString('Cancel')
                     },
                     {
-                        text: '<b>' + gettextCatalog.getString("Delete") + '</b>',
+                        text: sprintf('<b>%s</b>', gettextCatalog.getString("Delete")),
                         type: 'button-positive',
                         onTap: function (e) {
                             return true;
@@ -199,19 +199,34 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $interval($scope.reload, ONE_SECOND);
     })
 
-    .controller('EventsCtrl', function ($scope, $interval, gettextCatalog, Events, ONE_SECOND) {
-        function timePastAndLeft(start, end) {
+    .controller('EventsCtrl', function ($scope, $interval, Events, ONE_SECOND, gettextCatalog) {
+        function getEventStatusStrings(start, end) {
             var now = Date.now();
             var past = now - start;
             var left = end - now;
+
+            var time = {};
             if (past < 0) {
-                return "before";
+                past = -past;
+                past = moment.duration(past);
+                time = {
+                    past: {
+                        days: past.days(),
+                        hours: past.hours(),
+                        minutes: past.minutes(),
+                        seconds: past.seconds()
+                    }
+                };
+                return [
+                    sprintf(gettextCatalog.getString('Event will start in : %s days, %s hours, %s minutes, %s seconds'),
+                        time.past.days, time.past.hours, time.past.minutes, time.past.seconds)
+                ];
             } else if (left < 0) {
-                return "after";
+                return [gettextCatalog.getString("Event has ended")];
             } else {
                 past = moment.duration(past);
                 left = moment.duration(left);
-                return {
+                time = {
                     past: {
                         days: past.days(),
                         hours: past.hours(),
@@ -224,45 +239,20 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                         minutes: left.minutes(),
                         seconds: left.seconds()
                     }
-                }
-            }
-        }
-
-        function getTimePastAndLeft(start, end) {
-            var res = timePastAndLeft(start, end);
-            if (res === "before") {
-                return gettextCatalog.getString("Event hasn't started");
-            } else if (res === 'After') {
-                return gettextCatalog.getString("Event has ended");
-            } else {
-                var past =
-                    gettextCatalog.getString("Past: ")
-                    + res.past.days + " " + gettextCatalog.getString("days") + " "
-                    + res.past.hours + " " + gettextCatalog.getString("hours") + " "
-                    + res.past.minutes + " " + gettextCatalog.getString("minutes") + " "
-                    + res.past.seconds + " " + gettextCatalog.getString("seconds");
-                var left = gettextCatalog.getString("Left: ")
-                    + res.left.days + " " + gettextCatalog.getString("days") + " "
-                    + res.left.hours + " " + gettextCatalog.getString("hours") + " "
-                    + res.left.minutes + " " + gettextCatalog.getString("minutes") + " "
-                    + res.left.seconds + " " + gettextCatalog.getString("seconds");
-                return {
-                    past: past,
-                    left: left
-                }
+                };
+                return [
+                    sprintf(gettextCatalog.getString('Past: %s days, %s hours, %s minutes, %s seconds'),
+                        time.past.days, time.past.hours, time.past.minutes, time.past.seconds),
+                    sprintf(gettextCatalog.getString('Left: %s days, %s hours, %s minutes, %s seconds'),
+                        time.left.days, time.left.hours, time.left.minutes, time.left.seconds)
+                ];
             }
         }
 
         Events.getByRegion('jp').then(function (data) {
             $scope.jp = data;
             $interval(function () {
-                var res = getTimePastAndLeft($scope.jp.start, $scope.jp.end);
-                if (typeof res === 'string') {
-                    $scope.jp.past = res;
-                } else {
-                    $scope.jp.past = res.past;
-                    $scope.jp.left = res.left;
-                }
+                $scope.jp.event_status_strings = getEventStatusStrings($scope.jp.start, $scope.jp.end);
             }, ONE_SECOND)
         }, function (err) {
 
@@ -271,13 +261,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         Events.getByRegion('us').then(function (data) {
             $scope.us = data;
             $interval(function () {
-                var res = getTimePastAndLeft($scope.us.start, $scope.us.end);
-                if (typeof res === 'string') {
-                    $scope.us.past = res;
-                } else {
-                    $scope.us.past = res.past;
-                    $scope.us.left = res.left;
-                }
+                $scope.us.event_status_strings = getEventStatusStrings($scope.us.start, $scope.us.end);
             }, ONE_SECOND)
         }, function (err) {
 

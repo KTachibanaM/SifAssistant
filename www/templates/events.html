@@ -8,8 +8,7 @@
                 <img image-lazy-src="{{jp.image}}" image-lazy-loader="lines">
             </div>
             <div class="item item-body">
-                <div>{{jp.past}}</div>
-                <div>{{jp.left}}</div>
+                <div ng-repeat="s in jp.event_status_strings">{{s}}</div>
             </div>
         </div>
         <div class="card">
@@ -20,8 +19,7 @@
                 <img image-lazy-src="{{us.image}}" image-lazy-loader="lines">
             </div>
             <div class="item item-body">
-                <div>{{us.past}}</div>
-                <div>{{us.left}}</div>
+                <div ng-repeat="s in us.event_status_strings">{{s}}</div>
             </div>
         </div>
         <div class="card">
