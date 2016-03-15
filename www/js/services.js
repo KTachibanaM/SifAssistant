@@ -507,89 +507,67 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory('SongTypes', function (gettextCatalog) {
-        const SONG_TYPES = [
-            {
-                id: "easy",
+    .factory('Songs', function (gettextCatalog) {
+        const DIFFICULTIES = {
+            easy: {
                 name: gettextCatalog.getString("Easy"),
                 expAddition: 12,
                 lpSubtraction: 5
             },
-            {
-                id: "medium",
+            medium: {
                 name: gettextCatalog.getString("Medium"),
                 expAddition: 26,
                 lpSubtraction: 10
             },
-            {
-                id: "hard",
+            hard: {
                 name: gettextCatalog.getString("Hard"),
                 expAddition: 46,
                 lpSubtraction: 15
             },
-            {
-                id: "expert",
+            expert: {
                 name: gettextCatalog.getString("Expert"),
                 expAddition: 83,
                 lpSubtraction: 25
             }
-        ];
-        const CATEGORIES = [
-            {
-                id: "regular",
+        };
+        const CATEGORIES = {
+            regular: {
                 name: gettextCatalog.getString("Regular"),
                 songMultipliers: [1],
                 lpMultiplier: 1,
                 expMultiplier: 1
             },
-            {
-                id: "tokenCollection",
+            tokenCollection: {
                 name: gettextCatalog.getString("Token collection"),
                 songMultipliers: [1],
                 lpMultiplier: 0,
                 expMultiplier: 1
             },
-            {
-                id: "scoreMatch",
+            scoreMatch: {
                 name: gettextCatalog.getString("Score Match"),
                 songMultipliers: [1],
                 lpMultiplier: 1,
                 expMultiplier: 1
             },
-            {
-                id: "medleyFestival",
+            medleyFestival: {
                 name: gettextCatalog.getString("Medley Festival"),
                 songMultipliers: [1, 2, 3],
                 lpMultiplier: 0.8,
                 expMultiplier: 1
+            },
+            challengeFestival: {
+                name: gettextCatalog.getString("Challenge Festival"),
+                songMultipliers: [1, 2, 3, 4, 5],
+                lpMultiplier: 1,
+                expMultiplier: 1
             }
-        ];
+        };
         return {
             get: function () {
-                var song_types = [];
-                CATEGORIES.forEach(function (category) {
-                    var new_songs = [];
-                    SONG_TYPES.forEach(function (song_type) {
-                        category.songMultipliers.forEach(function (song_multiplier) {
-                            new_songs.push({
-                                id: {
-                                    song_type: song_type.id,
-                                    song_multiplier: song_multiplier
-                                },
-                                name: song_type.name + " ("+ category.name + ") x " + song_multiplier,
-                                expAddition: song_type.expAddition * category.expMultiplier * song_multiplier,
-                                lpSubtraction: song_type.lpSubtraction * category.lpMultiplier * song_multiplier
-                            });
-                        })
-                    });
-                    var new_category = {
-                        id: category.id,
-                        name: category.name,
-                        songs: new_songs
-                    };
-                    song_types.push(new_category);
-                });
-                return song_types;
+                return {
+                    difficulties: DIFFICULTIES,
+                    categories: CATEGORIES
+                }
             }
         }
     })

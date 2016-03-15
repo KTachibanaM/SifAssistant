@@ -22,25 +22,37 @@
             <div class="item item-divider">
                 <translate>Automagically update by songs played</translate>
             </div>
-            <div class="item">
-                <div ng-repeat="category in song_types">
-                    <p>{{category.name}}</p>
-                    <div ng-repeat="song_type in category.songs" class="row">
-                        <button ng-click="addToBuffer(song_type)" class="button button-clear button-positive">
-                            <i class="ion-plus"></i>
-                            {{song_type.name}}
-                        </button>
-                    </div>
-                </div>
+            <ion-input class="item item-input item-select">
+                <ion-label translate>Difficulty</ion-label>
+                <select ng-model="addedSong.difficulty"
+                        ng-options="d.id as d.name for d in difficulties"></select>
+            </ion-input>
+            <ion-input class="item item-input item-select">
+                <ion-label translate>Category</ion-label>
+                <select ng-model="addedSong.category"
+                        ng-options="c.id as c.name for c in categories"></select>
+            </ion-input>
+            <ion-input class="item item-input item-select">
+                <ion-label translate>Multipliers</ion-label>
+                <select ng-model="addedSong.multiplier"
+                        ng-options="m as m for m in multipliers"></select>
+            </ion-input>
+            <ion-input class="item item-input">
+                <button class="button button-positive" ng-click="addToBuffer()">
+                    Add
+                </button>
+                <button class="button button-assertive" ng-click="resetAddedSong()">
+                    Reset
+                </button>
+            </ion-input>
+            <div class="item item-divider">
+                <translate>Songs played</translate>
             </div>
-            <div class="item">
-                <p translate>Played songs queue</p>
-                <div ng-repeat="song in buffer track by $index" class="row">
-                    <button ng-click="removeFromBuffer($index)" class="button button-clear button-assertive">
-                        <i class="ion-minus"></i>
-                        {{song.name}}
-                    </button>
-                </div>
+            <div class="item item-input" ng-repeat="song in buffer track by $index">
+                <button ng-click="removeFromBuffer($index)" class="button button-clear button-assertive">
+                    <i class="ion-minus"></i>
+                    {{song.name}}
+                </button>
             </div>
         </div>
     </ion-content>

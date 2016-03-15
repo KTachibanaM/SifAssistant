@@ -1,25 +1,32 @@
 <ion-view view-title="{{'Events'|translate}}">
     <ion-content lazy-scroll>
-        <div class="card">
-            <div class="item item-divider">
-                {{jp.region_name}}
-            </div>
-            <div class="item item-image">
-                <img image-lazy-src="{{jp.image}}" image-lazy-loader="lines">
-            </div>
+        <div class="card" ng-show="error">
             <div class="item item-body">
-                <div ng-repeat="s in jp.event_status_strings">{{s}}</div>
+                <div translate>An network error has occurred</div>
             </div>
         </div>
-        <div class="card">
-            <div class="item item-divider">
-                {{us.region_name}}
+        <div ng-hide="error">
+            <div class="card">
+                <div class="item item-divider">
+                    {{jp.region_name}}
+                </div>
+                <div class="item item-image">
+                    <img image-lazy-src="{{jp.image}}" image-lazy-loader="lines">
+                </div>
+                <div class="item item-body">
+                    <div ng-repeat="s in jp.event_status_strings">{{s}}</div>
+                </div>
             </div>
-            <div class="item item-image">
-                <img image-lazy-src="{{us.image}}" image-lazy-loader="lines">
-            </div>
-            <div class="item item-body">
-                <div ng-repeat="s in us.event_status_strings">{{s}}</div>
+            <div class="card">
+                <div class="item item-divider">
+                    {{us.region_name}}
+                </div>
+                <div class="item item-image">
+                    <img image-lazy-src="{{us.image}}" image-lazy-loader="lines">
+                </div>
+                <div class="item item-body">
+                    <div ng-repeat="s in us.event_status_strings">{{s}}</div>
+                </div>
             </div>
         </div>
         <div class="card">

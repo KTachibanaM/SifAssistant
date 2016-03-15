@@ -28,7 +28,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
     })
 
-    .controller('AccountsCtrl', function ($scope, $rootScope, $interval, ONE_SECOND, $timeout, $ionicPopup, Accounts, Calculators, SongTypes, gettextCatalog) {
+    .controller('AccountsCtrl', function ($scope, $rootScope, $interval, ONE_SECOND, $timeout, $ionicPopup, Accounts, Calculators, gettextCatalog) {
         /**
          * Timers
          */
@@ -140,21 +140,67 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
     })
 
-    .controller('UpdateCtrl', function ($scope, $rootScope, $ionicHistory, $stateParams, Accounts, SongTypes, Calculators) {
+    .controller('UpdateCtrl', function ($scope, $rootScope, $ionicHistory, $stateParams, Accounts, Songs, Calculators) {
         $scope.updatingAccount = Accounts.getAccountByAlias($stateParams.alias);
+        $scope.songs = Songs.get();
 
-        $scope.song_types = SongTypes.get();
+        // Added song
+        $scope.resetAddedSong = function () {
+            $scope.addedSong = {
+                difficulty: 'easy',
+                category: 'regular'
+            };
+        };
+        $scope.resetAddedSong();
 
+        // When current category changes, available multipliers change
+        // When available multipliers change, added song multiplier change
+        $scope.$watch('addedSong.category', function () {
+            $scope.multipliers = $scope.songs.categories[$scope.addedSong.category].songMultipliers;
+            $scope.addedSong.multiplier = $scope.multipliers[0];
+        });
+
+        function objectToArrayWithIdField(object) {
+            return Object.keys(object).map(function (key) {
+                var newObject = object[key];
+                newObject.id = key;
+                return newObject;
+            })
+        }
+
+        // Available difficulties and categories
+        $scope.difficulties = objectToArrayWithIdField($scope.songs.difficulties);
+        $scope.categories = objectToArrayWithIdField($scope.songs.categories);
+
+        // Buffer
         $scope.buffer = [];
-
-        $scope.addToBuffer = function (song_type) {
-            $scope.buffer.push(song_type);
+        $scope.addToBuffer = function () {
+            var difficulty = $scope.addedSong.difficulty;
+            var category = $scope.addedSong.category;
+            var multiplier = $scope.addedSong.multiplier;
+            var legacySongType = {
+                name: sprintf(
+                    '%s %s x %d',
+                    $scope.songs.difficulties[difficulty].name,
+                    $scope.songs.categories[category].name,
+                    multiplier),
+                expAddition:
+                    $scope.songs.difficulties[difficulty].expAddition
+                        * $scope.songs.categories[category].expMultiplier
+                        * multiplier,
+                lpSubtraction:
+                    $scope.songs.difficulties[difficulty].lpSubtraction
+                    * $scope.songs.categories[category].lpMultiplier
+                    * multiplier
+            };
+            $scope.buffer.push(legacySongType);
         };
 
         $scope.removeFromBuffer = function (index) {
             $scope.buffer.splice(index, 1);
         };
 
+        // Save
         $scope.save = function () {
             var updated_account = Calculators.updateAccountSongsPlayed($scope.updatingAccount, $scope.buffer);
             Accounts.updateAccount($scope.updatingAccount, "level", updated_account.level);
@@ -255,7 +301,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 $scope.jp.event_status_strings = getEventStatusStrings($scope.jp.start, $scope.jp.end);
             }, ONE_SECOND)
         }, function (err) {
-
+            $scope.error = err;
         });
 
         Events.getByRegion('us').then(function (data) {
@@ -264,7 +310,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                 $scope.us.event_status_strings = getEventStatusStrings($scope.us.start, $scope.us.end);
             }, ONE_SECOND)
         }, function (err) {
-
+            $scope.error = err;
         });
     })
 
