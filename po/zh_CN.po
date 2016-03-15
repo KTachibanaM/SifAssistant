@@ -48,6 +48,10 @@ msgstr "添加账号"
 msgid "Alias"
 msgstr "名称"
 
+#: events.html:5
+msgid "An network error has occurred"
+msgstr "网络错误"
+
 #: about.html:4
 msgid "App version: {{app_version}}"
 msgstr "应用版本: {{app_version}}"
@@ -72,13 +76,17 @@ msgstr "取消"
 msgid "Cannot have duplicate alias"
 msgstr "名称不能重复"
 
+#: update.html:31
+msgid "Category"
+msgstr "类别"
+
+#: services.js:559
+msgid "Challenge Festival"
+msgstr "挑战活动"
+
 #: services.js:468
 msgid "China"
 msgstr "国服"
-
-#: controllers.js:240 controllers.js:245
-msgid "days"
-msgstr "天"
 
 #: debug.html:1 menu.html:36
 msgid "Debug"
@@ -92,7 +100,11 @@ msgstr "删除"
 msgid "Delete account"
 msgstr "删除账号"
 
-#: services.js:514
+#: update.html:26
+msgid "Difficulty"
+msgstr "难度"
+
+#: services.js:513
 msgid "Easy"
 msgstr "简单"
 
@@ -104,13 +116,13 @@ msgstr "启用每日奖励提醒"
 msgid "Enable LP alert"
 msgstr "启用LP提醒"
 
-#: controllers.js:236
+#: controllers.js:271
 msgid "Event has ended"
 msgstr "活动已结束"
 
-#: controllers.js:234
-msgid "Event hasn't started"
-msgstr "活动未开始"
+#: controllers.js:267
+msgid "Event will start in : %s days, %s hours, %s minutes, %s seconds"
+msgstr "活动将会在 %s 天, %s 小时, %s 分钟, %s 秒 内开始"
 
 #: events.html:1 menu.html:24
 msgid "Events"
@@ -124,11 +136,11 @@ msgstr "经验"
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgstr "经验： {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 
-#: services.js:532
+#: services.js:528
 msgid "Expert"
 msgstr "专家"
 
-#: events.html:30
+#: events.html:35
 msgid "for the event API"
 msgstr "提供活动API"
 
@@ -136,17 +148,13 @@ msgstr "提供活动API"
 msgid "Full"
 msgstr "满"
 
-#: services.js:526
+#: services.js:523
 msgid "Hard"
 msgstr "困难"
 
 #: accounts.html:31
 msgid "Has claimed daily bonus"
 msgstr "已领取每日奖励"
-
-#: controllers.js:241 controllers.js:246
-msgid "hours"
-msgstr "小时"
 
 #: services.js:462
 msgid "Japan"
@@ -156,9 +164,9 @@ msgstr "日服"
 msgid "Korea"
 msgstr "韩服"
 
-#: controllers.js:244
-msgid "Left:"
-msgstr "剩余："
+#: controllers.js:292
+msgid "Left: %s days, %s hours, %s minutes, %s seconds"
+msgstr "剩余: %s 天, %s 小时, %s 分钟, %s 秒"
 
 #: regions.html:10
 msgid "Local time: {{region.local_time}}"
@@ -180,17 +188,17 @@ msgstr "LP提醒值"
 msgid "Manually update"
 msgstr "手动更新"
 
-#: services.js:520
+#: services.js:518
 msgid "Medium"
 msgstr "中等"
 
-#: services.js:561
+#: services.js:553
 msgid "Medley Festival"
 msgstr "Medley Festival"
 
-#: controllers.js:242 controllers.js:247
-msgid "minutes"
-msgstr "分钟"
+#: update.html:36
+msgid "Multipliers"
+msgstr "乘以"
 
 #: accounts.html:23
 msgid "Next LP"
@@ -204,9 +212,9 @@ msgstr "或者加上"
 msgid "Or subtract by"
 msgstr "或者减去"
 
-#: controllers.js:239
-msgid "Past:"
-msgstr "过去："
+#: controllers.js:290
+msgid "Past: %s days, %s hours, %s minutes, %s seconds"
+msgstr "已过去: %s 天, %s 小时, %s 分钟, %s 秒"
 
 #: about.html:10
 msgid "Platform version: {{platform_version}}"
@@ -215,10 +223,6 @@ msgstr "平台版本: {{platform_version}}"
 #: about.html:7
 msgid "Platform: {{platform}}"
 msgstr "平台: {{platform}}"
-
-#: update.html:37
-msgid "Played songs queue"
-msgstr "已打的歌曲列表"
 
 #: add-account.html:17 update.html:11
 msgid "Rank"
@@ -240,7 +244,7 @@ msgstr "区域"
 msgid "Regions"
 msgstr "区域"
 
-#: services.js:540
+#: services.js:535
 msgid "Regular"
 msgstr "普通"
 
@@ -248,13 +252,9 @@ msgstr "普通"
 msgid "Save"
 msgstr "保存"
 
-#: services.js:554
+#: services.js:547
 msgid "Score Match"
 msgstr "撕逼活动"
-
-#: controllers.js:243 controllers.js:248
-msgid "seconds"
-msgstr "秒"
 
 #: menu.html:30 settings.html:1
 msgid "Settings"
@@ -264,6 +264,10 @@ msgstr "设置"
 msgid "Show debug page (restart app to take effect)"
 msgstr "显示调试页面（重启App以生效）"
 
+#: update.html:49
+msgid "Songs played"
+msgstr "已打的歌曲"
+
 #: accounts.html:83
 msgid "Start by pressing that + button"
 msgstr "触摸+号以开始"
@@ -272,7 +276,7 @@ msgstr "触摸+号以开始"
 msgid "Taiwan"
 msgstr "台服"
 
-#: events.html:29
+#: events.html:34
 msgid "Thanks to"
 msgstr "感谢"
 
@@ -280,7 +284,7 @@ msgstr "感谢"
 msgid "Timezone: {{region.timezone}}"
 msgstr "时区: {{region.timezone}}"
 
-#: services.js:547
+#: services.js:541
 msgid "Token collection"
 msgstr "收集活动"
 
@@ -299,6 +303,30 @@ msgstr "更新等级/经验/LP"
 #: update-loveca.html:20 update-loveca.html:37
 msgid "with multiplier"
 msgstr "乘以"
+
+#~ msgid "days"
+#~ msgstr "天"
+
+#~ msgid "Event hasn't started"
+#~ msgstr "活动未开始"
+
+#~ msgid "hours"
+#~ msgstr "小时"
+
+#~ msgid "Left:"
+#~ msgstr "剩余："
+
+#~ msgid "minutes"
+#~ msgstr "分钟"
+
+#~ msgid "Past:"
+#~ msgstr "过去："
+
+#~ msgid "Played songs queue"
+#~ msgstr "已打的歌曲列表"
+
+#~ msgid "seconds"
+#~ msgstr "秒"
 
 #~ msgid "All"
 #~ msgstr "全部"

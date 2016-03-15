@@ -35,6 +35,6 @@ ionic resources
 npm install -g gulp
 npm install
 gulp pot # get template.pot under ./po
-# Edit template.pot along witht **.po and save **.po
+# Edit template.pot along with **.po and save **.po
 gulp translations
 ```

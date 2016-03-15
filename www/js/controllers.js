@@ -264,7 +264,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     }
                 };
                 return [
-                    sprintf(gettextCatalog.getString('Event will start in : %s days, %s hours, %s minutes, %s seconds'),
+                    sprintf(gettextCatalog.getString('Event will start in: %s days, %s hours, %s minutes, %s seconds'),
                         time.past.days, time.past.hours, time.past.minutes, time.past.seconds)
                 ];
             } else if (left < 0) {

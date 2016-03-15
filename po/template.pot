@@ -42,6 +42,10 @@ msgstr ""
 msgid "Alias"
 msgstr ""
 
+#: events.html:5
+msgid "An network error has occurred"
+msgstr ""
+
 #: about.html:4
 msgid "App version: {{app_version}}"
 msgstr ""
@@ -66,13 +70,16 @@ msgstr ""
 msgid "Cannot have duplicate alias"
 msgstr ""
 
-#: services.js:468
-msgid "China"
+#: update.html:31
+msgid "Category"
 msgstr ""
 
-#: controllers.js:240
-#: controllers.js:245
-msgid "days"
+#: services.js:559
+msgid "Challenge Festival"
+msgstr ""
+
+#: services.js:468
+msgid "China"
 msgstr ""
 
 #: debug.html:1
@@ -89,7 +96,11 @@ msgstr ""
 msgid "Delete account"
 msgstr ""
 
-#: services.js:514
+#: update.html:26
+msgid "Difficulty"
+msgstr ""
+
+#: services.js:513
 msgid "Easy"
 msgstr ""
 
@@ -101,12 +112,12 @@ msgstr ""
 msgid "Enable LP alert"
 msgstr ""
 
-#: controllers.js:236
+#: controllers.js:271
 msgid "Event has ended"
 msgstr ""
 
-#: controllers.js:234
-msgid "Event hasn't started"
+#: controllers.js:267
+msgid "Event will start in : %s days, %s hours, %s minutes, %s seconds"
 msgstr ""
 
 #: events.html:1
@@ -123,11 +134,11 @@ msgstr ""
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgstr ""
 
-#: services.js:532
+#: services.js:528
 msgid "Expert"
 msgstr ""
 
-#: events.html:30
+#: events.html:35
 msgid "for the event API"
 msgstr ""
 
@@ -135,17 +146,12 @@ msgstr ""
 msgid "Full"
 msgstr ""
 
-#: services.js:526
+#: services.js:523
 msgid "Hard"
 msgstr ""
 
 #: accounts.html:31
 msgid "Has claimed daily bonus"
-msgstr ""
-
-#: controllers.js:241
-#: controllers.js:246
-msgid "hours"
 msgstr ""
 
 #: services.js:462
@@ -156,8 +162,8 @@ msgstr ""
 msgid "Korea"
 msgstr ""
 
-#: controllers.js:244
-msgid "Left:"
+#: controllers.js:292
+msgid "Left: %s days, %s hours, %s minutes, %s seconds"
 msgstr ""
 
 #: regions.html:10
@@ -183,17 +189,16 @@ msgstr ""
 msgid "Manually update"
 msgstr ""
 
-#: services.js:520
+#: services.js:518
 msgid "Medium"
 msgstr ""
 
-#: services.js:561
+#: services.js:553
 msgid "Medley Festival"
 msgstr ""
 
-#: controllers.js:242
-#: controllers.js:247
-msgid "minutes"
+#: update.html:36
+msgid "Multipliers"
 msgstr ""
 
 #: accounts.html:23
@@ -208,8 +213,8 @@ msgstr ""
 msgid "Or subtract by"
 msgstr ""
 
-#: controllers.js:239
-msgid "Past:"
+#: controllers.js:290
+msgid "Past: %s days, %s hours, %s minutes, %s seconds"
 msgstr ""
 
 #: about.html:10
@@ -218,10 +223,6 @@ msgstr ""
 
 #: about.html:7
 msgid "Platform: {{platform}}"
-msgstr ""
-
-#: update.html:37
-msgid "Played songs queue"
 msgstr ""
 
 #: add-account.html:17
@@ -246,7 +247,7 @@ msgstr ""
 msgid "Regions"
 msgstr ""
 
-#: services.js:540
+#: services.js:535
 msgid "Regular"
 msgstr ""
 
@@ -255,13 +256,8 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: services.js:554
+#: services.js:547
 msgid "Score Match"
-msgstr ""
-
-#: controllers.js:243
-#: controllers.js:248
-msgid "seconds"
 msgstr ""
 
 #: menu.html:30
@@ -273,6 +269,10 @@ msgstr ""
 msgid "Show debug page (restart app to take effect)"
 msgstr ""
 
+#: update.html:49
+msgid "Songs played"
+msgstr ""
+
 #: accounts.html:83
 msgid "Start by pressing that + button"
 msgstr ""
@@ -281,7 +281,7 @@ msgstr ""
 msgid "Taiwan"
 msgstr ""
 
-#: events.html:29
+#: events.html:34
 msgid "Thanks to"
 msgstr ""
 
@@ -289,7 +289,7 @@ msgstr ""
 msgid "Timezone: {{region.timezone}}"
 msgstr ""
 
-#: services.js:547
+#: services.js:541
 msgid "Token collection"
 msgstr ""
 
