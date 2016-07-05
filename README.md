@@ -1,5 +1,7 @@
 # SIF Assistant
 
+**[DEPRECATED] This app is no longer maintained**
+
 ## Local
 
 ```
