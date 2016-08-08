@@ -8,6 +8,15 @@ bower install
 ionic serve
 ```
 
+## Translations
+```
+npm install -g gulp
+npm install
+gulp pot # get template.pot under ./po
+# In software such as PoEdit, edit per-language **.po files along with template.pot, and save **.po files
+gulp translations
+```
+
 ## Prepare for mobile
 ```
 ionic state reset
@@ -28,13 +37,4 @@ ionic run ios
 ## Resources (icon, splash screen)
 ```
 ionic resources
-```
-
-## Translations
-```
-npm install -g gulp
-npm install
-gulp pot # get template.pot under ./po
-# Edit template.pot along with **.po and save **.po
-gulp translations
 ```

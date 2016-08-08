@@ -528,6 +528,11 @@ angular.module('sif-assistant.services', [])
                 name: gettextCatalog.getString("Expert"),
                 expAddition: 83,
                 lpSubtraction: 25
+            },
+            master: {
+                name: gettextCatalog.getString("Master"),
+                expAddition: 83,
+                lpSubtraction: 25
             }
         };
         const CATEGORIES = {

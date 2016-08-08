@@ -9,16 +9,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#: services.js:315
-msgid ": Daily bonus is available!"
-msgstr ": 可领取每日奖励！"
-
-#: services.js:295
-msgid ": LP has reached"
-msgstr ": LP已到达"
 
 #: update-loveca.html:15
 msgid "5 (1 scout)"
@@ -27,6 +19,14 @@ msgstr "5 (单抽)"
 #: update-loveca.html:16
 msgid "50 (11 scouts)"
 msgstr "50 (11连)"
+
+#: services.js:315
+msgid ": Daily bonus is available!"
+msgstr ": 可领取每日奖励！"
+
+#: services.js:295
+msgid ": LP has reached"
+msgstr ": LP已到达"
 
 #: about.html:1 menu.html:33
 msgid "About"
@@ -80,7 +80,7 @@ msgstr "名称不能重复"
 msgid "Category"
 msgstr "类别"
 
-#: services.js:559
+#: services.js:564
 msgid "Challenge Festival"
 msgstr "挑战活动"
 
@@ -104,30 +104,6 @@ msgstr "删除账号"
 msgid "Difficulty"
 msgstr "难度"
 
-#: services.js:513
-msgid "Easy"
-msgstr "简单"
-
-#: accounts.html:57
-msgid "Enable daily bonus alert"
-msgstr "启用每日奖励提醒"
-
-#: accounts.html:44
-msgid "Enable LP alert"
-msgstr "启用LP提醒"
-
-#: controllers.js:271
-msgid "Event has ended"
-msgstr "活动已结束"
-
-#: controllers.js:267
-msgid "Event will start in : %s days, %s hours, %s minutes, %s seconds"
-msgstr "活动将会在 %s 天, %s 小时, %s 分钟, %s 秒 内开始"
-
-#: events.html:1 menu.html:24
-msgid "Events"
-msgstr "活动"
-
 #: add-account.html:21 update.html:15
 msgid "EXP"
 msgstr "经验"
@@ -136,13 +112,33 @@ msgstr "经验"
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgstr "经验： {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 
+#: services.js:513
+msgid "Easy"
+msgstr "简单"
+
+#: accounts.html:44
+msgid "Enable LP alert"
+msgstr "启用LP提醒"
+
+#: accounts.html:57
+msgid "Enable daily bonus alert"
+msgstr "启用每日奖励提醒"
+
+#: controllers.js:271
+msgid "Event has ended"
+msgstr "活动已结束"
+
+#: controllers.js:267
+msgid "Event will start in: %s days, %s hours, %s minutes, %s seconds"
+msgstr ""
+
+#: events.html:1 menu.html:24
+msgid "Events"
+msgstr "活动"
+
 #: services.js:528
 msgid "Expert"
 msgstr "专家"
-
-#: events.html:35
-msgid "for the event API"
-msgstr "提供活动API"
 
 #: services.js:364
 msgid "Full"
@@ -164,6 +160,14 @@ msgstr "日服"
 msgid "Korea"
 msgstr "韩服"
 
+#: accounts.html:19
+msgid "LP"
+msgstr "LP"
+
+#: accounts.html:53
+msgid "LP alert value"
+msgstr "LP提醒值"
+
 #: controllers.js:292
 msgid "Left: %s days, %s hours, %s minutes, %s seconds"
 msgstr "剩余: %s 天, %s 小时, %s 分钟, %s 秒"
@@ -176,23 +180,19 @@ msgstr "当地时间: {{region.local_time}}"
 msgid "Love gems"
 msgstr "Loveca"
 
-#: accounts.html:19
-msgid "LP"
-msgstr "LP"
-
-#: accounts.html:53
-msgid "LP alert value"
-msgstr "LP提醒值"
-
 #: update.html:8
 msgid "Manually update"
 msgstr "手动更新"
+
+#: services.js:533
+msgid "Master"
+msgstr "大湿"
 
 #: services.js:518
 msgid "Medium"
 msgstr "中等"
 
-#: services.js:553
+#: services.js:558
 msgid "Medley Festival"
 msgstr "Medley Festival"
 
@@ -228,13 +228,13 @@ msgstr "平台: {{platform}}"
 msgid "Rank"
 msgstr "等级"
 
-#: accounts.html:13
-msgid "Rank: {{account.level}}"
-msgstr "等级: {{account.level}}"
-
 #: accounts.html:70
 msgid "Rank/EXP/LP"
 msgstr "等级/经验/LP"
+
+#: accounts.html:13
+msgid "Rank: {{account.level}}"
+msgstr "等级: {{account.level}}"
 
 #: add-account.html:12
 msgid "Region"
@@ -244,7 +244,7 @@ msgstr "区域"
 msgid "Regions"
 msgstr "区域"
 
-#: services.js:535
+#: services.js:540
 msgid "Regular"
 msgstr "普通"
 
@@ -252,7 +252,7 @@ msgstr "普通"
 msgid "Save"
 msgstr "保存"
 
-#: services.js:547
+#: services.js:552
 msgid "Score Match"
 msgstr "撕逼活动"
 
@@ -284,7 +284,7 @@ msgstr "感谢"
 msgid "Timezone: {{region.timezone}}"
 msgstr "时区: {{region.timezone}}"
 
-#: services.js:541
+#: services.js:546
 msgid "Token collection"
 msgstr "收集活动"
 
@@ -300,9 +300,16 @@ msgstr "更新Loveca"
 msgid "Update Rank/EXP/LP"
 msgstr "更新等级/经验/LP"
 
+#: events.html:35
+msgid "for the event API"
+msgstr "提供活动API"
+
 #: update-loveca.html:20 update-loveca.html:37
 msgid "with multiplier"
 msgstr "乘以"
+
+#~ msgid "Event will start in : %s days, %s hours, %s minutes, %s seconds"
+#~ msgstr "活动将会在 %s 天, %s 小时, %s 分钟, %s 秒 内开始"
 
 #~ msgid "days"
 #~ msgstr "天"

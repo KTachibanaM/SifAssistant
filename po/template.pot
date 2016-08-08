@@ -4,20 +4,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 
-#: services.js:315
-msgid ": Daily bonus is available!"
-msgstr ""
-
-#: services.js:295
-msgid ": LP has reached"
-msgstr ""
-
 #: update-loveca.html:15
 msgid "5 (1 scout)"
 msgstr ""
 
 #: update-loveca.html:16
 msgid "50 (11 scouts)"
+msgstr ""
+
+#: services.js:315
+msgid ": Daily bonus is available!"
+msgstr ""
+
+#: services.js:295
+msgid ": LP has reached"
 msgstr ""
 
 #: about.html:1
@@ -74,7 +74,7 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: services.js:559
+#: services.js:564
 msgid "Challenge Festival"
 msgstr ""
 
@@ -100,31 +100,6 @@ msgstr ""
 msgid "Difficulty"
 msgstr ""
 
-#: services.js:513
-msgid "Easy"
-msgstr ""
-
-#: accounts.html:57
-msgid "Enable daily bonus alert"
-msgstr ""
-
-#: accounts.html:44
-msgid "Enable LP alert"
-msgstr ""
-
-#: controllers.js:271
-msgid "Event has ended"
-msgstr ""
-
-#: controllers.js:267
-msgid "Event will start in : %s days, %s hours, %s minutes, %s seconds"
-msgstr ""
-
-#: events.html:1
-#: menu.html:24
-msgid "Events"
-msgstr ""
-
 #: add-account.html:21
 #: update.html:15
 msgid "EXP"
@@ -134,12 +109,33 @@ msgstr ""
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgstr ""
 
-#: services.js:528
-msgid "Expert"
+#: services.js:513
+msgid "Easy"
 msgstr ""
 
-#: events.html:35
-msgid "for the event API"
+#: accounts.html:44
+msgid "Enable LP alert"
+msgstr ""
+
+#: accounts.html:57
+msgid "Enable daily bonus alert"
+msgstr ""
+
+#: controllers.js:271
+msgid "Event has ended"
+msgstr ""
+
+#: controllers.js:267
+msgid "Event will start in: %s days, %s hours, %s minutes, %s seconds"
+msgstr ""
+
+#: events.html:1
+#: menu.html:24
+msgid "Events"
+msgstr ""
+
+#: services.js:528
+msgid "Expert"
 msgstr ""
 
 #: services.js:364
@@ -162,6 +158,14 @@ msgstr ""
 msgid "Korea"
 msgstr ""
 
+#: accounts.html:19
+msgid "LP"
+msgstr ""
+
+#: accounts.html:53
+msgid "LP alert value"
+msgstr ""
+
 #: controllers.js:292
 msgid "Left: %s days, %s hours, %s minutes, %s seconds"
 msgstr ""
@@ -177,23 +181,19 @@ msgstr ""
 msgid "Love gems"
 msgstr ""
 
-#: accounts.html:19
-msgid "LP"
-msgstr ""
-
-#: accounts.html:53
-msgid "LP alert value"
-msgstr ""
-
 #: update.html:8
 msgid "Manually update"
+msgstr ""
+
+#: services.js:533
+msgid "Master"
 msgstr ""
 
 #: services.js:518
 msgid "Medium"
 msgstr ""
 
-#: services.js:553
+#: services.js:558
 msgid "Medley Festival"
 msgstr ""
 
@@ -230,12 +230,12 @@ msgstr ""
 msgid "Rank"
 msgstr ""
 
-#: accounts.html:13
-msgid "Rank: {{account.level}}"
-msgstr ""
-
 #: accounts.html:70
 msgid "Rank/EXP/LP"
+msgstr ""
+
+#: accounts.html:13
+msgid "Rank: {{account.level}}"
 msgstr ""
 
 #: add-account.html:12
@@ -247,7 +247,7 @@ msgstr ""
 msgid "Regions"
 msgstr ""
 
-#: services.js:535
+#: services.js:540
 msgid "Regular"
 msgstr ""
 
@@ -256,7 +256,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: services.js:547
+#: services.js:552
 msgid "Score Match"
 msgstr ""
 
@@ -289,7 +289,7 @@ msgstr ""
 msgid "Timezone: {{region.timezone}}"
 msgstr ""
 
-#: services.js:541
+#: services.js:546
 msgid "Token collection"
 msgstr ""
 
@@ -303,6 +303,10 @@ msgstr ""
 
 #: update.html:1
 msgid "Update Rank/EXP/LP"
+msgstr ""
+
+#: events.html:35
+msgid "for the event API"
 msgstr ""
 
 #: update-loveca.html:20
