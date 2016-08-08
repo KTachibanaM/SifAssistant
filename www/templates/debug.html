@@ -1,18 +1,40 @@
 <ion-view view-title="{{'Debug'|translate}}">
 	<ion-content>
-		<button class="button button-positive" ng-click="immediately()">Schedule notification immediately</button>
-		<button class="button button-positive" ng-click="five_seconds()">Schedule notification five seconds later</button>
-		<button class="button button-positive" ng-click="one_minute()">Schedule notification one minute later</button>
-		<button class="button button-positive" ng-click="every_second()">Schedule notification every second</button>
-		<ul class="list">
-			<li ng-repeat="notification in all_notifications" class="item">
-				<button ng-click="cancel(notification.id)" class="button">X</button>
-				<p>Id: {{notification.id}}</p>
-				<p>Title: {{notification.title}}</p>
-				<p>Text: {{notification.text}}</p>
-				<p>Every: {{notification.every}}</p>
-				<p>At: {{notification.at}}</p>
-			</li>
-		</ul>
+		<div class="card">
+            <div class="item item-divider">
+                Fire test notifications
+            </div>
+            <div class="item item-body">
+                <button class="button button-positive" ng-click="immediately()">Schedule notification immediately</button>
+                <button class="button button-positive" ng-click="five_seconds()">Schedule notification five seconds later</button>
+                <button class="button button-positive" ng-click="one_minute()">Schedule notification one minute later</button>
+                <button class="button button-positive" ng-click="every_second()">Schedule notification every second</button>
+                <ul class="list">
+                    <li ng-repeat="notification in all_notifications" class="item">
+                        <button ng-click="cancel(notification.id)" class="button">X</button>
+                        <p>Id: {{notification.id}}</p>
+                        <p>Title: {{notification.title}}</p>
+                        <p>Text: {{notification.text}}</p>
+                        <p>Every: {{notification.every}}</p>
+                        <p>At: {{notification.at}}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="item item-divider">
+                Force locale
+            </div>
+            <div class="item item-body">
+                <ion-input class="item item-input item-select">
+                    <ion-label translate>Locale</ion-label>
+                    <select ng-model="settings.debug_force_locale"
+                            ng-options="locale as locale for locale in locales"></select>
+                </ion-input>
+                <button class="button button-full button-positive" ng-click="save_forced_locale()">
+                    Saved forced locale (restart app to take effect)
+                </button>
+            </div>
+        </div>
 	</ion-content>
 </ion-view>

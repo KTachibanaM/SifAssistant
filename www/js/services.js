@@ -612,7 +612,8 @@ angular.module('sif-assistant.services', [])
     .factory("Settings", function ($localStorage) {
         const SETTINGS_KEY = "settings";
         const DEFAULT_SETTINGS = {
-            "show_debug": false
+            "show_debug": false,
+            "debug_force_locale": undefined
         };
         return {
             get: function () {

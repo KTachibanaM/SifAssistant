@@ -314,7 +314,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         });
     })
 
-    .controller('DebugCtrl', function ($scope, $interval, NativeNotification, ONE_SECOND) {
+    .controller('DebugCtrl', function ($scope, $interval, NativeNotification, ONE_SECOND, Settings, locales) {
+        // Fire test notifications
         $scope.reload = function () {
             NativeNotification.getAll(function (notifications) {
                 $scope.all_notifications = notifications;
@@ -360,6 +361,13 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.cancel = function (id) {
             NativeNotification.cancelByRawHashedId(id);
         };
+
+        // Debug force locale
+        $scope.settings = Settings.get();
+        $scope.locales = locales.concat(undefined);
+        $scope.save_forced_locale = function () {
+            Settings.set($scope.settings)
+        }
     })
 
     .controller('AboutCtrl', function ($scope) {

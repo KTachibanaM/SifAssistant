@@ -22,8 +22,13 @@ angular.module('sif-assistant', ['ionic', 'ionicLazyLoad', 'sif-assistant.contro
         });
     })
 
-    .run(function (gettextCatalog, Platform) {
-        var locale = Platform.getLocale();
+    .run(function (gettextCatalog, Platform, Settings) {
+        var locale;
+        if (Settings.get().debug_force_locale) {
+            locale = Settings.get().debug_force_locale
+        } else {
+            locale = Platform.getLocale();
+        }
         if (locale) {
             gettextCatalog.loadRemote("js/translations/" + locale + ".json");
             gettextCatalog.setCurrentLanguage(locale);
@@ -33,6 +38,8 @@ angular.module('sif-assistant', ['ionic', 'ionicLazyLoad', 'sif-assistant.contro
     .constant("isBrowser", window.cordova === undefined)
 
     .constant("ONE_SECOND", 1000)
+
+    .constant("locales", ['zh_CN'])
 
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
