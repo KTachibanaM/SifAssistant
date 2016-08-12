@@ -11,7 +11,7 @@
                     {{jp.region_name}}
                 </div>
                 <div class="item item-image">
-                    <img image-lazy-src="{{jp.image}}" image-lazy-loader="lines">
+                    <img cache-src="{{jp.image}}">
                 </div>
                 <div class="item item-body">
                     <div ng-repeat="s in jp.event_status_strings">{{s}}</div>
@@ -22,7 +22,7 @@
                     {{us.region_name}}
                 </div>
                 <div class="item item-image">
-                    <img image-lazy-src="{{us.image}}" image-lazy-loader="lines">
+                    <img cache-src="{{us.image}}">
                 </div>
                 <div class="item item-body">
                     <div ng-repeat="s in us.event_status_strings">{{s}}</div>

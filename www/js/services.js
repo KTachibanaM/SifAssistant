@@ -649,7 +649,7 @@ angular.module('sif-assistant.services', [])
                 cached_events[region_id] = events;
                 $localStorage.set(EVENTS_CACHE_KEY, cached_events);
             },
-            ifEventExpired: function(event) {
+            ifEventExpired: function (event) {
                 return Date.now() > event.end;
             },
             getByRegion: function (region_id) {

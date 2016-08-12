@@ -8,7 +8,10 @@
     "angular-gettext": "~2.1.0"
   },
   "dependencies": {
-    "ionic-image-lazy-load": "ion-image-lazy-load#*",
-    "sprintf": "~1.0.3"
+    "sprintf": "~1.0.3",
+    "ionic-cache-src": "^0.7.3"
+  },
+  "resolutions": {
+    "angular": "1.4.3"
   }
 }

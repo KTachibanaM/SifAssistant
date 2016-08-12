@@ -41,7 +41,9 @@
     {
       "locator": "https://github.com/driftyco/ionic-plugin-keyboard.git",
       "id": "ionic-plugin-keyboard"
-    }
+    },
+    "cordova-plugin-file",
+    "cordova-plugin-file-transfer"
   ],
   "cordovaPlatforms": [
     "android",
