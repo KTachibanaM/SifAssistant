@@ -38,6 +38,11 @@ ionic run android
 ionic run ios
 ```
 
+## Build for mobile
+```
+ionic build
+```
+
 ## Generate resources (icon, splash screen)
 ```
 ionic resources
