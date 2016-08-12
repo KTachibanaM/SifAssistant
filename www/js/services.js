@@ -625,9 +625,11 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory("Events", function ($http, $q, Regions) {
+    .factory("Events", function ($http, $q, Regions, $localStorage) {
+        const EVENTS_CACHE_KEY = 'events_cache';
+
         return {
-            getRawByRegion: function (region_id) {
+            getNetworkedRawByRegion: function (region_id) {
                 if (region_id === 'jp') {
                     return $http.get('http://schoolido.lu/api/events/?ordering=-beginning&page_size=1');
                 } else if (region_id === 'us') {
@@ -636,39 +638,67 @@ angular.module('sif-assistant.services', [])
                     return $q.when({});
                 }
             },
+            getCached: function () {
+                return $localStorage.getObject(EVENTS_CACHE_KEY, {})
+            },
+            getCachedByRegion: function (region_id) {
+                return this.getCached()[region_id]
+            },
+            setCacheByRegion: function (region_id, events) {
+                var cached_events = this.getCached();
+                cached_events[region_id] = events;
+                $localStorage.set(EVENTS_CACHE_KEY, cached_events);
+            },
+            ifEventExpired: function(event) {
+                return Date.now() > event.end;
+            },
             getByRegion: function (region_id) {
                 var defer = $q.defer();
 
-                this.getRawByRegion(region_id).then(function (data) {
-                    var raw = data.data.results[0];
+                var event_factory_this = this;
+                if (!this.getCachedByRegion(region_id) || this.ifEventExpired(this.getCachedByRegion(region_id))) {
+                    // if not cached OR cached but expired, retrieve from network, parse and cache
+                    this.getNetworkedRawByRegion(region_id).then(function (data) {
+                        var raw = data.data.results[0];
 
-                    // Retrieve event info
-                    var image;
-                    var start;
-                    var end;
-                    if (region_id == 'jp') {
-                        image = raw["image"];
-                        start = raw["beginning"];
-                        end = raw["end"];
-                    } else {
-                        image = raw["english_image"];
-                        start = raw["english_beginning"];
-                        end = raw["english_end"];
-                    }
+                        // Retrieve event info
+                        var image;
+                        var start;
+                        var end;
+                        if (region_id == 'jp') {
+                            image = raw["image"];
+                            start = raw["beginning"];
+                            end = raw["end"];
+                        } else {
+                            image = raw["english_image"];
+                            start = raw["english_beginning"];
+                            end = raw["english_end"];
+                        }
 
-                    // Parse to UNIX time
-                    start = moment(start).valueOf();
-                    end = moment(end).valueOf();
+                        // Parse to UNIX time
+                        start = moment(start).valueOf();
+                        end = moment(end).valueOf();
 
-                    defer.resolve({
-                        region_name: Regions.getById(region_id).name,
-                        image: image,
-                        start: start,
-                        end: end
+                        // Concat to event
+                        var event = {
+                            region_name: Regions.getById(region_id).name,
+                            image: image,
+                            start: start,
+                            end: end
+                        };
+
+                        // Cache event
+                        event_factory_this.setCacheByRegion(region_id, event);
+
+                        // Resolve event
+                        defer.resolve(event);
+                    }, function (error) {
+                        defer.reject(error);
                     });
-                }, function (error) {
-                    defer.reject(error);
-                });
+                } else {
+                    // otherwise use cached
+                    defer.resolve(this.getCachedByRegion(region_id))
+                }
 
                 return defer.promise;
             }
