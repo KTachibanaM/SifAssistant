@@ -693,7 +693,12 @@ angular.module('sif-assistant.services', [])
                         // Resolve event
                         defer.resolve(event);
                     }, function (error) {
-                        defer.reject(error);
+                        if (event_factory_this.getCachedByRegion(region_id)) {
+                            // use cached if fails but cached
+                            defer.resolve(event_factory_this.getCachedByRegion(region_id))
+                        } else {
+                            defer.reject(error);
+                        }
                     });
                 } else {
                     // otherwise use cached
