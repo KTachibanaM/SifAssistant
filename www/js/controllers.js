@@ -28,7 +28,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
     })
 
-    .controller('AccountsCtrl', function ($scope, $rootScope, $interval, ONE_SECOND, $timeout, $ionicPopup, Accounts, Calculators, gettextCatalog) {
+    .controller('AccountsCtrl', function ($scope, $rootScope, $interval, update_interval_in_ms, $timeout, $ionicPopup, Accounts, Calculators, gettextCatalog) {
         /**
          * Timers
          */
@@ -36,7 +36,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             $scope.time_remaining_till_next_lp = Accounts.calculateAllTimeRemainingTillNextLp();
         };
 
-        $interval($scope.updateTimingRemainingTillNextLp, ONE_SECOND);
+        $interval($scope.updateTimingRemainingTillNextLp, update_interval_in_ms);
 
         /**
          * Computed attributes
@@ -235,17 +235,17 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
     })
 
-    .controller('RegionsCtrl', function ($scope, $interval, Regions, ONE_SECOND) {
+    .controller('RegionsCtrl', function ($scope, $interval, Regions, update_interval_in_ms) {
         $scope.reload = function () {
             $scope.regions = Regions.get();
         };
 
         $scope.reload();
 
-        $interval($scope.reload, ONE_SECOND);
+        $interval($scope.reload, update_interval_in_ms);
     })
 
-    .controller('EventsCtrl', function ($scope, $interval, Events, ONE_SECOND, gettextCatalog) {
+    .controller('EventsCtrl', function ($scope, $interval, Events, update_interval_in_ms, gettextCatalog) {
         function getEventStatusStrings(start, end) {
             var now = Date.now();
             var past = now - start;
@@ -299,7 +299,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             $scope.jp = data;
             $interval(function () {
                 $scope.jp.event_status_strings = getEventStatusStrings($scope.jp.start, $scope.jp.end);
-            }, ONE_SECOND)
+            }, update_interval_in_ms)
         }, function (err) {
             $scope.error = err;
         });
@@ -308,13 +308,13 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             $scope.us = data;
             $interval(function () {
                 $scope.us.event_status_strings = getEventStatusStrings($scope.us.start, $scope.us.end);
-            }, ONE_SECOND)
+            }, update_interval_in_ms)
         }, function (err) {
             $scope.error = err;
         });
     })
 
-    .controller('DebugCtrl', function ($scope, $interval, NativeNotification, ONE_SECOND, Settings, locales) {
+    .controller('DebugCtrl', function ($scope, $interval, NativeNotification, update_interval_in_ms, Settings, locales) {
         // Fire test notifications
         $scope.reload = function () {
             NativeNotification.getAll(function (notifications) {
@@ -322,7 +322,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             });
         };
 
-        $interval($scope.reload, ONE_SECOND);
+        $interval($scope.reload, update_interval_in_ms);
 
         $scope.reload();
 

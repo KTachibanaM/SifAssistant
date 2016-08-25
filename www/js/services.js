@@ -33,43 +33,41 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory('NativeNotification', function (isBrowser) {
+    .factory('NativeNotification', function () {
         return {
-            schedule: function (id, text, time, every) {
-                id = this.processId(id);
+            schedule: function (id, text, at, every) {
+                var processed_id = this.processId(id);
                 var options = {
-                    id: id,
+                    id: processed_id,
                     title: "Idol Manager",
                     text: text
                 };
-                if (time) {
-                    options.at = time;
+                if (at) {
+                    options.at = at;
                 }
                 if (every) {
                     options.every = every;
                 }
-                if (isBrowser) {
-                    console.log("Schedule native notification");
-                    console.log(options)
+                if (!window.cordova) {
+                    console.log("scheduling native notification in browser, options: ", options);
                 }
                 else {
                     cordova.plugins.notification.local.schedule(options);
                 }
+                return processed_id
             },
             cancel: function (id) {
                 id = this.processId(id);
-                if (isBrowser) {
-                    console.log("Cancel native notification");
-                    console.log(id)
+                if (!window.cordova) {
+                    console.log("canceling native notification in browser, id: ", id);
                 }
                 else {
                     cordova.plugins.notification.local.cancel(id);
                 }
             },
             cancelByRawHashedId: function (id) {
-                if (isBrowser) {
-                    console.log("Cancel native notification");
-                    console.log(id)
+                if (!window.cordova) {
+                    console.log("canceling native notification in browser, raw id: ", id);
                 }
                 else {
                     cordova.plugins.notification.local.cancel(id);
@@ -77,8 +75,8 @@ angular.module('sif-assistant.services', [])
             },
             isPresent: function (id, callback) {
                 id = this.processId(id);
-                if (isBrowser) {
-                    console.log("isPresent is unimplemented, always return true");
+                if (!window.cordova) {
+                    console.log("isPresent is unimplemented in browser, always return true");
                     callback(true);
                 }
                 else {
@@ -86,8 +84,8 @@ angular.module('sif-assistant.services', [])
                 }
             },
             getAll: function (callback) {
-                if (isBrowser) {
-                    console.log("getAll is unimplemented, always return empty array");
+                if (!window.cordova) {
+                    console.log("getAll is unimplemented in browser, always return empty array");
                     callback([]);
                 }
                 else {
@@ -97,8 +95,6 @@ angular.module('sif-assistant.services', [])
                 }
             },
             processId: function (id) {
-                //if (isBrowser) return id;
-                //if (ionic.Platform.isIOS()) return id;
                 return id.hashCode();
             }
         }

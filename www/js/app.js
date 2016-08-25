@@ -35,9 +35,7 @@ angular.module('sif-assistant', ['ionic', 'ngCordova', 'gettext', 'ionic-cache-s
         }
     })
 
-    .constant("isBrowser", window.cordova === undefined)
-
-    .constant("ONE_SECOND", 1000)
+    .constant("update_interval_in_ms", 1000)
 
     .constant("locales", ['zh_CN'])
 
