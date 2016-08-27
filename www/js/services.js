@@ -100,6 +100,24 @@ angular.module('sif-assistant.services', [])
         }
     })
 
+    .factory('NativeSchedule', function (NativeNotification) {
+        return {
+            schedule: function (id, text, at, every, callback) {
+                var raw_hashed_id = NativeNotification.schedule(id, text, at, every);
+                if (!window.cordova) {
+                    console.log('not scheduling callback in browser, callback immediately');
+                    callback()
+                } else {
+                    cordova.plugins.notification.local.on("trigger", function(notification) {
+                        if (notification.id == raw_hashed_id) {
+                            callback()
+                        }
+                    });
+                }
+            }
+        }
+    })
+
     .factory('Calculators', function (Regions) {
         const BELOW_LEVEL_33_TO_EXP_MAPPING = {
             1: 11,

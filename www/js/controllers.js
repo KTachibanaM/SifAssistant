@@ -314,7 +314,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         });
     })
 
-    .controller('DebugCtrl', function ($scope, $interval, NativeNotification, update_interval_in_ms, Settings, locales) {
+    .controller('DebugCtrl', function ($scope, $interval, NativeNotification, NativeSchedule, Events, update_interval_in_ms, Settings, locales) {
         // Fire test notifications
         $scope.reload = function () {
             NativeNotification.getAll(function (notifications) {
@@ -328,14 +328,14 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.immediately = function () {
             NativeNotification.schedule(
-                "immediately",
+                "_immediately",
                 "Notification scheduled immediately"
             );
         };
 
         $scope.five_seconds = function () {
             NativeNotification.schedule(
-                "five seconds later",
+                "_five_seconds_later",
                 "Notification scheduled five seconds later",
                 Date.now() + 5 * 1000
             )
@@ -343,7 +343,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.one_minute = function () {
             NativeNotification.schedule(
-                "one minute later",
+                "_one_minute_later",
                 "Notification scheduled one minute later",
                 Date.now() + 60 * 1000
             )
@@ -351,7 +351,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.every_second = function () {
             NativeNotification.schedule(
-                "every second",
+                "_every_second",
                 "Notification scheduled every second",
                 0,
                 "second"
@@ -360,6 +360,29 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
         $scope.cancel = function (id) {
             NativeNotification.cancelByRawHashedId(id);
+        };
+
+        // Fire test schedule
+        $scope.download_every_second = function () {
+            NativeSchedule.schedule(
+                "_every_second_download",
+                "Downloading JP event scheduled every second",
+                0,
+                "second",
+                function () {
+                    Events.getNetworkedRawByRegion('jp').then(function (data) {
+                        NativeNotification.schedule(
+                            "_every_second_download_succeeded",
+                            JSON.stringify(data)
+                        )
+                    }, function (error) {
+                        NativeNotification.schedule(
+                            "_every_second_download_failed",
+                            error.message
+                        )
+                    })
+                }
+            )
         };
 
         // Debug force locale

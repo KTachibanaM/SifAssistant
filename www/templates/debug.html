@@ -1,14 +1,10 @@
 <ion-view view-title="{{'Debug'|translate}}">
 	<ion-content>
-		<div class="card">
+        <div class="card">
             <div class="item item-divider">
-                Fire test notifications
+                Current notifications
             </div>
-            <div class="item item-body">
-                <button class="button button-positive" ng-click="immediately()">Schedule notification immediately</button>
-                <button class="button button-positive" ng-click="five_seconds()">Schedule notification five seconds later</button>
-                <button class="button button-positive" ng-click="one_minute()">Schedule notification one minute later</button>
-                <button class="button button-positive" ng-click="every_second()">Schedule notification every second</button>
+            <div class=" item item-body">
                 <ul class="list">
                     <li ng-repeat="notification in all_notifications" class="item">
                         <button ng-click="cancel(notification.id)" class="button">X</button>
@@ -19,6 +15,25 @@
                         <p>At: {{notification.at}}</p>
                     </li>
                 </ul>
+            </div>
+        </div>
+		<div class="card">
+            <div class="item item-divider">
+                Fire test notifications
+            </div>
+            <div class="item item-body">
+                <button class="button button-positive" ng-click="immediately()">Schedule notification immediately</button>
+                <button class="button button-positive" ng-click="five_seconds()">Schedule notification five seconds later</button>
+                <button class="button button-positive" ng-click="one_minute()">Schedule notification one minute later</button>
+                <button class="button button-positive" ng-click="every_second()">Schedule notification every second</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="item item-divider">
+                Fire test schedules
+            </div>
+            <div class="item item-body">
+                <button class="button button-positive" ng-click="download_every_second()">Schedule downloading JP event every second</button>
             </div>
         </div>
         <div class="card">
