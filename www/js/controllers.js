@@ -1,7 +1,8 @@
 angular.module('sif-assistant.controllers', ['sif-assistant.services'])
 
     .controller('AppCtrl', function ($scope, Settings) {
-        $scope.settings = Settings.get();
+        $scope.settings = {};
+        $scope.settings.show_debug = Settings.getItem('show_debug');
     })
 
     .controller('AddAccountCtrl', function ($scope, $rootScope, $ionicHistory, Accounts, Regions, gettextCatalog) {
@@ -386,10 +387,12 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         };
 
         // Debug force locale
-        $scope.settings = Settings.get();
         $scope.locales = locales.concat(undefined);
+
+        $scope.settings = {};
+        $scope.settings.debug_force_locale = Settings.getItem('debug_force_locale');
         $scope.save_forced_locale = function () {
-            Settings.set($scope.settings)
+            Settings.setItem('debug_force_locale', $scope.settings.debug_force_locale)
         }
     })
 
@@ -405,9 +408,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
     })
 
     .controller('SettingsCtrl', function ($scope, Settings) {
-        $scope.settings = Settings.get();
-
+        $scope.settings = {};
+        $scope.settings.show_debug = Settings.getItem('show_debug');
         $scope.toggle = function () {
-            Settings.set($scope.settings);
+            Settings.setItem('show_debug', $scope.settings.show_debug);
         }
     });
