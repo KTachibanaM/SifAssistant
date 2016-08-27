@@ -627,14 +627,30 @@ angular.module('sif-assistant.services', [])
         const SETTINGS_KEY = "settings";
         const DEFAULT_SETTINGS = {
             "show_debug": false,
-            "debug_force_locale": undefined
+            "debug_force_locale": undefined,
+            "check_events": true
         };
         return {
             get: function () {
                 return $localStorage.getObject(SETTINGS_KEY, DEFAULT_SETTINGS);
             },
+            getItem: function (key) {
+                var settings = this.get();
+                if (settings.hasOwnProperty(key)) {
+                    // do not use settings[key] here!
+                    // http://stackoverflow.com/questions/20804163/check-if-a-key-exists-inside-a-json-object
+                    return settings[key];
+                } else {
+                    return DEFAULT_SETTINGS[key];
+                }
+            },
             set: function (new_settings) {
                 $localStorage.set(SETTINGS_KEY, new_settings);
+            },
+            setItem: function (key, value) {
+                var settings = this.get();
+                settings[key] = value;
+                this.set(settings)
             }
         }
     })

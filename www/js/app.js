@@ -24,8 +24,8 @@ angular.module('sif-assistant', ['ionic', 'ngCordova', 'gettext', 'ionic-cache-s
 
     .run(function (gettextCatalog, Platform, Settings) {
         var locale;
-        if (Settings.get().debug_force_locale) {
-            locale = Settings.get().debug_force_locale
+        if (Settings.getItem('debug_force_locale')) {
+            locale = Settings.getItem('debug_force_locale');
         } else {
             locale = Platform.getLocale();
         }
