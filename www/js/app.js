@@ -34,7 +34,40 @@ angular.module('sif-assistant', ['ionic', 'ngCordova', 'gettext', 'ionic-cache-s
             gettextCatalog.setCurrentLanguage(locale);
         }
     })
+    
+    .run(function (NativeSchedule, gettextCatalog, Events) {
+        // todo: run twice, why?
 
+        // daily event check callback
+        var daily_event_check = function () {
+            // check jp
+            Events.getByRegion("jp").then(function (event) {
+                console.log(event)
+            }, function (error) {
+                console.log(error)
+            });
+
+            // check us
+            Events.getByRegion("us").then(function (event) {
+                console.log(event)
+            }, function (error) {
+                console.log(error)
+            });
+        };
+
+        NativeSchedule.isPresent("_daily_event_check", function (present) {
+            if (!present) {
+                // if daily event check is not present, schedule one
+                NativeSchedule.schedule(
+                    "_daily_event_check",
+                    gettextCatalog.getString("Checking events"),
+                    0,
+                    "day",
+                    daily_event_check)
+            }
+        })
+    })
+    
     .constant("update_interval_in_ms", 1000)
 
     .constant("locales", ['zh_CN'])

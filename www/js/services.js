@@ -76,8 +76,8 @@ angular.module('sif-assistant.services', [])
             isPresent: function (id, callback) {
                 id = this.processId(id);
                 if (!window.cordova) {
-                    console.log("isPresent is unimplemented in browser, always return true");
-                    callback(true);
+                    console.log("isPresent is unimplemented in browser, always return false");
+                    callback(false);
                 }
                 else {
                     cordova.plugins.notification.local.isPresent(id, callback);
@@ -103,7 +103,8 @@ angular.module('sif-assistant.services', [])
     .factory('NativeSchedule', function (NativeNotification) {
         return {
             schedule: function (id, text, at, every, callback) {
-                var raw_hashed_id = NativeNotification.schedule(id, text, at, every);
+                var processed_id = this.processId(id);
+                var raw_hashed_id = NativeNotification.schedule(processed_id, text, at, every);
                 if (!window.cordova) {
                     console.log('not scheduling callback in browser, callback immediately');
                     callback()
@@ -114,6 +115,13 @@ angular.module('sif-assistant.services', [])
                         }
                     });
                 }
+            },
+            isPresent: function (id, callback) {
+                var processed_id = this.processId(id);
+                NativeNotification.isPresent(processed_id, callback)
+            },
+            processId: function (id) {
+                return "_NativeNotification_" + id
             }
         }
     })
