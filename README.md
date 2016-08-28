@@ -1,18 +1,20 @@
 # SIF Assistant
 
-## Init
+## Initialize
 ```
 npm install -g cordova ionic
 bower install
 ```
 
-## Run on browser
+## Browser
+
+### Run
 
 ```
 ionic serve
 ```
 
-## Edit and save translations
+### Edit translations
 ```
 npm install -g gulp
 npm install
@@ -21,29 +23,36 @@ gulp pot # get template.pot under ./po
 gulp translations
 ```
 
-## Init for mobile
+## Mobile
+
+### Initialize
 ```
 ionic state reset
 ```
 
-## Run on Android
+### Generate resources (icon, splash screen)
+```
+ionic resources
+```
+
+### Run on Android
 
 ```
 ionic run android
 ```
 
-## Run on iOS
+### Run on iOS
 
 ```
 ionic run ios
 ```
 
-## Build for mobile
+### Build for Android
 ```
-ionic build
+ionic build android
 ```
 
-## Generate resources (icon, splash screen)
+### Build for iOS
 ```
-ionic resources
+ionic build ios
 ```
