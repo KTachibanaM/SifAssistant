@@ -84,7 +84,7 @@ msgstr ""
 msgid "Challenge Festival"
 msgstr ""
 
-#: app.js:63
+#: app.js:85
 msgid "Checking events"
 msgstr ""
 
@@ -131,11 +131,11 @@ msgstr ""
 msgid "Enable daily bonus alert"
 msgstr ""
 
-#: controllers.js:257
+#: controllers.js:255
 msgid "Event has ended"
 msgstr ""
 
-#: controllers.js:252
+#: controllers.js:250
 msgid "Event will start in: %s"
 msgstr ""
 
@@ -146,6 +146,14 @@ msgstr ""
 
 #: services.js:550
 msgid "Expert"
+msgstr ""
+
+#: app.js:57
+msgid "Failed to check Japan event, reason: %s"
+msgstr ""
+
+#: app.js:75
+msgid "Failed to check US event, reason: %s"
 msgstr ""
 
 #: services.js:386
@@ -164,6 +172,10 @@ msgstr ""
 msgid "Japan"
 msgstr ""
 
+#: app.js:50
+msgid "Japan event will start in: %s"
+msgstr ""
+
 #: services.js:502
 msgid "Korea"
 msgstr ""
@@ -176,7 +188,7 @@ msgstr ""
 msgid "LP alert value"
 msgstr ""
 
-#: controllers.js:255
+#: controllers.js:253
 msgid "Left: %s"
 msgstr ""
 
@@ -227,7 +239,7 @@ msgstr ""
 msgid "Or subtract by"
 msgstr ""
 
-#: controllers.js:254
+#: controllers.js:252
 msgid "Past: %s"
 msgstr ""
 
@@ -305,6 +317,10 @@ msgstr ""
 
 #: services.js:568
 msgid "Token collection"
+msgstr ""
+
+#: app.js:68
+msgid "US event will start in: %s"
 msgstr ""
 
 #: services.js:496

@@ -42,16 +42,38 @@ angular.module('sif-assistant', ['ionic', 'ngCordova', 'gettext', 'ionic-cache-s
         var daily_event_check = function () {
             // check jp
             Events.getByRegion("jp").then(function (event) {
-                console.log(event)
+                if (!Events.ifEventExpired(event) && Events.getEventStatus(event).status === 'before') {
+                    // notify if before jp event
+                    NativeNotification.schedule(
+                        "_daily_event_check_jp_succeed",
+                        sprintf(
+                            gettextCatalog.getString('Japan event will start in: %s'), Events.getEventStatusInStrings(event).left
+                        )
+                    )
+                }
             }, function (error) {
-                console.log(error)
+                NativeNotification.schedule(
+                    "_daily_event_check_jp_fail",
+                    sprintf(gettextCatalog.getString('Failed to check Japan event, reason: %s'), error.message)
+                )
             });
 
             // check us
             Events.getByRegion("us").then(function (event) {
-                console.log(event)
+                if (!Events.ifEventExpired(event) && Events.getEventStatus(event).status === 'before') {
+                    // notify if before us event
+                    NativeNotification.schedule(
+                        "_daily_event_check_us_succeed",
+                        sprintf(
+                            gettextCatalog.getString('US event will start in: %s'), Events.getEventStatusInStrings(event).left
+                        )
+                    )
+                }
             }, function (error) {
-                console.log(error)
+                NativeNotification.schedule(
+                    "_daily_event_check_us_fail",
+                    sprintf(gettextCatalog.getString('Failed to check US event, reason: %s'), error.message)
+                )
             });
         };
 

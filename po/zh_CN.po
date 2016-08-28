@@ -88,7 +88,7 @@ msgstr "类别"
 msgid "Challenge Festival"
 msgstr "挑战活动"
 
-#: app.js:63
+#: app.js:85
 msgid "Checking events"
 msgstr "检查活动中"
 
@@ -132,11 +132,11 @@ msgstr "启用LP提醒"
 msgid "Enable daily bonus alert"
 msgstr "启用每日奖励提醒"
 
-#: controllers.js:257
+#: controllers.js:255
 msgid "Event has ended"
 msgstr "活动已结束"
 
-#: controllers.js:252
+#: controllers.js:250
 msgid "Event will start in: %s"
 msgstr "活动将开始于: %s"
 
@@ -147,6 +147,14 @@ msgstr "活动"
 #: services.js:550
 msgid "Expert"
 msgstr "专家"
+
+#: app.js:57
+msgid "Failed to check Japan event, reason: %s"
+msgstr "未能检查日服活动, 原因: %s"
+
+#: app.js:75
+msgid "Failed to check US event, reason: %s"
+msgstr "未能检查国际服活动, 原因: %s"
 
 #: services.js:386
 msgid "Full"
@@ -164,6 +172,10 @@ msgstr "已领取每日奖励"
 msgid "Japan"
 msgstr "日服"
 
+#: app.js:50
+msgid "Japan event will start in: %s"
+msgstr "日服活动将开始于: %s"
+
 #: services.js:502
 msgid "Korea"
 msgstr "韩服"
@@ -176,7 +188,7 @@ msgstr "LP"
 msgid "LP alert value"
 msgstr "LP提醒值"
 
-#: controllers.js:255
+#: controllers.js:253
 msgid "Left: %s"
 msgstr "剩余: %s"
 
@@ -224,7 +236,7 @@ msgstr "或者加上"
 msgid "Or subtract by"
 msgstr "或者减去"
 
-#: controllers.js:254
+#: controllers.js:252
 msgid "Past: %s"
 msgstr "已过去: %s"
 
@@ -299,6 +311,10 @@ msgstr "时区: {{region.timezone}}"
 #: services.js:568
 msgid "Token collection"
 msgstr "收集活动"
+
+#: app.js:68
+msgid "US event will start in: %s"
+msgstr "国际服活动将开始于: %s"
 
 #: services.js:496
 msgid "United States"
