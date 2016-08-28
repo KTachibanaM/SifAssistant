@@ -35,59 +35,60 @@ angular.module('sif-assistant', ['ionic', 'ngCordova', 'gettext', 'ionic-cache-s
         }
     })
 
-    .run(function (NativeSchedule, gettextCatalog, Events) {
-        // todo: run twice, why?
-
-        // daily event check callback
-        var daily_event_check = function () {
-            // check jp
-            Events.getByRegion("jp").then(function (event) {
-                if (!Events.ifEventExpired(event) && Events.getEventStatus(event).status === 'before') {
-                    // notify if before jp event
-                    NativeNotification.schedule(
-                        "_daily_event_check_jp_succeed",
-                        sprintf(
-                            gettextCatalog.getString('Japan event will start in: %s'), Events.getEventStatusInStrings(event).left
+    .run(function ($ionicPlatform, NativeSchedule, gettextCatalog, Events) {
+        $ionicPlatform.ready(function () {
+            // daily event check callback
+            var daily_event_check = function () {
+                // check jp
+                Events.getByRegion("jp").then(function (event) {
+                    if (!Events.ifEventExpired(event) && Events.getEventStatus(event).status === 'before') {
+                        // notify if before jp event
+                        NativeNotification.schedule(
+                            "_daily_event_check_jp_succeed",
+                            sprintf(
+                                gettextCatalog.getString('Japan event will start in: %s'), Events.getEventStatusInStrings(event).left
+                            )
                         )
-                    )
-                }
-            }, function (error) {
-                NativeNotification.schedule(
-                    "_daily_event_check_jp_fail",
-                    sprintf(gettextCatalog.getString('Failed to check Japan event, reason: %s'), error.message)
-                )
-            });
-
-            // check us
-            Events.getByRegion("us").then(function (event) {
-                if (!Events.ifEventExpired(event) && Events.getEventStatus(event).status === 'before') {
-                    // notify if before us event
+                    }
+                }, function (error) {
                     NativeNotification.schedule(
-                        "_daily_event_check_us_succeed",
-                        sprintf(
-                            gettextCatalog.getString('US event will start in: %s'), Events.getEventStatusInStrings(event).left
-                        )
+                        "_daily_event_check_jp_fail",
+                        sprintf(gettextCatalog.getString('Failed to check Japan event, reason: %s'), error.message)
                     )
-                }
-            }, function (error) {
-                NativeNotification.schedule(
-                    "_daily_event_check_us_fail",
-                    sprintf(gettextCatalog.getString('Failed to check US event, reason: %s'), error.message)
-                )
-            });
-        };
+                });
 
-        NativeSchedule.isPresent("_daily_event_check", function (present) {
-            if (!present) {
-                // if daily event check is not present, schedule one
-                NativeSchedule.schedule(
-                    "_daily_event_check",
-                    gettextCatalog.getString("Checking events"),
-                    0,
-                    "day",
-                    daily_event_check)
-            }
-        })
+                // check us
+                Events.getByRegion("us").then(function (event) {
+                    if (!Events.ifEventExpired(event) && Events.getEventStatus(event).status === 'before') {
+                        // notify if before us event
+                        NativeNotification.schedule(
+                            "_daily_event_check_us_succeed",
+                            sprintf(
+                                gettextCatalog.getString('US event will start in: %s'), Events.getEventStatusInStrings(event).left
+                            )
+                        )
+                    }
+                }, function (error) {
+                    NativeNotification.schedule(
+                        "_daily_event_check_us_fail",
+                        sprintf(gettextCatalog.getString('Failed to check US event, reason: %s'), error.message)
+                    )
+                });
+            };
+
+            // daily event check
+            NativeSchedule.isPresent("_daily_event_check", function (present) {
+                if (!present) {
+                    // if daily event check is not present, schedule one
+                    NativeSchedule.schedule(
+                        "_daily_event_check",
+                        gettextCatalog.getString("Checking events"),
+                        0,
+                        "day",
+                        daily_event_check)
+                }
+            })
+        });
     })
 
     .constant("update_interval_in_ms", 1000)
