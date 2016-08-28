@@ -34,7 +34,7 @@ angular.module('sif-assistant', ['ionic', 'ngCordova', 'gettext', 'ionic-cache-s
             gettextCatalog.setCurrentLanguage(locale);
         }
     })
-    
+
     .run(function (NativeSchedule, gettextCatalog, Events) {
         // todo: run twice, why?
 
@@ -67,7 +67,7 @@ angular.module('sif-assistant', ['ionic', 'ngCordova', 'gettext', 'ionic-cache-s
             }
         })
     })
-    
+
     .constant("update_interval_in_ms", 1000)
 
     .constant("locales", ['zh_CN'])

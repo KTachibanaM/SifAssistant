@@ -109,7 +109,7 @@ angular.module('sif-assistant.services', [])
                     console.log('not scheduling callback in browser, callback immediately');
                     callback()
                 } else {
-                    cordova.plugins.notification.local.on("trigger", function(notification) {
+                    cordova.plugins.notification.local.on("trigger", function (notification) {
                         if (notification.id == raw_hashed_id) {
                             callback()
                         }

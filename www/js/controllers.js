@@ -185,14 +185,12 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
                     $scope.songs.difficulties[difficulty].name,
                     $scope.songs.categories[category].name,
                     multiplier),
-                expAddition:
-                    $scope.songs.difficulties[difficulty].expAddition
-                        * $scope.songs.categories[category].expMultiplier
-                        * multiplier,
-                lpSubtraction:
-                    $scope.songs.difficulties[difficulty].lpSubtraction
-                    * $scope.songs.categories[category].lpMultiplier
-                    * multiplier
+                expAddition: $scope.songs.difficulties[difficulty].expAddition
+                * $scope.songs.categories[category].expMultiplier
+                * multiplier,
+                lpSubtraction: $scope.songs.difficulties[difficulty].lpSubtraction
+                * $scope.songs.categories[category].lpMultiplier
+                * multiplier
             };
             $scope.buffer.push(legacySongType);
         };
