@@ -33,7 +33,7 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory('NativeNotification', function () {
+    .factory('NativeNotification', function ($ionicPlatform) {
         return {
             schedule: function (id, text, at, every) {
                 var processed_id = this.processId(id);
@@ -52,7 +52,9 @@ angular.module('sif-assistant.services', [])
                     console.log("scheduling native notification in browser, options: ", options);
                 }
                 else {
-                    cordova.plugins.notification.local.schedule(options);
+                    $ionicPlatform.ready(function () {
+                        cordova.plugins.notification.local.schedule(options);
+                    });
                 }
                 return processed_id
             },
@@ -62,7 +64,9 @@ angular.module('sif-assistant.services', [])
                     console.log("canceling native notification in browser, id: ", id);
                 }
                 else {
-                    cordova.plugins.notification.local.cancel(id);
+                    $ionicPlatform.ready(function () {
+                        cordova.plugins.notification.local.cancel(id);
+                    });
                 }
             },
             cancelByRawHashedId: function (id) {
@@ -70,7 +74,9 @@ angular.module('sif-assistant.services', [])
                     console.log("canceling native notification in browser, raw id: ", id);
                 }
                 else {
-                    cordova.plugins.notification.local.cancel(id);
+                    $ionicPlatform.ready(function () {
+                        cordova.plugins.notification.local.cancel(id);
+                    });
                 }
             },
             isPresent: function (id, callback) {
@@ -80,7 +86,9 @@ angular.module('sif-assistant.services', [])
                     callback(false);
                 }
                 else {
-                    cordova.plugins.notification.local.isPresent(id, callback);
+                    $ionicPlatform.ready(function () {
+                        cordova.plugins.notification.local.isPresent(id, callback);
+                    });
                 }
             },
             getAll: function (callback) {
@@ -89,8 +97,10 @@ angular.module('sif-assistant.services', [])
                     callback([]);
                 }
                 else {
-                    cordova.plugins.notification.local.getAll(function (notifications) {
-                        callback(notifications);
+                    $ionicPlatform.ready(function () {
+                        cordova.plugins.notification.local.getAll(function (notifications) {
+                            callback(notifications);
+                        });
                     });
                 }
             },
@@ -100,7 +110,7 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory('NativeSchedule', function (NativeNotification) {
+    .factory('NativeSchedule', function (NativeNotification, $ionicPlatform) {
         return {
             schedule: function (id, text, at, every, callback) {
                 var processed_id = this.processId(id);
@@ -109,10 +119,12 @@ angular.module('sif-assistant.services', [])
                     console.log('not scheduling callback in browser, callback immediately');
                     callback()
                 } else {
-                    cordova.plugins.notification.local.on("trigger", function (notification) {
-                        if (notification.id == raw_hashed_id) {
-                            callback()
-                        }
+                    $ionicPlatform.ready(function () {
+                        cordova.plugins.notification.local.on("trigger", function (notification) {
+                            if (notification.id == raw_hashed_id) {
+                                callback()
+                            }
+                        });
                     });
                 }
             },
