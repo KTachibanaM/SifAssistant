@@ -356,7 +356,11 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.settings = {};
         $scope.settings.debug_force_locale = Settings.getItem('debug_force_locale');
         $scope.save_forced_locale = function () {
-            Settings.setItem('debug_force_locale', $scope.settings.debug_force_locale)
+            // save
+            Settings.setItem('debug_force_locale', $scope.settings.debug_force_locale);
+
+            // reload
+            location.reload();
         }
     })
 
@@ -391,6 +395,10 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         // show debug
         $scope.settings.show_debug = Settings.getItem('show_debug');
         $scope.toggle_show_debug = function () {
+            // save
             Settings.setItem('show_debug', $scope.settings.show_debug);
+
+            // reload
+            location.reload();
         };
     });

@@ -285,8 +285,8 @@ msgid "Settings"
 msgstr "设置"
 
 #: settings.html:14
-msgid "Show debug page (restart app to take effect)"
-msgstr "显示调试页面 (重启App以生效)"
+msgid "Show debug page"
+msgstr "显示调试页面"
 
 #: update.html:49
 msgid "Songs played"
@@ -335,6 +335,9 @@ msgstr "提供活动API"
 #: update-loveca.html:20 update-loveca.html:37
 msgid "with multiplier"
 msgstr "乘以"
+
+#~ msgid "Show debug page (restart app to take effect)"
+#~ msgstr "显示调试页面 (重启App以生效)"
 
 #~ msgid "Locale"
 #~ msgstr "语言"

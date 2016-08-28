@@ -292,7 +292,7 @@ msgid "Settings"
 msgstr ""
 
 #: settings.html:14
-msgid "Show debug page (restart app to take effect)"
+msgid "Show debug page"
 msgstr ""
 
 #: update.html:49
