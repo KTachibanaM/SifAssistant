@@ -12,7 +12,7 @@ msgstr ""
 "X-Generator: Poedit 1.8.8\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: services.js:808 services.js:814 services.js:816
+#: services.js:812 services.js:818 services.js:820
 msgid "%s days, %s hours, %s minutes, %s seconds"
 msgstr "%s 天, %s 小时, %s 分钟, %s 秒"
 
@@ -24,11 +24,11 @@ msgstr "5 (单抽)"
 msgid "50 (11 scouts)"
 msgstr "50 (11连)"
 
-#: services.js:349
+#: services.js:353
 msgid ": Daily bonus is available!"
 msgstr ": 可领取每日奖励！"
 
-#: services.js:329
+#: services.js:333
 msgid ": LP has reached"
 msgstr ": LP已到达"
 
@@ -84,15 +84,19 @@ msgstr "名称不能重复"
 msgid "Category"
 msgstr "类别"
 
-#: services.js:598
+#: services.js:602
 msgid "Challenge Festival"
 msgstr "挑战活动"
 
-#: app.js:84
+#: settings.html:5
+msgid "Check events"
+msgstr "检查活动"
+
+#: services.js:840
 msgid "Checking events"
 msgstr "检查活动中"
 
-#: services.js:502
+#: services.js:506
 msgid "China"
 msgstr "国服"
 
@@ -120,7 +124,7 @@ msgstr "经验"
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgstr "经验: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 
-#: services.js:547
+#: services.js:551
 msgid "Easy"
 msgstr "简单"
 
@@ -144,23 +148,23 @@ msgstr "活动将开始于: %s"
 msgid "Events"
 msgstr "活动"
 
-#: services.js:562
+#: services.js:566
 msgid "Expert"
 msgstr "专家"
 
-#: app.js:55
+#: services.js:858
 msgid "Failed to check Japan event, reason: %s"
 msgstr "未能检查日服活动, 原因: %s"
 
-#: app.js:73
+#: services.js:876
 msgid "Failed to check US event, reason: %s"
 msgstr "未能检查国际服活动, 原因: %s"
 
-#: services.js:398
+#: services.js:402
 msgid "Full"
 msgstr "满"
 
-#: services.js:557
+#: services.js:561
 msgid "Hard"
 msgstr "困难"
 
@@ -168,15 +172,15 @@ msgstr "困难"
 msgid "Has claimed daily bonus"
 msgstr "已领取每日奖励"
 
-#: services.js:496
+#: services.js:500
 msgid "Japan"
 msgstr "日服"
 
-#: app.js:48
+#: services.js:851
 msgid "Japan event will start in: %s"
 msgstr "日服活动将开始于: %s"
 
-#: services.js:514
+#: services.js:518
 msgid "Korea"
 msgstr "韩服"
 
@@ -204,15 +208,15 @@ msgstr "Loveca"
 msgid "Manually update"
 msgstr "手动更新"
 
-#: services.js:567
+#: services.js:571
 msgid "Master"
 msgstr "大湿"
 
-#: services.js:552
+#: services.js:556
 msgid "Medium"
 msgstr "中等"
 
-#: services.js:592
+#: services.js:596
 msgid "Medley Festival"
 msgstr "Medley Festival"
 
@@ -264,7 +268,7 @@ msgstr "区域"
 msgid "Regions"
 msgstr "区域"
 
-#: services.js:574
+#: services.js:578
 msgid "Regular"
 msgstr "普通"
 
@@ -272,7 +276,7 @@ msgstr "普通"
 msgid "Save"
 msgstr "保存"
 
-#: services.js:586
+#: services.js:590
 msgid "Score Match"
 msgstr "撕逼活动"
 
@@ -280,7 +284,7 @@ msgstr "撕逼活动"
 msgid "Settings"
 msgstr "设置"
 
-#: settings.html:5
+#: settings.html:14
 msgid "Show debug page (restart app to take effect)"
 msgstr "显示调试页面 (重启App以生效)"
 
@@ -292,7 +296,7 @@ msgstr "已打的歌曲"
 msgid "Start by pressing that + button"
 msgstr "触摸+号以开始"
 
-#: services.js:520
+#: services.js:524
 msgid "Taiwan"
 msgstr "台服"
 
@@ -304,15 +308,15 @@ msgstr "感谢"
 msgid "Timezone: {{region.timezone}}"
 msgstr "时区: {{region.timezone}}"
 
-#: services.js:580
+#: services.js:584
 msgid "Token collection"
 msgstr "收集活动"
 
-#: app.js:66
+#: services.js:869
 msgid "US event will start in: %s"
 msgstr "国际服活动将开始于: %s"
 
-#: services.js:508
+#: services.js:512
 msgid "United States"
 msgstr "国际服"
 

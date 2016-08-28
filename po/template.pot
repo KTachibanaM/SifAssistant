@@ -4,9 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 
-#: services.js:808
-#: services.js:814
-#: services.js:816
+#: services.js:812
+#: services.js:818
+#: services.js:820
 msgid "%s days, %s hours, %s minutes, %s seconds"
 msgstr ""
 
@@ -18,11 +18,11 @@ msgstr ""
 msgid "50 (11 scouts)"
 msgstr ""
 
-#: services.js:349
+#: services.js:353
 msgid ": Daily bonus is available!"
 msgstr ""
 
-#: services.js:329
+#: services.js:333
 msgid ": LP has reached"
 msgstr ""
 
@@ -80,15 +80,19 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: services.js:598
+#: services.js:602
 msgid "Challenge Festival"
 msgstr ""
 
-#: app.js:84
+#: settings.html:5
+msgid "Check events"
+msgstr ""
+
+#: services.js:840
 msgid "Checking events"
 msgstr ""
 
-#: services.js:502
+#: services.js:506
 msgid "China"
 msgstr ""
 
@@ -119,7 +123,7 @@ msgstr ""
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgstr ""
 
-#: services.js:547
+#: services.js:551
 msgid "Easy"
 msgstr ""
 
@@ -144,23 +148,23 @@ msgstr ""
 msgid "Events"
 msgstr ""
 
-#: services.js:562
+#: services.js:566
 msgid "Expert"
 msgstr ""
 
-#: app.js:55
+#: services.js:858
 msgid "Failed to check Japan event, reason: %s"
 msgstr ""
 
-#: app.js:73
+#: services.js:876
 msgid "Failed to check US event, reason: %s"
 msgstr ""
 
-#: services.js:398
+#: services.js:402
 msgid "Full"
 msgstr ""
 
-#: services.js:557
+#: services.js:561
 msgid "Hard"
 msgstr ""
 
@@ -168,15 +172,15 @@ msgstr ""
 msgid "Has claimed daily bonus"
 msgstr ""
 
-#: services.js:496
+#: services.js:500
 msgid "Japan"
 msgstr ""
 
-#: app.js:48
+#: services.js:851
 msgid "Japan event will start in: %s"
 msgstr ""
 
-#: services.js:514
+#: services.js:518
 msgid "Korea"
 msgstr ""
 
@@ -207,15 +211,15 @@ msgstr ""
 msgid "Manually update"
 msgstr ""
 
-#: services.js:567
+#: services.js:571
 msgid "Master"
 msgstr ""
 
-#: services.js:552
+#: services.js:556
 msgid "Medium"
 msgstr ""
 
-#: services.js:592
+#: services.js:596
 msgid "Medley Festival"
 msgstr ""
 
@@ -269,7 +273,7 @@ msgstr ""
 msgid "Regions"
 msgstr ""
 
-#: services.js:574
+#: services.js:578
 msgid "Regular"
 msgstr ""
 
@@ -278,7 +282,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: services.js:586
+#: services.js:590
 msgid "Score Match"
 msgstr ""
 
@@ -287,7 +291,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: settings.html:5
+#: settings.html:14
 msgid "Show debug page (restart app to take effect)"
 msgstr ""
 
@@ -299,7 +303,7 @@ msgstr ""
 msgid "Start by pressing that + button"
 msgstr ""
 
-#: services.js:520
+#: services.js:524
 msgid "Taiwan"
 msgstr ""
 
@@ -311,15 +315,15 @@ msgstr ""
 msgid "Timezone: {{region.timezone}}"
 msgstr ""
 
-#: services.js:580
+#: services.js:584
 msgid "Token collection"
 msgstr ""
 
-#: app.js:66
+#: services.js:869
 msgid "US event will start in: %s"
 msgstr ""
 
-#: services.js:508
+#: services.js:512
 msgid "United States"
 msgstr ""
 
