@@ -256,8 +256,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             }
         }
 
-        Events.getByRegion('jp').then(function (data) {
-            $scope.jp = data;
+        Events.getByRegion('jp').then(function (jp_data) {
+            $scope.jp = jp_data;
+            $scope.jp.region_name = gettextCatalog.getString($scope.jp.region_name);
             $interval(function () {
                 $scope.jp.event_status_strings
                     = event_status_in_strings_to_string_array(Events.getEventStatusInStrings($scope.jp));
@@ -266,8 +267,9 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
             $scope.error = err;
         });
 
-        Events.getByRegion('us').then(function (data) {
-            $scope.us = data;
+        Events.getByRegion('us').then(function (us_data) {
+            $scope.us = us_data;
+            $scope.us.region_name = gettextCatalog.getString($scope.us.region_name);
             $interval(function () {
                 $scope.us.event_status_strings
                     = event_status_in_strings_to_string_array(Events.getEventStatusInStrings($scope.us));

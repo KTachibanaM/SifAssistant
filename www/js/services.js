@@ -806,7 +806,7 @@ angular.module('sif-assistant.services', [])
                     return {
                         status: 'before',
                         left: sprintf(gettextCatalog.getString('%s days, %s hours, %s minutes, %s seconds'),
-                            result.left.days, result.left.hours, result.left.minutes, time.left.seconds)
+                            result.left.days, result.left.hours, result.left.minutes, result.left.seconds)
                     };
                 } else if (result.status === 'during') {
                     return {

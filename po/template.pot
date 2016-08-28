@@ -4,9 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 
-#: services.js:796
-#: services.js:802
-#: services.js:804
+#: services.js:808
+#: services.js:814
+#: services.js:816
 msgid "%s days, %s hours, %s minutes, %s seconds"
 msgstr ""
 
@@ -18,11 +18,11 @@ msgstr ""
 msgid "50 (11 scouts)"
 msgstr ""
 
-#: services.js:337
+#: services.js:349
 msgid ": Daily bonus is available!"
 msgstr ""
 
-#: services.js:317
+#: services.js:329
 msgid ": LP has reached"
 msgstr ""
 
@@ -80,15 +80,15 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: services.js:586
+#: services.js:598
 msgid "Challenge Festival"
 msgstr ""
 
-#: app.js:85
+#: app.js:84
 msgid "Checking events"
 msgstr ""
 
-#: services.js:490
+#: services.js:502
 msgid "China"
 msgstr ""
 
@@ -119,7 +119,7 @@ msgstr ""
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgstr ""
 
-#: services.js:535
+#: services.js:547
 msgid "Easy"
 msgstr ""
 
@@ -144,23 +144,23 @@ msgstr ""
 msgid "Events"
 msgstr ""
 
-#: services.js:550
+#: services.js:562
 msgid "Expert"
 msgstr ""
 
-#: app.js:57
+#: app.js:55
 msgid "Failed to check Japan event, reason: %s"
 msgstr ""
 
-#: app.js:75
+#: app.js:73
 msgid "Failed to check US event, reason: %s"
 msgstr ""
 
-#: services.js:386
+#: services.js:398
 msgid "Full"
 msgstr ""
 
-#: services.js:545
+#: services.js:557
 msgid "Hard"
 msgstr ""
 
@@ -168,15 +168,15 @@ msgstr ""
 msgid "Has claimed daily bonus"
 msgstr ""
 
-#: services.js:484
+#: services.js:496
 msgid "Japan"
 msgstr ""
 
-#: app.js:50
+#: app.js:48
 msgid "Japan event will start in: %s"
 msgstr ""
 
-#: services.js:502
+#: services.js:514
 msgid "Korea"
 msgstr ""
 
@@ -196,10 +196,6 @@ msgstr ""
 msgid "Local time: {{region.local_time}}"
 msgstr ""
 
-#: debug.html:45
-msgid "Locale"
-msgstr ""
-
 #: accounts.html:27
 #: accounts.html:74
 #: add-account.html:29
@@ -211,15 +207,15 @@ msgstr ""
 msgid "Manually update"
 msgstr ""
 
-#: services.js:555
+#: services.js:567
 msgid "Master"
 msgstr ""
 
-#: services.js:540
+#: services.js:552
 msgid "Medium"
 msgstr ""
 
-#: services.js:580
+#: services.js:592
 msgid "Medley Festival"
 msgstr ""
 
@@ -273,7 +269,7 @@ msgstr ""
 msgid "Regions"
 msgstr ""
 
-#: services.js:562
+#: services.js:574
 msgid "Regular"
 msgstr ""
 
@@ -282,7 +278,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: services.js:574
+#: services.js:586
 msgid "Score Match"
 msgstr ""
 
@@ -303,7 +299,7 @@ msgstr ""
 msgid "Start by pressing that + button"
 msgstr ""
 
-#: services.js:508
+#: services.js:520
 msgid "Taiwan"
 msgstr ""
 
@@ -315,15 +311,15 @@ msgstr ""
 msgid "Timezone: {{region.timezone}}"
 msgstr ""
 
-#: services.js:568
+#: services.js:580
 msgid "Token collection"
 msgstr ""
 
-#: app.js:68
+#: app.js:66
 msgid "US event will start in: %s"
 msgstr ""
 
-#: services.js:496
+#: services.js:508
 msgid "United States"
 msgstr ""
 

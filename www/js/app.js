@@ -35,7 +35,7 @@ angular.module('sif-assistant', ['ionic', 'ngCordova', 'gettext', 'ionic-cache-s
         }
     })
 
-    .run(function ($ionicPlatform, NativeSchedule, gettextCatalog, Events) {
+    .run(function ($ionicPlatform, NativeNotification, NativeSchedule, gettextCatalog, Events) {
         // daily event check callback
         var daily_event_check = function () {
             // check jp
