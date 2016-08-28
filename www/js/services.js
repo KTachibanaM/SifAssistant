@@ -128,6 +128,10 @@ angular.module('sif-assistant.services', [])
                     });
                 }
             },
+            cancel: function (id) {
+                var processed_id = this.processId(id);
+                NativeNotification.cancel(processed_id);
+            },
             isPresent: function (id, callback) {
                 var processed_id = this.processId(id);
                 NativeNotification.isPresent(processed_id, callback)
@@ -821,6 +825,69 @@ angular.module('sif-assistant.services', [])
                         status: 'after'
                     }
                 }
+            }
+        }
+    })
+
+    .factory('DailyEventsCheck', function (NativeNotification, NativeSchedule, gettextCatalog, Events) {
+        return {
+            schedule: function () {
+                NativeSchedule.isPresent("_daily_event_check", function (present) {
+                    if (!present) {
+                        // if daily event check is not present, schedule one
+                        NativeSchedule.schedule(
+                            "_daily_event_check",
+                            gettextCatalog.getString("Checking events"),
+                            0,
+                            "day",
+                            function () {
+                                // check jp
+                                Events.getByRegion("jp").then(function (event) {
+                                    if (!Events.ifEventExpired(event) && Events.getEventStatus(event).status === 'before') {
+                                        // notify if before jp event
+                                        NativeNotification.schedule(
+                                            "_daily_event_check_jp_succeed",
+                                            sprintf(
+                                                gettextCatalog.getString('Japan event will start in: %s'), Events.getEventStatusInStrings(event).left
+                                            )
+                                        )
+                                    }
+                                }, function (error) {
+                                    NativeNotification.schedule(
+                                        "_daily_event_check_jp_fail",
+                                        sprintf(gettextCatalog.getString('Failed to check Japan event, reason: %s'), error.message)
+                                    )
+                                });
+
+                                // check us
+                                Events.getByRegion("us").then(function (event) {
+                                    if (!Events.ifEventExpired(event) && Events.getEventStatus(event).status === 'before') {
+                                        // notify if before us event
+                                        NativeNotification.schedule(
+                                            "_daily_event_check_us_succeed",
+                                            sprintf(
+                                                gettextCatalog.getString('US event will start in: %s'), Events.getEventStatusInStrings(event).left
+                                            )
+                                        )
+                                    }
+                                }, function (error) {
+                                    NativeNotification.schedule(
+                                        "_daily_event_check_us_fail",
+                                        sprintf(gettextCatalog.getString('Failed to check US event, reason: %s'), error.message)
+                                    )
+                                });
+                            }
+                        )
+                    }
+                })
+            },
+            disable: function () {
+                NativeSchedule.isPresent("_daily_event_check", function (present) {
+                    if (present) {
+                        // if daily event check is present, cancel
+                        NativeSchedule.cancel("_daily_event_check");
+                    }
+                })
             }
         }
     });

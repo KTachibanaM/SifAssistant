@@ -371,10 +371,26 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $scope.locale = navigator.language || navigator.userLanguage;
     })
 
-    .controller('SettingsCtrl', function ($scope, Settings) {
+    .controller('SettingsCtrl', function ($scope, Settings, DailyEventsCheck) {
         $scope.settings = {};
+
+        // check events
+        $scope.settings.check_events = Settings.getItem('check_events');
+        $scope.toggle_check_events = function () {
+            // sync notification state
+            if ($scope.settings.check_events) {
+                DailyEventsCheck.schedule();
+            } else {
+                DailyEventsCheck.disable();
+            }
+
+            // save
+            Settings.setItem('check_events', $scope.settings.check_events)
+        };
+
+        // show debug
         $scope.settings.show_debug = Settings.getItem('show_debug');
-        $scope.toggle = function () {
+        $scope.toggle_show_debug = function () {
             Settings.setItem('show_debug', $scope.settings.show_debug);
-        }
+        };
     });
