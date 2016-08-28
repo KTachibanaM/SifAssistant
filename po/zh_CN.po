@@ -12,6 +12,10 @@ msgstr ""
 "X-Generator: Poedit 1.8.8\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: services.js:796 services.js:802 services.js:804
+msgid "%s days, %s hours, %s minutes, %s seconds"
+msgstr "%s 天, %s 小时, %s 分钟, %s 秒"
+
 #: update-loveca.html:15
 msgid "5 (1 scout)"
 msgstr "5 (单抽)"
@@ -20,11 +24,11 @@ msgstr "5 (单抽)"
 msgid "50 (11 scouts)"
 msgstr "50 (11连)"
 
-#: services.js:315
+#: services.js:337
 msgid ": Daily bonus is available!"
 msgstr ": 可领取每日奖励！"
 
-#: services.js:295
+#: services.js:317
 msgid ": LP has reached"
 msgstr ": LP已到达"
 
@@ -68,11 +72,11 @@ msgstr "根据已打的歌曲自动更新"
 msgid "Browser locale: {{locale}}"
 msgstr "浏览器语言: {{locale}}"
 
-#: controllers.js:119
+#: controllers.js:120
 msgid "Cancel"
 msgstr "取消"
 
-#: controllers.js:21
+#: controllers.js:22
 msgid "Cannot have duplicate alias"
 msgstr "名称不能重复"
 
@@ -80,11 +84,15 @@ msgstr "名称不能重复"
 msgid "Category"
 msgstr "类别"
 
-#: services.js:564
+#: services.js:586
 msgid "Challenge Festival"
 msgstr "挑战活动"
 
-#: services.js:468
+#: app.js:63
+msgid "Checking events"
+msgstr "检查活动中"
+
+#: services.js:490
 msgid "China"
 msgstr "国服"
 
@@ -92,11 +100,11 @@ msgstr "国服"
 msgid "Debug"
 msgstr "调试"
 
-#: accounts.html:78 controllers.js:122
+#: accounts.html:78 controllers.js:123
 msgid "Delete"
 msgstr "删除"
 
-#: controllers.js:114
+#: controllers.js:115
 msgid "Delete account"
 msgstr "删除账号"
 
@@ -110,9 +118,9 @@ msgstr "经验"
 
 #: accounts.html:14
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
-msgstr "经验： {{account.exp}}/{{computed_attributes[$index].max_exp}}"
+msgstr "经验: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 
-#: services.js:513
+#: services.js:535
 msgid "Easy"
 msgstr "简单"
 
@@ -124,27 +132,27 @@ msgstr "启用LP提醒"
 msgid "Enable daily bonus alert"
 msgstr "启用每日奖励提醒"
 
-#: controllers.js:271
+#: controllers.js:257
 msgid "Event has ended"
 msgstr "活动已结束"
 
-#: controllers.js:267
-msgid "Event will start in: %s days, %s hours, %s minutes, %s seconds"
-msgstr ""
+#: controllers.js:252
+msgid "Event will start in: %s"
+msgstr "活动将开始于: %s"
 
 #: events.html:1 menu.html:24
 msgid "Events"
 msgstr "活动"
 
-#: services.js:528
+#: services.js:550
 msgid "Expert"
 msgstr "专家"
 
-#: services.js:364
+#: services.js:386
 msgid "Full"
 msgstr "满"
 
-#: services.js:523
+#: services.js:545
 msgid "Hard"
 msgstr "困难"
 
@@ -152,11 +160,11 @@ msgstr "困难"
 msgid "Has claimed daily bonus"
 msgstr "已领取每日奖励"
 
-#: services.js:462
+#: services.js:484
 msgid "Japan"
 msgstr "日服"
 
-#: services.js:480
+#: services.js:502
 msgid "Korea"
 msgstr "韩服"
 
@@ -168,13 +176,17 @@ msgstr "LP"
 msgid "LP alert value"
 msgstr "LP提醒值"
 
-#: controllers.js:292
-msgid "Left: %s days, %s hours, %s minutes, %s seconds"
-msgstr "剩余: %s 天, %s 小时, %s 分钟, %s 秒"
+#: controllers.js:255
+msgid "Left: %s"
+msgstr "剩余: %s"
 
 #: regions.html:10
 msgid "Local time: {{region.local_time}}"
 msgstr "当地时间: {{region.local_time}}"
+
+#: debug.html:45
+msgid "Locale"
+msgstr "语言"
 
 #: accounts.html:27 accounts.html:74 add-account.html:29 update-loveca.html:8
 msgid "Love gems"
@@ -184,15 +196,15 @@ msgstr "Loveca"
 msgid "Manually update"
 msgstr "手动更新"
 
-#: services.js:533
+#: services.js:555
 msgid "Master"
 msgstr "大湿"
 
-#: services.js:518
+#: services.js:540
 msgid "Medium"
 msgstr "中等"
 
-#: services.js:558
+#: services.js:580
 msgid "Medley Festival"
 msgstr "Medley Festival"
 
@@ -212,9 +224,9 @@ msgstr "或者加上"
 msgid "Or subtract by"
 msgstr "或者减去"
 
-#: controllers.js:290
-msgid "Past: %s days, %s hours, %s minutes, %s seconds"
-msgstr "已过去: %s 天, %s 小时, %s 分钟, %s 秒"
+#: controllers.js:254
+msgid "Past: %s"
+msgstr "已过去: %s"
 
 #: about.html:10
 msgid "Platform version: {{platform_version}}"
@@ -244,7 +256,7 @@ msgstr "区域"
 msgid "Regions"
 msgstr "区域"
 
-#: services.js:540
+#: services.js:562
 msgid "Regular"
 msgstr "普通"
 
@@ -252,7 +264,7 @@ msgstr "普通"
 msgid "Save"
 msgstr "保存"
 
-#: services.js:552
+#: services.js:574
 msgid "Score Match"
 msgstr "撕逼活动"
 
@@ -262,7 +274,7 @@ msgstr "设置"
 
 #: settings.html:5
 msgid "Show debug page (restart app to take effect)"
-msgstr "显示调试页面（重启App以生效）"
+msgstr "显示调试页面 (重启App以生效)"
 
 #: update.html:49
 msgid "Songs played"
@@ -272,7 +284,7 @@ msgstr "已打的歌曲"
 msgid "Start by pressing that + button"
 msgstr "触摸+号以开始"
 
-#: services.js:486
+#: services.js:508
 msgid "Taiwan"
 msgstr "台服"
 
@@ -284,11 +296,11 @@ msgstr "感谢"
 msgid "Timezone: {{region.timezone}}"
 msgstr "时区: {{region.timezone}}"
 
-#: services.js:546
+#: services.js:568
 msgid "Token collection"
 msgstr "收集活动"
 
-#: services.js:474
+#: services.js:496
 msgid "United States"
 msgstr "国际服"
 
@@ -307,6 +319,12 @@ msgstr "提供活动API"
 #: update-loveca.html:20 update-loveca.html:37
 msgid "with multiplier"
 msgstr "乘以"
+
+#~ msgid "Left: %s days, %s hours, %s minutes, %s seconds"
+#~ msgstr "剩余: %s 天, %s 小时, %s 分钟, %s 秒"
+
+#~ msgid "Past: %s days, %s hours, %s minutes, %s seconds"
+#~ msgstr "已过去: %s 天, %s 小时, %s 分钟, %s 秒"
 
 #~ msgid "Event will start in : %s days, %s hours, %s minutes, %s seconds"
 #~ msgstr "活动将会在 %s 天, %s 小时, %s 分钟, %s 秒 内开始"

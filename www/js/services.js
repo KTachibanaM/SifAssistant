@@ -788,20 +788,26 @@ angular.module('sif-assistant.services', [])
                     };
                 }
             },
-            getEventStatusStrings: function (event) {
+            getEventStatusInStrings: function (event) {
                 var result = this.getEventStatus(event);
                 if (result.status === 'before') {
-                    return [sprintf(gettextCatalog.getString('Event will start in: %s days, %s hours, %s minutes, %s seconds'),
-                        result.left.days, result.left.hours, result.left.minutes, time.left.seconds)]
+                    return {
+                        status: 'before',
+                        left: sprintf(gettextCatalog.getString('%s days, %s hours, %s minutes, %s seconds'),
+                            result.left.days, result.left.hours, result.left.minutes, time.left.seconds)
+                    };
                 } else if (result.status === 'during') {
-                    return [
-                        sprintf(gettextCatalog.getString('Past: %s days, %s hours, %s minutes, %s seconds'),
+                    return {
+                        status: 'during',
+                        past: sprintf(gettextCatalog.getString('%s days, %s hours, %s minutes, %s seconds'),
                             result.past.days, result.past.hours, result.past.minutes, result.past.seconds),
-                        sprintf(gettextCatalog.getString('Left: %s days, %s hours, %s minutes, %s seconds'),
+                        left: sprintf(gettextCatalog.getString('%s days, %s hours, %s minutes, %s seconds'),
                             result.left.days, result.left.hours, result.left.minutes, result.left.seconds)
-                    ];
+                    };
                 } else {
-                    return [gettextCatalog.getString("Event has ended")];
+                    return {
+                        status: 'after'
+                    }
                 }
             }
         }

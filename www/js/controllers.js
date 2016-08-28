@@ -246,11 +246,23 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $interval($scope.reload, update_interval_in_ms);
     })
 
-    .controller('EventsCtrl', function ($scope, $interval, Events, update_interval_in_ms) {
+    .controller('EventsCtrl', function ($scope, $interval, Events, update_interval_in_ms, gettextCatalog) {
+        function event_status_in_strings_to_string_array(obj) {
+            if (obj.status === 'before') {
+                return [sprintf(gettextCatalog.getString('Event will start in: %s'), obj.left)]
+            } else if (obj.status === 'during') {
+                return [sprintf(gettextCatalog.getString('Past: %s'), obj.past),
+                    sprintf(gettextCatalog.getString('Left: %s'), obj.left)]
+            } else {
+                return [gettextCatalog.getString('Event has ended')]
+            }
+        }
+
         Events.getByRegion('jp').then(function (data) {
             $scope.jp = data;
             $interval(function () {
-                $scope.jp.event_status_strings = Events.getEventStatusStrings($scope.jp);
+                $scope.jp.event_status_strings
+                    = event_status_in_strings_to_string_array(Events.getEventStatusInStrings($scope.jp));
             }, update_interval_in_ms)
         }, function (err) {
             $scope.error = err;
@@ -259,7 +271,8 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         Events.getByRegion('us').then(function (data) {
             $scope.us = data;
             $interval(function () {
-                $scope.us.event_status_strings = Events.getEventStatusStrings($scope.us);
+                $scope.us.event_status_strings
+                    = event_status_in_strings_to_string_array(Events.getEventStatusInStrings($scope.us));
             }, update_interval_in_ms)
         }, function (err) {
             $scope.error = err;

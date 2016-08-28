@@ -4,6 +4,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 
+#: services.js:796
+#: services.js:802
+#: services.js:804
+msgid "%s days, %s hours, %s minutes, %s seconds"
+msgstr ""
+
 #: update-loveca.html:15
 msgid "5 (1 scout)"
 msgstr ""
@@ -12,11 +18,11 @@ msgstr ""
 msgid "50 (11 scouts)"
 msgstr ""
 
-#: services.js:315
+#: services.js:337
 msgid ": Daily bonus is available!"
 msgstr ""
 
-#: services.js:295
+#: services.js:317
 msgid ": LP has reached"
 msgstr ""
 
@@ -62,11 +68,11 @@ msgstr ""
 msgid "Browser locale: {{locale}}"
 msgstr ""
 
-#: controllers.js:119
+#: controllers.js:120
 msgid "Cancel"
 msgstr ""
 
-#: controllers.js:21
+#: controllers.js:22
 msgid "Cannot have duplicate alias"
 msgstr ""
 
@@ -74,11 +80,15 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
-#: services.js:564
+#: services.js:586
 msgid "Challenge Festival"
 msgstr ""
 
-#: services.js:468
+#: app.js:63
+msgid "Checking events"
+msgstr ""
+
+#: services.js:490
 msgid "China"
 msgstr ""
 
@@ -88,11 +98,11 @@ msgid "Debug"
 msgstr ""
 
 #: accounts.html:78
-#: controllers.js:122
+#: controllers.js:123
 msgid "Delete"
 msgstr ""
 
-#: controllers.js:114
+#: controllers.js:115
 msgid "Delete account"
 msgstr ""
 
@@ -109,7 +119,7 @@ msgstr ""
 msgid "EXP: {{account.exp}}/{{computed_attributes[$index].max_exp}}"
 msgstr ""
 
-#: services.js:513
+#: services.js:535
 msgid "Easy"
 msgstr ""
 
@@ -121,12 +131,12 @@ msgstr ""
 msgid "Enable daily bonus alert"
 msgstr ""
 
-#: controllers.js:271
+#: controllers.js:257
 msgid "Event has ended"
 msgstr ""
 
-#: controllers.js:267
-msgid "Event will start in: %s days, %s hours, %s minutes, %s seconds"
+#: controllers.js:252
+msgid "Event will start in: %s"
 msgstr ""
 
 #: events.html:1
@@ -134,15 +144,15 @@ msgstr ""
 msgid "Events"
 msgstr ""
 
-#: services.js:528
+#: services.js:550
 msgid "Expert"
 msgstr ""
 
-#: services.js:364
+#: services.js:386
 msgid "Full"
 msgstr ""
 
-#: services.js:523
+#: services.js:545
 msgid "Hard"
 msgstr ""
 
@@ -150,11 +160,11 @@ msgstr ""
 msgid "Has claimed daily bonus"
 msgstr ""
 
-#: services.js:462
+#: services.js:484
 msgid "Japan"
 msgstr ""
 
-#: services.js:480
+#: services.js:502
 msgid "Korea"
 msgstr ""
 
@@ -166,12 +176,16 @@ msgstr ""
 msgid "LP alert value"
 msgstr ""
 
-#: controllers.js:292
-msgid "Left: %s days, %s hours, %s minutes, %s seconds"
+#: controllers.js:255
+msgid "Left: %s"
 msgstr ""
 
 #: regions.html:10
 msgid "Local time: {{region.local_time}}"
+msgstr ""
+
+#: debug.html:45
+msgid "Locale"
 msgstr ""
 
 #: accounts.html:27
@@ -185,15 +199,15 @@ msgstr ""
 msgid "Manually update"
 msgstr ""
 
-#: services.js:533
+#: services.js:555
 msgid "Master"
 msgstr ""
 
-#: services.js:518
+#: services.js:540
 msgid "Medium"
 msgstr ""
 
-#: services.js:558
+#: services.js:580
 msgid "Medley Festival"
 msgstr ""
 
@@ -213,8 +227,8 @@ msgstr ""
 msgid "Or subtract by"
 msgstr ""
 
-#: controllers.js:290
-msgid "Past: %s days, %s hours, %s minutes, %s seconds"
+#: controllers.js:254
+msgid "Past: %s"
 msgstr ""
 
 #: about.html:10
@@ -247,7 +261,7 @@ msgstr ""
 msgid "Regions"
 msgstr ""
 
-#: services.js:540
+#: services.js:562
 msgid "Regular"
 msgstr ""
 
@@ -256,7 +270,7 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: services.js:552
+#: services.js:574
 msgid "Score Match"
 msgstr ""
 
@@ -277,7 +291,7 @@ msgstr ""
 msgid "Start by pressing that + button"
 msgstr ""
 
-#: services.js:486
+#: services.js:508
 msgid "Taiwan"
 msgstr ""
 
@@ -289,11 +303,11 @@ msgstr ""
 msgid "Timezone: {{region.timezone}}"
 msgstr ""
 
-#: services.js:546
+#: services.js:568
 msgid "Token collection"
 msgstr ""
 
-#: services.js:474
+#: services.js:496
 msgid "United States"
 msgstr ""
 
