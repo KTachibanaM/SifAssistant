@@ -615,7 +615,7 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory("Platform", function () {
+    .factory("Platform", function ($ionicPlatform) {
         const LOCALE_CONVERSION_MAP = [
             {
                 if_contains: ["zh", "CN"],
@@ -624,7 +624,7 @@ angular.module('sif-assistant.services', [])
         ];
         return {
             getLocale: function () {
-                var raw_locale_string = (navigator.language || navigator.userLanguage).toUpperCase();
+                var raw_locale_string = this.getBrowserLocale().toUpperCase();
                 if (!raw_locale_string) {
                     return undefined;
                 }
@@ -643,6 +643,36 @@ angular.module('sif-assistant.services', [])
                     }
                 });
                 return matched_locale;
+            },
+            getBrowserLocale: function () {
+                return navigator.language || navigator.userLanguage;
+            },
+            getAppVersion: function (callback) {
+                if (window.cordova) {
+                    window.cordova.getAppVersion(function (version) {
+                        callback(version)
+                    });
+                } else {
+                    callback('0.0.0')
+                }
+            },
+            getPlatform: function (callback) {
+                if (window.cordova) {
+                    $ionicPlatform.ready(function () {
+                        callback(ionic.Platform.platform())
+                    })
+                } else {
+                    callback('browser')
+                }
+            },
+            getPlatformVersion: function (callback) {
+                if (window.cordova) {
+                    $ionicPlatform.ready(function () {
+                        callback(ionic.Platform.version())
+                    })
+                } else {
+                    callback(0)
+                }
             }
         }
     })

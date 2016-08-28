@@ -4,9 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 
-#: services.js:812
-#: services.js:818
-#: services.js:820
+#: services.js:842
+#: services.js:848
+#: services.js:850
 msgid "%s days, %s hours, %s minutes, %s seconds"
 msgstr ""
 
@@ -64,8 +64,8 @@ msgstr ""
 msgid "Automagically update by songs played"
 msgstr ""
 
-#: about.html:13
-msgid "Browser locale: {{locale}}"
+#: about.html:16
+msgid "Browser locale: {{browser_locale}}"
 msgstr ""
 
 #: controllers.js:120
@@ -88,7 +88,7 @@ msgstr ""
 msgid "Check events"
 msgstr ""
 
-#: services.js:840
+#: services.js:870
 msgid "Checking events"
 msgstr ""
 
@@ -152,11 +152,11 @@ msgstr ""
 msgid "Expert"
 msgstr ""
 
-#: services.js:858
+#: services.js:888
 msgid "Failed to check Japan event, reason: %s"
 msgstr ""
 
-#: services.js:876
+#: services.js:906
 msgid "Failed to check US event, reason: %s"
 msgstr ""
 
@@ -176,7 +176,7 @@ msgstr ""
 msgid "Japan"
 msgstr ""
 
-#: services.js:851
+#: services.js:881
 msgid "Japan event will start in: %s"
 msgstr ""
 
@@ -198,6 +198,10 @@ msgstr ""
 
 #: regions.html:10
 msgid "Local time: {{region.local_time}}"
+msgstr ""
+
+#: about.html:13
+msgid "Locale: {{locale}}"
 msgstr ""
 
 #: accounts.html:27
@@ -319,7 +323,7 @@ msgstr ""
 msgid "Token collection"
 msgstr ""
 
-#: services.js:869
+#: services.js:899
 msgid "US event will start in: %s"
 msgstr ""
 

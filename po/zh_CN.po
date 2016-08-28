@@ -12,7 +12,7 @@ msgstr ""
 "X-Generator: Poedit 1.8.8\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: services.js:812 services.js:818 services.js:820
+#: services.js:842 services.js:848 services.js:850
 msgid "%s days, %s hours, %s minutes, %s seconds"
 msgstr "%s 天, %s 小时, %s 分钟, %s 秒"
 
@@ -68,9 +68,9 @@ msgstr "你确定要删除账号吗？"
 msgid "Automagically update by songs played"
 msgstr "根据已打的歌曲自动更新"
 
-#: about.html:13
-msgid "Browser locale: {{locale}}"
-msgstr "浏览器语言: {{locale}}"
+#: about.html:16
+msgid "Browser locale: {{browser_locale}}"
+msgstr "浏览器语言: {{browser_locale}}"
 
 #: controllers.js:120
 msgid "Cancel"
@@ -92,7 +92,7 @@ msgstr "挑战活动"
 msgid "Check events"
 msgstr "检查活动"
 
-#: services.js:840
+#: services.js:870
 msgid "Checking events"
 msgstr "检查活动中"
 
@@ -152,11 +152,11 @@ msgstr "活动"
 msgid "Expert"
 msgstr "专家"
 
-#: services.js:858
+#: services.js:888
 msgid "Failed to check Japan event, reason: %s"
 msgstr "未能检查日服活动, 原因: %s"
 
-#: services.js:876
+#: services.js:906
 msgid "Failed to check US event, reason: %s"
 msgstr "未能检查国际服活动, 原因: %s"
 
@@ -176,7 +176,7 @@ msgstr "已领取每日奖励"
 msgid "Japan"
 msgstr "日服"
 
-#: services.js:851
+#: services.js:881
 msgid "Japan event will start in: %s"
 msgstr "日服活动将开始于: %s"
 
@@ -199,6 +199,10 @@ msgstr "剩余: %s"
 #: regions.html:10
 msgid "Local time: {{region.local_time}}"
 msgstr "当地时间: {{region.local_time}}"
+
+#: about.html:13
+msgid "Locale: {{locale}}"
+msgstr "语言: {{locale}}"
 
 #: accounts.html:27 accounts.html:74 add-account.html:29 update-loveca.html:8
 msgid "Love gems"
@@ -312,7 +316,7 @@ msgstr "时区: {{region.timezone}}"
 msgid "Token collection"
 msgstr "收集活动"
 
-#: services.js:869
+#: services.js:899
 msgid "US event will start in: %s"
 msgstr "国际服活动将开始于: %s"
 
@@ -335,6 +339,9 @@ msgstr "提供活动API"
 #: update-loveca.html:20 update-loveca.html:37
 msgid "with multiplier"
 msgstr "乘以"
+
+#~ msgid "Browser locale: {{locale}}"
+#~ msgstr "浏览器语言: {{locale}}"
 
 #~ msgid "Show debug page (restart app to take effect)"
 #~ msgstr "显示调试页面 (重启App以生效)"

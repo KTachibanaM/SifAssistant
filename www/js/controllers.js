@@ -364,15 +364,27 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         }
     })
 
-    .controller('AboutCtrl', function ($scope) {
-        if (window.cordova) {
-            window.cordova.getAppVersion(function (version) {
-                $scope.app_version = version;
-            });
-        }
-        $scope.platform = ionic.Platform.platform();
-        $scope.platform_version = ionic.Platform.version();
-        $scope.locale = navigator.language || navigator.userLanguage;
+    .controller('AboutCtrl', function ($scope, Platform) {
+        // app version
+        Platform.getAppVersion(function (version) {
+            $scope.app_version = version;
+        });
+
+        // platform
+        Platform.getPlatform(function (platform) {
+            $scope.platform = platform;
+        });
+
+        // platform version
+        Platform.getPlatformVersion(function (platform_version) {
+            $scope.platform_version = platform_version;
+        });
+
+        // locale
+        $scope.locale = Platform.getLocale();
+
+        // browser locale
+        $scope.browser_locale = Platform.getBrowserLocale();
     })
 
     .controller('SettingsCtrl', function ($scope, Settings, DailyEventsCheck) {
