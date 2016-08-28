@@ -663,7 +663,7 @@ angular.module('sif-assistant.services', [])
         }
     })
 
-    .factory("Events", function ($http, $q, Regions, $localStorage) {
+    .factory("Events", function ($http, $q, Regions, $localStorage, gettextCatalog) {
         const EVENTS_CACHE_KEY = 'events_cache';
 
         return {
@@ -744,6 +744,65 @@ angular.module('sif-assistant.services', [])
                 }
 
                 return defer.promise;
+            },
+            getEventStatus: function (event) {
+                var now = Date.now();
+                var start = event.start;
+                var end = event.end;
+                var now_to_start = now - start;
+                var end_to_now = end - now;
+
+                if (now_to_start < 0) {
+                    now_to_start = -now_to_start;
+                    now_to_start = moment.duration(now_to_start);
+                    return {
+                        status: 'before',
+                        left: {
+                            days: now_to_start.days(),
+                            hours: now_to_start.hours(),
+                            minutes: now_to_start.minutes(),
+                            seconds: now_to_start.seconds()
+                        }
+                    };
+                } else if (end_to_now < 0) {
+                    return {
+                        status: 'after'
+                    }
+                } else {
+                    now_to_start = moment.duration(now_to_start);
+                    end_to_now = moment.duration(end_to_now);
+                    return {
+                        status: 'during',
+                        past: {
+                            days: now_to_start.days(),
+                            hours: now_to_start.hours(),
+                            minutes: now_to_start.minutes(),
+                            seconds: now_to_start.seconds()
+                        },
+                        left: {
+                            days: end_to_now.days(),
+                            hours: end_to_now.hours(),
+                            minutes: end_to_now.minutes(),
+                            seconds: end_to_now.seconds()
+                        }
+                    };
+                }
+            },
+            getEventStatusStrings: function (event) {
+                var result = this.getEventStatus(event);
+                if (result.status === 'before') {
+                    return [sprintf(gettextCatalog.getString('Event will start in: %s days, %s hours, %s minutes, %s seconds'),
+                        result.left.days, result.left.hours, result.left.minutes, time.left.seconds)]
+                } else if (result.status === 'during') {
+                    return [
+                        sprintf(gettextCatalog.getString('Past: %s days, %s hours, %s minutes, %s seconds'),
+                            result.past.days, result.past.hours, result.past.minutes, result.past.seconds),
+                        sprintf(gettextCatalog.getString('Left: %s days, %s hours, %s minutes, %s seconds'),
+                            result.left.days, result.left.hours, result.left.minutes, result.left.seconds)
+                    ];
+                } else {
+                    return [gettextCatalog.getString("Event has ended")];
+                }
             }
         }
     });

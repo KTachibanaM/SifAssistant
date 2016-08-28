@@ -246,60 +246,11 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         $interval($scope.reload, update_interval_in_ms);
     })
 
-    .controller('EventsCtrl', function ($scope, $interval, Events, update_interval_in_ms, gettextCatalog) {
-        function getEventStatusStrings(start, end) {
-            var now = Date.now();
-            var past = now - start;
-            var left = end - now;
-
-            var time = {};
-            if (past < 0) {
-                past = -past;
-                past = moment.duration(past);
-                time = {
-                    past: {
-                        days: past.days(),
-                        hours: past.hours(),
-                        minutes: past.minutes(),
-                        seconds: past.seconds()
-                    }
-                };
-                return [
-                    sprintf(gettextCatalog.getString('Event will start in: %s days, %s hours, %s minutes, %s seconds'),
-                        time.past.days, time.past.hours, time.past.minutes, time.past.seconds)
-                ];
-            } else if (left < 0) {
-                return [gettextCatalog.getString("Event has ended")];
-            } else {
-                past = moment.duration(past);
-                left = moment.duration(left);
-                time = {
-                    past: {
-                        days: past.days(),
-                        hours: past.hours(),
-                        minutes: past.minutes(),
-                        seconds: past.seconds()
-                    },
-                    left: {
-                        days: left.days(),
-                        hours: left.hours(),
-                        minutes: left.minutes(),
-                        seconds: left.seconds()
-                    }
-                };
-                return [
-                    sprintf(gettextCatalog.getString('Past: %s days, %s hours, %s minutes, %s seconds'),
-                        time.past.days, time.past.hours, time.past.minutes, time.past.seconds),
-                    sprintf(gettextCatalog.getString('Left: %s days, %s hours, %s minutes, %s seconds'),
-                        time.left.days, time.left.hours, time.left.minutes, time.left.seconds)
-                ];
-            }
-        }
-
+    .controller('EventsCtrl', function ($scope, $interval, Events, update_interval_in_ms) {
         Events.getByRegion('jp').then(function (data) {
             $scope.jp = data;
             $interval(function () {
-                $scope.jp.event_status_strings = getEventStatusStrings($scope.jp.start, $scope.jp.end);
+                $scope.jp.event_status_strings = Events.getEventStatusStrings($scope.jp);
             }, update_interval_in_ms)
         }, function (err) {
             $scope.error = err;
@@ -308,7 +259,7 @@ angular.module('sif-assistant.controllers', ['sif-assistant.services'])
         Events.getByRegion('us').then(function (data) {
             $scope.us = data;
             $interval(function () {
-                $scope.us.event_status_strings = getEventStatusStrings($scope.us.start, $scope.us.end);
+                $scope.us.event_status_strings = Events.getEventStatusStrings($scope.us);
             }, update_interval_in_ms)
         }, function (err) {
             $scope.error = err;
