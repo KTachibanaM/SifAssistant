@@ -2,8 +2,7 @@
 
 ## Initialize
 ```
-npm install -g cordova ionic
-bower install
+npm install
 ```
 
 ## Browser
@@ -16,8 +15,6 @@ ionic serve
 
 ### Edit translations
 ```
-npm install -g gulp
-npm install
 gulp pot # get template.pot under ./po
 # In software such as PoEdit, edit per-language **.po files along with template.pot, and save **.po files
 gulp translations
