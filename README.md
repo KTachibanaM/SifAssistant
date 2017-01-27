@@ -1,5 +1,11 @@
 # SIF Assistant
 
+A new app based on Ionic 2 is being developed [here](https://gitlab.com/KTachibanaM/sif-assistant).
+
+The new app will be cut over to this repo once it's finished.
+
+Maintenance to this repo will be paused until then.
+
 ## Initialize
 ```
 npm install
